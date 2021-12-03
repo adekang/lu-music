@@ -1,0 +1,10 @@
+@import "./src/assets/scss/reset";
+
+
+.AppWrapper {
+  padding: 8px 16px;
+  max-width: 470px;
+  min-width: 375px;
+  margin: 0 auto;
+  min-height: 100vh;
+}

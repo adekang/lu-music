@@ -1,0 +1,12 @@
+.navWrapper {
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+  }
+}
