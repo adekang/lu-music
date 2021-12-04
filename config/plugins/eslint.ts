@@ -1,5 +1,5 @@
 // @ts-ignore
-import checker from 'vite-plugin-checker';
+import checker from "vite-plugin-checker";
 
 /**
  * @description 对eslint的支持，在开发模式下，自动会开启检测
@@ -10,8 +10,8 @@ export default function configEslint() {
     checker({
       typescript: true,
       eslint: {
-        files: ['./src'],
-        extensions: ['.ts', '.tsx', '.jsx'],
+        files: ["./src"],
+        extensions: [".ts", ".tsx", ".jsx"],
       },
     }),
   ];
