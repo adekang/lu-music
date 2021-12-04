@@ -1,15 +1,19 @@
-import React, { FC, useEffect } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { FC, useEffect } from 'react'
+import { NavLink, Outlet } from 'react-router-dom'
 
-import styles from "@/assets/scss/index.module.scss";
-import { getBannerRequest } from "@/services/comment";
+import styles from '@/assets/scss/index.module.scss'
+import { getBannerRequest } from '@/services/comment'
 
-const Index: FC = function() {
+const Index: FC = function () {
+  const getBanner = async () => {
+    const { data } = await getBannerRequest()
+    console.log(data)
+    return data
+  }
+
   useEffect(() => {
-    getBannerRequest().then((data) => {
-      console.log(data);
-    });
-  }, []);
+    getBanner()
+  }, [])
 
   return (
     <>
@@ -28,7 +32,7 @@ const Index: FC = function() {
       </nav>
       <Outlet />
     </>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

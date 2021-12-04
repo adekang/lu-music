@@ -17,4 +17,4 @@ export const environmentVariable = () =>
       break;
   }
   return parps; */
-  "dev";
+  'dev'

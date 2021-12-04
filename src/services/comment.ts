@@ -1,5 +1,5 @@
-import service from "./request";
+import service from './request'
 
-export const getBannerRequest = () => service.get("/banner");
+export const getBannerRequest = () => service.get('/banner')
 
-export const getRecommendListRequest = () => service.get("/personalized");
+export const getRecommendListRequest = () => service.get('/personalized')
