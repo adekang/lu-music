@@ -1,10 +1,9 @@
 {
+  "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 120,
   "proseWrap": "never",
   "tabWidth": 2,
-  "jsxBracketSameLine": false,
-  "arrowParens": "always",
   "overrides": [
     {
       "files": ".prettierrc",

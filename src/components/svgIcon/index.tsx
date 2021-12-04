@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from "react";
+
 export type svgProps = {
   iconClass: string;
   fill?: string;
@@ -8,15 +9,8 @@ export type svgProps = {
   onClick?: React.MouseEventHandler<SVGSVGElement>;
 };
 
-const SvgIcon: React.FC<svgProps> = memo(function SvgIcon({
-  iconClass,
-  fill,
-  fontSize = "18px",
-  className,
-  onClick,
-  style,
-}) {
-  const iconName = useMemo(() => "#icon-" + iconClass, [iconClass]);
+const SvgIcon: React.FC<svgProps> = memo(({ iconClass, fill, fontSize = "18px", className, onClick, style }) => {
+  const iconName = useMemo(() => `#icon-${iconClass}`, [iconClass]);
   return (
     <svg
       fontSize={fontSize!}

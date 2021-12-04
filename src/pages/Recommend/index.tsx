@@ -1,10 +1,6 @@
 import React, { FC } from "react";
 
-const Recommend: FC = () => {
-  return (
-    <>
-      <div>Recommend</div>
-    </>
-  );
+const Recommend: FC = function () {
+  return <div>Recommend</div>;
 };
 export default Recommend;

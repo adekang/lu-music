@@ -1,9 +1,5 @@
-import { axiosInstance } from "./request";
+import service from "./request";
 
-export const getBannerRequest = () => {
-  return axiosInstance.get("/banner");
-};
+export const getBannerRequest = () => service.get("/banner");
 
-export const getRecommendListRequest = () => {
-  return axiosInstance.get("/personalized");
-};
+export const getRecommendListRequest = () => service.get("/personalized");

@@ -1,10 +1,6 @@
 import React, { FC } from "react";
 
-const Singers: FC = () => {
-  return (
-    <>
-      <div>Singers</div>
-    </>
-  );
+const Singers: FC = function () {
+  return <div>Singers</div>;
 };
 export default Singers;

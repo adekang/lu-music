@@ -2,7 +2,7 @@
  * @description node运行环境
  * @return "dev" | "prod"
  */
-export const environmentVariable = () => {
+export const environmentVariable = () =>
   /* const env = import.meta.env.VITE_APP_ANT;
   let parps = null;
   switch (env) {
@@ -17,5 +17,4 @@ export const environmentVariable = () => {
       break;
   }
   return parps; */
-  return "dev";
-};
+  "dev";

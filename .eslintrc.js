@@ -1,29 +1,45 @@
 module.exports = {
+  root: true,
   parser: "@typescript-eslint/parser",
-  extends: ["prettier/@typescript-eslint", "plugin:prettier/recommended"],
-  plugins: ["@typescript-eslint"],
-  env: {
-    browser: true,
-    node: true,
-  },
-  settings: {
-    //自动发现React的版本，从而进行规范react代码
-    react: {
-      pragma: "React",
-      version: "detect",
-    },
-  },
   parserOptions: {
-    //指定ESLint可以解析JSX语法
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
   },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  env: {
+    browser: true,
+    amd: true,
+    node: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended", // Make sure this is always the last element in the array.
+  ],
+  plugins: ["simple-import-sort", "prettier"],
   rules: {
-    "import/no-anonymous-default-export": 0,
-    quotes: "off",
-    "comma-dangle": "off",
+    "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/accessible-emoji": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        components: ["Link"],
+        specialLink: ["hrefLeft", "hrefRight"],
+        aspects: ["invalidHref", "preferButton"],
+      },
+    ],
   },
 };
