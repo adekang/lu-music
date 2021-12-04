@@ -17,12 +17,12 @@ const App: FC = () => {
     <>
       <div className={styles.AppWrapper}>
         <Routes>
-          <Route path='/' element={<Index />}>
-            <Route path='/rank' element={<Rank />} />
-            <Route path='/singers' element={<Singers />} />
-            <Route path='/recommend' element={<Recommend />} />
-            <Route path='/' element={<Recommend />} />
-            <Route path='*' element={<NotFound />} />
+          <Route path="/" element={<Index />}>
+            <Route path="/rank" element={<Rank />} />
+            <Route path="/singers" element={<Singers />} />
+            <Route path="/recommend" element={<Recommend />} />
+            <Route path="/" element={<Recommend />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </div>
@@ -31,5 +31,3 @@ const App: FC = () => {
 };
 
 export default App;
-
-
