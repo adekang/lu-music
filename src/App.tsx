@@ -1,12 +1,12 @@
-import React, { FC, useEffect } from 'react';
-import styles from './app.module.scss';
-import { environmentVariable } from './utils';
-import Index from '@/pages/index';
-import { Route, Routes } from 'react-router-dom';
-import NotFound from '@/pages/NotFound';
-import Singers from '@/pages/Singers';
-import Rank from '@/pages/Rank';
-import Recommend from '@/pages/Recommend';
+import React, { FC, useEffect } from "react";
+import styles from "./app.module.scss";
+import { environmentVariable } from "./utils";
+import Index from "@/pages/index";
+import { Route, Routes } from "react-router-dom";
+import NotFound from "@/pages/NotFound";
+import Singers from "@/pages/Singers";
+import Rank from "@/pages/Rank";
+import Recommend from "@/pages/Recommend";
 
 const App: FC = () => {
   useEffect(() => {

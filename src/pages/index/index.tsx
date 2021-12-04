@@ -1,7 +1,8 @@
-import React, { FC, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import styles from '@/assets/scss/index.module.scss';
-import { getBannerRequest } from '@/services/comment';
+import React, { FC, useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import styles from "@/assets/scss/index.module.scss";
+import { getBannerRequest } from "@/services/comment";
+import { Button } from "antd-mobile";
 
 const Index: FC = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const Index: FC = () => {
 
   return (
     <>
+      <Button>按钮</Button>
       <nav className={styles.navWrapper}>
         <ul>
           <li>

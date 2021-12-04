@@ -2,14 +2,14 @@
  * @author lgf
  * @description vite的插件配置文件
  */
-import { Plugin } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
-import configSvgIcons from './svgIcons';
-import configEslint from './eslint';
-import configVisualizerConfig from './visualizer';
-import configStyleImport from './styleImport';
-import legacy from '@vitejs/plugin-legacy';
-import { VITE_APP_ESLINT, VITE_APP_VISUALIZER, VITE_APP_LEGACY } from '../index';
+import { Plugin } from "vite";
+import reactRefresh from "@vitejs/plugin-react-refresh";
+import configSvgIcons from "./svgIcons";
+import configEslint from "./eslint";
+import configVisualizerConfig from "./visualizer";
+import configStyleImport from "./styleImport";
+import legacy from "@vitejs/plugin-legacy";
+import { VITE_APP_ESLINT, VITE_APP_VISUALIZER, VITE_APP_LEGACY } from "../index";
 export default function createVitePlugins() {
   const vitePlugins: (Plugin | Plugin[])[] = [
     /**
@@ -24,8 +24,8 @@ export default function createVitePlugins() {
   VITE_APP_LEGACY &&
     vitePlugins.push(
       legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+        targets: ["ie >= 11"],
+        additionalLegacyPolyfills: ["regenerator-runtime/runtime"],
       }),
     );
   return vitePlugins;

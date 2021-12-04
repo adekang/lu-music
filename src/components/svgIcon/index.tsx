@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo } from "react";
 export type svgProps = {
   iconClass: string;
   fill?: string;
@@ -11,12 +11,12 @@ export type svgProps = {
 const SvgIcon: React.FC<svgProps> = memo(function SvgIcon({
   iconClass,
   fill,
-  fontSize = '18px',
+  fontSize = "18px",
   className,
   onClick,
   style,
 }) {
-  const iconName = useMemo(() => '#icon-' + iconClass, [iconClass]);
+  const iconName = useMemo(() => "#icon-" + iconClass, [iconClass]);
   return (
     <svg
       fontSize={fontSize!}
@@ -31,12 +31,12 @@ const SvgIcon: React.FC<svgProps> = memo(function SvgIcon({
 });
 
 const svgStyle = {
-  width: '1em',
-  height: '1em',
-  verticalAlign: '-0.15em',
-  overflow: 'hidden',
-  fill: 'currentColor', // 颜色值
-  fontSize: '1.1em',
+  width: "1em",
+  height: "1em",
+  verticalAlign: "-0.15em",
+  overflow: "hidden",
+  fill: "currentColor", // 颜色值
+  fontSize: "1.1em",
 };
 
 export default SvgIcon;
