@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useRoutes } from 'react-router-dom'
 import styles from './app.module.scss'
 import { environmentVariable } from './utils'
 import Index from '@/pages/index'
@@ -13,14 +13,20 @@ const App: FC = function () {
     console.log(`environmentVariable()`, environmentVariable())
   }, [])
 
+  const routes = [
+    { path: '/singers', element: <Singers /> },
+    { path: '/rank', element: <Rank /> },
+    { path: '/recommend', element: <Recommend /> }
+  ]
+
   return (
     <div className={styles.AppWrapper}>
       <Routes>
         <Route path="/" element={<Index />}>
-          <Route path="/rank" element={<Rank />} />
-          <Route path="/singers" element={<Singers />} />
-          <Route path="/recommend" element={<Recommend />} />
-          <Route path="/" element={<Recommend />} />
+          {routes.map((value, index) => (
+            <Route key={index} path={value.path} element={value.element} />
+          ))}
+          <Route path="/" element={<Navigate to="/recommend" />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

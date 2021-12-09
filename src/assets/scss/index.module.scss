@@ -1,3 +1,11 @@
+.indexWrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+
+}
+
 .navWrapper {
 
   ul {
@@ -9,4 +17,8 @@
       font-size: 16px;
     }
   }
+}
+
+.outlet {
+  flex-grow: 1;
 }

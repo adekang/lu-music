@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import QS from 'qs'
 import { environmentVariable } from '@/utils'
 
@@ -62,7 +62,10 @@ service.interceptors.response.use(
  * @param {*} url     请求地址
  * @param {*} params
  */
-export function get(url: string, params: unknown) {
+export function get<T = never, R = AxiosResponse<T>>(
+  url: string,
+  params: AxiosRequestConfig<T>
+): Promise<R> {
   return service.get(url, {
     params
   })
