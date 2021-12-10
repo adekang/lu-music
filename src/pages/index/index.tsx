@@ -1,24 +1,24 @@
 import React, { FC } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
-import styles from '@/assets/scss/index.module.scss'
+import '@/assets/scss/index.scss'
 
 const Index: FC = function () {
   return (
-    <div className={styles.indexWrapper}>
-      <div className={styles.outlet}>
+    <div className={'indexWrapper'}>
+      <div className={'outlet'}>
         <Outlet />
       </div>
-      <nav className={styles.navWrapper}>
+      <nav className={'navWrapper'}>
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/recommend">主页</NavLink>
           </li>
           <li>
-            <NavLink to="/rank">Rank</NavLink>
+            <NavLink to="rank">排行</NavLink>
           </li>
           <li>
-            <NavLink to="/recommend">Recommend</NavLink>
+            <NavLink to="singers">歌手</NavLink>
           </li>
         </ul>
       </nav>
