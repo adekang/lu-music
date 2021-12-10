@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Button } from 'antd-mobile'
 import { getBannerRequest } from '@/services/comment'
+import { Image, Swiper } from 'antd-mobile'
+import { BannerList } from '@/pages/Recommend/types'
 
 const Recommend: FC = function () {
-  const [bannerList, setBannerList] = useState<string[]>()
+  const [bannerList, setBannerList] = useState<BannerList[]>()
   useEffect(() => {
     getBannerRequest().then(data => {
       const {
@@ -12,12 +13,32 @@ const Recommend: FC = function () {
       setBannerList(banners)
     })
   }, [])
+
   return (
     <>
-      <div>Recommend</div>
-      <h1>123</h1>
-      <span>{JSON.stringify(bannerList)}</span>
-      <Button>Commend</Button>
+      <h1>个性推荐</h1>
+      <Swiper
+        autoplay
+        loop
+        style={{
+          '--border-radius': '8px'
+        }}
+      >
+        {bannerList?.map((value, index) => {
+          return (
+            <Swiper.Item key={index}>
+              <div
+                className={'swiperItem'}
+                onClick={() => {
+                  console.log(value.typeTitle)
+                }}
+              >
+                <Image src={value.imageUrl} alt={value.typeTitle} />
+              </div>
+            </Swiper.Item>
+          )
+        })}
+      </Swiper>
     </>
   )
 }
