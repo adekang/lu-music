@@ -1,18 +1,36 @@
 import React, { FC, useEffect, useState } from 'react'
-import { getBannerRequest } from '@/services/comment'
+import { getBannerRequest, getHotList } from '@/services/comment'
 import { Image, Swiper } from 'antd-mobile'
-import { BannerList } from '@/pages/Recommend/types'
+import { BannerList, SongList } from '@/pages/Recommend/types'
+import styles from './recommend.module.scss'
 
 const Recommend: FC = function () {
   const [bannerList, setBannerList] = useState<BannerList[]>()
+  const [songList, setSongList] = useState<SongList[]>()
   useEffect(() => {
-    getBannerRequest().then(data => {
-      const {
-        data: { banners }
-      } = data
-      setBannerList(banners)
+    getBannerRequest()
+      .then((data: any) => {
+        const { banners } = data
+        setBannerList(banners)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+    getHotList({
+      limit: 10
     })
+      .then((data: any) => {
+        console.log('data::', data)
+
+        const { result } = data
+        setSongList(result)
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }, [])
+
+  console.log(songList)
 
   return (
     <>
@@ -39,6 +57,20 @@ const Recommend: FC = function () {
           )
         })}
       </Swiper>
+
+      <section>
+        <h1 className={styles.title}>推荐歌单{'>>'}</h1>
+        <div className={styles.songListWrapper}>
+          {songList?.map(value => {
+            return (
+              <div className={styles.songList} key={value.id}>
+                <Image src={value.picUrl} style={{ width: 105, height: 105 }} />
+                <p>{value.name}</p>
+              </div>
+            )
+          })}
+        </div>
+      </section>
     </>
   )
 }

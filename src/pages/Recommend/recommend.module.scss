@@ -1,0 +1,33 @@
+.title {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  color: rgba(80, 80, 80, 1);
+  margin-left: 8px;
+}
+
+.songListWrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+  justify-content: flex-start;
+  margin-left: 8px;
+  color: rgba(80, 80, 80, 1);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.songList {
+  margin-right: 8px;
+  width: 105px;
+
+  p {
+    color: inherit;
+    text-align: left;
+    line-height: 150%;
+    @include ellipsis;
+  }
+}
