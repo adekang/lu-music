@@ -1,5 +1,5 @@
 import service from './request'
-import { BannerList, SongList } from '@/pages/Recommend/types'
+import { BannerList, Response, SongList } from '@/pages/Recommend/types'
 
 // export const getBannerRequest = () => service.get<{ banners: BannerList[] }>('/banner')
 

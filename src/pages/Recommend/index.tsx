@@ -9,7 +9,7 @@ const Recommend: FC = function () {
   const [songList, setSongList] = useState<SongList[]>()
   useEffect(() => {
     getBannerRequest()
-      .then((data: any) => {
+      .then(data => {
         const { banners } = data
         setBannerList(banners)
       })
