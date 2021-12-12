@@ -64,6 +64,7 @@ function handleError(instance, createConfig) {
   instance.interceptors.response.use(
     response => {
       // http status 200
+      console.log(response)
       const { data, config } = response || {}
       // const { needDetail, needHttpResponse } = config || {}
       const responseData = data || {}
