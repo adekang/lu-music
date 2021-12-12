@@ -31,3 +31,35 @@
     @include ellipsis;
   }
 }
+
+.tuneListTitle {
+  margin: 16px 8px;
+
+}
+
+.tuneList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 8px;
+  border-top: 1px solid #cccccc;
+
+  .tuneListLeft {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+
+    > p {
+      padding-left: 16px;
+      font-size: 16px;
+      line-height: 150%;
+      text-align: left;
+      color: rgba(80, 80, 80, 1);
+    }
+
+    > .img {
+      width: 45px;
+      height: 45px;
+    }
+  }
+}

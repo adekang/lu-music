@@ -23,3 +23,9 @@ export const getHotList = (data: { limit: number }) => {
     data
   })
 }
+
+export const getNewSong = () => {
+  return service({
+    url: '/personalized/newsong'
+  })
+}
