@@ -4,7 +4,11 @@ import { Image, Swiper } from 'antd-mobile'
 import { BannerList, SongList } from '@/pages/Recommend/types'
 import styles from './recommend.module.scss'
 
-const Recommend: FC = function () {
+interface Props {
+  name: string
+}
+
+const Recommend: FC<Props> = () => {
   const [bannerList, setBannerList] = useState<BannerList[]>()
   const [songList, setSongList] = useState<SongList[]>()
   const [newsongList, setNewSongList] = useState<SongList[]>()
@@ -43,7 +47,7 @@ const Recommend: FC = function () {
 
   const getSongUrl = (id: number) => {
     setIsSongChange(false)
-    getSingSongDetail({ id }).then((data: { data: never[] }) => {
+    getSingSongDetail({ id }).then((data: { data: { url: string }[] }) => {
       const { data: res } = data
       res.length && setSongUrl(res[0]?.url)
       setIsSongChange(true)
@@ -60,6 +64,7 @@ const Recommend: FC = function () {
                 <div
                   className={'swiperItem'}
                   onClick={() => {
+                    // TODO 跳转链接
                     console.log(value.typeTitle)
                   }}
                 >
