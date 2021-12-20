@@ -29,3 +29,12 @@ export const getNewSong = () => {
     url: '/personalized/newsong'
   })
 }
+
+// 获取歌曲详情
+// 必选参数 : ids: 音乐 id, 如 id=347230
+export const getSingSongDetail = (data: { id: number }) => {
+  return service({
+    url: '/song/url',
+    data
+  })
+}

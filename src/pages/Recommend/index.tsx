@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
-import { getBannerRequest, getHotList, getNewSong } from '@/services/comment'
+import React, { FC, useCallback, useEffect, useState } from 'react'
+import { getBannerRequest, getHotList, getNewSong, getSingSongDetail } from '@/services/comment'
 import { Image, Swiper } from 'antd-mobile'
 import { BannerList, SongList } from '@/pages/Recommend/types'
 import styles from './recommend.module.scss'
@@ -38,18 +38,22 @@ const Recommend: FC = function () {
       })
   }, [])
 
-  console.log(newsongList)
+  const [songUrl, setSongUrl] = useState<string>()
+  const [isSongChange, setIsSongChange] = useState(false)
+
+  const getSongUrl = (id: number) => {
+    setIsSongChange(false)
+    getSingSongDetail({ id }).then((data: { data: never[] }) => {
+      const { data: res } = data
+      res.length && setSongUrl(res[0]?.url)
+      setIsSongChange(true)
+    })
+  }
 
   return (
     <>
       <section>
-        <Swiper
-          autoplay
-          loop
-          style={{
-            '--border-radius': '8px'
-          }}
-        >
+        <Swiper autoplay loop>
           {bannerList?.map((value, index) => {
             return (
               <Swiper.Item key={index}>
@@ -93,7 +97,8 @@ const Recommend: FC = function () {
               id={String(value.id)}
               onClick={e => {
                 e.preventDefault()
-                console.log(e.target.id)
+                const id = Number(e.currentTarget.id)
+                getSongUrl(id)
               }}
             >
               <div className={styles.tuneListLeft}>
@@ -105,6 +110,13 @@ const Recommend: FC = function () {
           )
         })}
       </section>
+      {songUrl && isSongChange && (
+        <section>
+          <audio controls>
+            <source src={songUrl} type="audio/mpeg" />
+          </audio>
+        </section>
+      )}
     </>
   )
 }
