@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import React, { FC } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 
-import '@/assets/scss/index.scss'
+import "@/assets/scss/index.scss";
 
 const Index: FC = function () {
   return (
-    <div className={'indexWrapper'}>
-      <div className={'outlet'}>
+    <div className={"indexWrapper"}>
+      <div className={"outlet"}>
         <Outlet />
       </div>
-      <nav className={'navWrapper'}>
+      <nav className={"navWrapper"}>
         <ul>
           <li>
             <NavLink to="/recommend">主页</NavLink>
@@ -23,7 +23,7 @@ const Index: FC = function () {
         </ul>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

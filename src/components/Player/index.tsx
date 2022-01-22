@@ -1,20 +1,20 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState } from "react";
 
 interface Props {
-  playing: boolean
-  currentSong: string
-  currentIndex: number
-  playList: unknown[]
-  mode: string
-  sequencePlayList: string[]
-  fullScreen: boolean
+  playing: boolean;
+  currentSong: string;
+  currentIndex: number;
+  playList: unknown[];
+  mode: string;
+  sequencePlayList: string[];
+  fullScreen: boolean;
 }
 
 const Player: (props: Props) => void = props => {
   //目前播放时间
-  const [currentTime, setCurrentTime] = useState(0)
+  const [currentTime, setCurrentTime] = useState(0);
   //歌曲总时长
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(0);
   //歌曲播放进度
   // let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
 
@@ -26,7 +26,7 @@ const Player: (props: Props) => void = props => {
     mode, //播放模式
     sequencePlayList: immutableSequencePlayList, //顺序列表
     fullScreen
-  } = props
-}
+  } = props;
+};
 
-export default Player
+export default Player;

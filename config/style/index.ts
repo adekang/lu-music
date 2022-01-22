@@ -1,13 +1,13 @@
-import { CSSOptions } from 'vite'
+import { CSSOptions } from "vite";
 
 /**
  * @description css样式配置
  */
 const cssOption: CSSOptions = {
   modules: {
-    generateScopedName: '[name]_[local]_[hash:base64:5]',
-    hashPrefix: 'prefix',
-    localsConvention: 'camelCase'
+    generateScopedName: "[name]_[local]_[hash:base64:5]",
+    hashPrefix: "prefix",
+    localsConvention: "camelCase"
   },
   preprocessorOptions: {
     less: {
@@ -17,5 +17,5 @@ const cssOption: CSSOptions = {
       additionalData: '@import "./src/assets/scss/varible.scss";'
     }
   }
-}
-export default cssOption
+};
+export default cssOption;

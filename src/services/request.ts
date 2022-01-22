@@ -99,15 +99,15 @@
 // // 最后把封装好的axios导出
 // export default service
 
-import { environmentVariable } from '@/utils'
+import { environmentVariable } from "@/utils";
 
-const isPrd = environmentVariable() === 'dev'
+const isPrd = environmentVariable() === "dev";
 
-export const baseUrl = isPrd ? 'http://121.41.42.16:3000' : 'http://localhost:3000'
+export const baseUrl = isPrd ? "http://121.41.42.16:3000" : "http://localhost:3000";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import createRequest from './createRequest.js'
+import createRequest from "./createRequest.js";
 
 const service = createRequest({
   baseURL: baseUrl,
@@ -116,8 +116,8 @@ const service = createRequest({
   responseStatusMap: {},
   headers: {
     // 'X-SERVICE-GROUP': getCookie(cookieKey)
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   }
-})
+});
 
-export default service
+export default service;

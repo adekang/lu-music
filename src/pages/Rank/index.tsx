@@ -1,18 +1,18 @@
-import React, { FC, useEffect } from 'react'
-import { RootState, useAppDispatch } from '@/store'
-import { useSelector } from 'react-redux'
-import { decrement, increment, updateAge, fetchName } from '@/store/counterSlice'
+import React, { FC, useEffect } from "react";
+import { RootState, useAppDispatch } from "@/store";
+import { useSelector } from "react-redux";
+import { decrement, increment, updateAge, fetchName } from "@/store/counterSlice";
 
 const Rank: FC = function () {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const counter = useSelector((state: RootState) => state.counter)
-  const dispatch = useAppDispatch()
+  const count = useSelector((state: RootState) => state.counter.value);
+  const counter = useSelector((state: RootState) => state.counter);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchName()).then(res => {
-      console.log(res)
-    })
-  }, [])
+      console.log(res);
+    });
+  }, []);
 
   return (
     <div>
@@ -28,13 +28,13 @@ const Rank: FC = function () {
         <input
           type="number"
           onBlur={e => {
-            const newAge = e.target.value
-            dispatch(updateAge(Number(newAge)))
+            const newAge = e.target.value;
+            dispatch(updateAge(Number(newAge)));
           }}
         />
         <h1>{counter.age}</h1>
       </div>
     </div>
-  )
-}
-export default Rank
+  );
+};
+export default Rank;

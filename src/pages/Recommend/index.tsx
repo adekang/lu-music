@@ -1,58 +1,58 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
-import { getBannerRequest, getHotList, getNewSong, getSingSongDetail } from '@/services/comment'
-import { Image, Swiper } from 'antd-mobile'
-import { BannerList, SongList } from '@/pages/Recommend/types'
-import styles from './recommend.module.scss'
+import React, { FC, useCallback, useEffect, useState } from "react";
+import { getBannerRequest, getHotList, getNewSong, getSingSongDetail } from "@/services/comment";
+import { Image, Swiper } from "antd-mobile";
+import { BannerList, SongList } from "@/pages/Recommend/types";
+import styles from "./recommend.module.scss";
 
 interface Props {
-  name: string
+  name: string;
 }
 
 const Recommend: FC<Props> = () => {
-  const [bannerList, setBannerList] = useState<BannerList[]>()
-  const [songList, setSongList] = useState<SongList[]>()
-  const [newsongList, setNewSongList] = useState<SongList[]>()
+  const [bannerList, setBannerList] = useState<BannerList[]>();
+  const [songList, setSongList] = useState<SongList[]>();
+  const [newsongList, setNewSongList] = useState<SongList[]>();
 
   useEffect(() => {
     getBannerRequest()
       .then((data: { banners: BannerList[] }) => {
-        const { banners } = data
-        setBannerList(banners)
+        const { banners } = data;
+        setBannerList(banners);
       })
       .catch((e: unknown) => {
-        console.log(e)
-      })
+        console.log(e);
+      });
     getHotList({
       limit: 10
     })
       .then((data: { result: SongList[] }) => {
-        const { result } = data
-        setSongList(result)
+        const { result } = data;
+        setSongList(result);
       })
       .catch((e: unknown) => {
-        console.log(e)
-      })
+        console.log(e);
+      });
     getNewSong()
       .then((data: { result: never }) => {
-        const { result } = data
-        setNewSongList(result)
+        const { result } = data;
+        setNewSongList(result);
       })
       .catch((e: unknown) => {
-        console.log(e)
-      })
-  }, [])
+        console.log(e);
+      });
+  }, []);
 
-  const [songUrl, setSongUrl] = useState<string>()
-  const [isSongChange, setIsSongChange] = useState(false)
+  const [songUrl, setSongUrl] = useState<string>();
+  const [isSongChange, setIsSongChange] = useState(false);
 
   const getSongUrl = (id: number) => {
-    setIsSongChange(false)
+    setIsSongChange(false);
     getSingSongDetail({ id }).then((data: { data: { url: string }[] }) => {
-      const { data: res } = data
-      res.length && setSongUrl(res[0]?.url)
-      setIsSongChange(true)
-    })
-  }
+      const { data: res } = data;
+      res.length && setSongUrl(res[0]?.url);
+      setIsSongChange(true);
+    });
+  };
 
   return (
     <>
@@ -62,21 +62,21 @@ const Recommend: FC<Props> = () => {
             return (
               <Swiper.Item key={index}>
                 <div
-                  className={'swiperItem'}
+                  className={"swiperItem"}
                   onClick={() => {
                     // TODO 跳转链接
-                    console.log(value.typeTitle)
+                    console.log(value.typeTitle);
                   }}
                 >
                   <Image src={value.imageUrl} alt={value.typeTitle} />
                 </div>
               </Swiper.Item>
-            )
+            );
           })}
         </Swiper>
       </section>
       <section>
-        <h1 className={styles.title}>推荐歌单{'>>'}</h1>
+        <h1 className={styles.title}>推荐歌单{">>"}</h1>
         <div className={styles.songListWrapper}>
           {songList?.map(value => {
             return (
@@ -88,7 +88,7 @@ const Recommend: FC<Props> = () => {
                 />
                 <p>{value.name}</p>
               </div>
-            )
+            );
           })}
         </div>
       </section>
@@ -101,9 +101,9 @@ const Recommend: FC<Props> = () => {
               key={value.id}
               id={String(value.id)}
               onClick={e => {
-                e.preventDefault()
-                const id = Number(e.currentTarget.id)
-                getSongUrl(id)
+                e.preventDefault();
+                const id = Number(e.currentTarget.id);
+                getSongUrl(id);
               }}
             >
               <div className={styles.tuneListLeft}>
@@ -112,7 +112,7 @@ const Recommend: FC<Props> = () => {
               </div>
               <div className={styles.tuneListRight}>---</div>
             </div>
-          )
+          );
         })}
       </section>
       {songUrl && isSongChange && (
@@ -123,6 +123,6 @@ const Recommend: FC<Props> = () => {
         </section>
       )}
     </>
-  )
-}
-export default Recommend
+  );
+};
+export default Recommend;

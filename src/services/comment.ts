@@ -1,5 +1,5 @@
-import service from './request'
-import { BannerList, Response, SongList } from '@/pages/Recommend/types'
+import service from "./request";
+import { BannerList, Response, SongList } from "@/pages/Recommend/types";
 
 // export const getBannerRequest = () => service.get<{ banners: BannerList[] }>('/banner')
 
@@ -13,28 +13,28 @@ import { BannerList, Response, SongList } from '@/pages/Recommend/types'
 
 export const getBannerRequest = () => {
   return service({
-    url: '/banner'
-  })
-}
+    url: "/banner"
+  });
+};
 
 export const getHotList = (data: { limit: number }) => {
   return service({
-    url: '/personalized',
+    url: "/personalized",
     data
-  })
-}
+  });
+};
 
 export const getNewSong = () => {
   return service({
-    url: '/personalized/newsong'
-  })
-}
+    url: "/personalized/newsong"
+  });
+};
 
 // 获取歌曲详情
 // 必选参数 : ids: 音乐 id, 如 id=347230
 export const getSingSongDetail = (data: { id: number }) => {
   return service({
-    url: '/song/url',
+    url: "/song/url",
     data
-  })
-}
+  });
+};
