@@ -12,7 +12,7 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.6.2",
+    "@reduxjs/toolkit": "^1.7.1",
     "@types/classnames": "^2.3.1",
     "antd-mobile": "^5.0.0-rc.2",
     "axios": "^0.24.0",

@@ -16,7 +16,7 @@ const Player: (props: Props) => void = props => {
   //歌曲总时长
   const [duration, setDuration] = useState(0)
   //歌曲播放进度
-  let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
+  // let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration
 
   const {
     playing,

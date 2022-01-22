@@ -1,6 +1,7 @@
 module.exports = {
   plugins: [
     require('autoprefixer'),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('postcss-px-to-viewport-8-plugin')({
       unitToConvert: 'px', // 要转化的单位
       viewportWidth: 375, // UI设计稿的宽度

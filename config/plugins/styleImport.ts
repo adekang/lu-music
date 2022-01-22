@@ -3,7 +3,6 @@
 /**
  * @note antd我并未安装，如果安装了ant，可以将下面的注释去掉
  */
-// @ts-ignore
 import styleImport from 'vite-plugin-style-import'
 
 export default function configStyleImport() {
