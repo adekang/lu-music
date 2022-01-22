@@ -6,8 +6,6 @@ import { decrement, increment, updateAge, fetchName } from '@/store/counterSlice
 const Rank: FC = function () {
   const count = useSelector((state: RootState) => state.counter.value)
   const counter = useSelector((state: RootState) => state.counter)
-  console.log(counter)
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
