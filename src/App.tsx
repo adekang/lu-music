@@ -1,35 +1,63 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, lazy } from "react";
 import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
 import styles from "./app.module.scss";
-import { environmentVariable } from "./utils";
 import Index from "@/pages/index";
 import NotFound from "@/pages/NotFound";
 import Singers from "@/pages/Singers";
 import Rank from "@/pages/Rank";
 import Recommend from "@/pages/Recommend";
+import Album from "@/pages/Album";
 
 const App: FC = function () {
-  useEffect(() => {
-    console.log(`environmentVariable()`, environmentVariable());
-  }, []);
-
-  const routes = [
-    { path: "/singers", element: <Singers /> },
-    { path: "/rank", element: <Rank /> },
-    { path: "/recommend", element: <Recommend /> }
-  ];
+  const element = useRoutes([
+    {
+      path: "/",
+      element: <Index />,
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/recommend" />
+        },
+        {
+          path: "rank",
+          element: <Rank />
+        },
+        {
+          path: "singers",
+          element: <Singers />
+        },
+        {
+          path: "recommend",
+          element: <Recommend />,
+          children: [
+            {
+              path: ":id",
+              element: <Album />
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: "*",
+      element: <NotFound />
+    }
+  ]);
 
   return (
     <div className={styles.AppWrapper}>
-      <Routes>
-        <Route path="/" element={<Index />}>
-          {routes.map((value, index) => (
-            <Route key={index} path={value.path} element={value.element} />
-          ))}
-          <Route path="/" element={<Navigate to="/recommend" />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      {/*<Routes>*/}
+      {/*  <Route path="/" element={<Index />}>*/}
+      {/*    <Route path="rank" element={<Rank />} />*/}
+      {/*    <Route path="singers" element={<Singers />} />*/}
+      {/*    <Route path="recommend" element={<Recommend />}>*/}
+      {/*      <Route path=":id" element={<Album />} />*/}
+      {/*    </Route>*/}
+      {/*    <Route path="/" element={<Navigate to="/recommend" />} />*/}
+      {/*    <Route path="*" element={<NotFound />} />*/}
+      {/*  </Route>*/}
+      {/*</Routes>*/}
+      {element}
     </div>
   );
 };

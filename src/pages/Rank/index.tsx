@@ -2,17 +2,21 @@ import React, { FC, useEffect } from "react";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import { decrement, increment, updateAge, fetchName } from "@/store/counterSlice";
-import { getResultSongsListRequest } from '@/services/comment'
+import { getResultSongsListRequest } from "@/services/comment";
 
 const Rank: FC = function () {
   const count = useSelector((state: RootState) => state.counter.value);
   const counter = useSelector((state: RootState) => state.counter);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  const getSongs = () => {
     dispatch(fetchName()).then(res => {
       console.log(res);
     });
+  };
+
+  useEffect(() => {
+    getSongs();
   }, []);
 
   return (
@@ -26,6 +30,7 @@ const Rank: FC = function () {
           +
         </button>
 
+        {counter.loading ? <h1>加载中</h1> : <h1>加载完成</h1>}
         <input
           type="number"
           onBlur={e => {

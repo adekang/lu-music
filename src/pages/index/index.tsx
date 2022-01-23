@@ -1,14 +1,12 @@
 import React, { FC } from "react";
-import { NavLink, Outlet } from "react-router-dom";
-
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "@/assets/scss/index.scss";
 
 const Index: FC = function () {
+  const location = useLocation();
+  console.log(location);
   return (
     <div className={"indexWrapper"}>
-      <div className={"outlet"}>
-        <Outlet />
-      </div>
       <nav className={"navWrapper"}>
         <ul>
           <li>
@@ -22,6 +20,9 @@ const Index: FC = function () {
           </li>
         </ul>
       </nav>
+      <div className={"outlet"}>
+        <Outlet />
+      </div>
     </div>
   );
 };
