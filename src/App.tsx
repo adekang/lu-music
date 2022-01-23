@@ -28,15 +28,13 @@ const App: FC = function () {
         },
         {
           path: "recommend",
-          element: <Recommend />,
-          children: [
-            {
-              path: ":id",
-              element: <Album />
-            }
-          ]
+          element: <Recommend />
         }
       ]
+    },
+    {
+      path: "recommend/:id",
+      element: <Album />
     },
     {
       path: "*",
