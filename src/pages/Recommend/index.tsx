@@ -20,6 +20,8 @@ const Recommend: FC<Props> = props => {
     navigate(`./${id}`);
   };
 
+  console.log("渲染了");
+
   useEffect(() => {
     getBannerRequest()
       .then((data: { banners: BannerList[] }) => {
@@ -84,7 +86,7 @@ const Recommend: FC<Props> = props => {
           </Swiper>
         </section>
         <section>
-          <h1 className={styles.title}>推荐歌单{">>"}</h1>
+          <h1 className={styles.title}>推荐歌单</h1>
           <div className={styles.songListWrapper}>
             {songList?.map(value => {
               return (

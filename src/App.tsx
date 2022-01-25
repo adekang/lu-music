@@ -1,7 +1,7 @@
 import React, { FC, useEffect, lazy } from "react";
 import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
 import styles from "./app.module.scss";
-import Index from "@/pages/index";
+import Layout from "@/pages/index";
 import NotFound from "@/pages/NotFound";
 import Singers from "@/pages/Singers";
 import Rank from "@/pages/Rank";
@@ -12,7 +12,7 @@ const App: FC = function () {
   const element = useRoutes([
     {
       path: "/",
-      element: <Index />,
+      element: <Layout />,
       children: [
         {
           index: true,

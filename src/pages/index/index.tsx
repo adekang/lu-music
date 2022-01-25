@@ -3,8 +3,6 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "@/assets/scss/index.scss";
 
 const Index: FC = function () {
-  const location = useLocation();
-  console.log(location);
   return (
     <div className={"indexWrapper"}>
       <nav className={"navWrapper"}>

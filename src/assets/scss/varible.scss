@@ -2,14 +2,18 @@ $bg: #f0f0f0;
 $borderColor: #f0f0f0;
 $theme-color: #d44439;
 $theme-color-shadow: rgba (212, 68, 57, 0.5);
+
 $font-color-light: #f1f1f1;
+$font-color-deep: #18191C;
 $font-color-desc: #2e3030;
 $font-color-desc-v2: #bba8a8; // 略淡
+
 $font-size-ss: 10px;
-$font-size-s: 12px;
+$font-size-s: 13px;
 $font-size-m: 14px;
 $font-size-l: 16px;
 $font-size-ll: 18px;
+
 $border-color: #e4e4e4;
 $background-color: #f2f3f4;
 $background-color-shadow: rgba (0, 0, 0, 0.3);
@@ -22,7 +26,7 @@ $highlight-background-color: #fff;
   justify-content: $jc;
 }
 
-@mixin style($size, $color, $bold: normal) {
+@mixin fontStyle($size, $color, $bold: normal) {
   font-size: $size;
   color: $color;
   font-weight: $bold;
@@ -38,4 +42,10 @@ $highlight-background-color: #fff;
   overflow: hidden;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+@mixin fontNormal($fw) {
+  font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif !important;
+  font-weight: $fw;
+  color: $font-color-deep;
 }

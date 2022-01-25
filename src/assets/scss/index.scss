@@ -1,3 +1,5 @@
+@import "demo";
+
 .indexWrapper {
   height: 100vh;
   display: flex;
@@ -6,7 +8,7 @@
 
 .navWrapper {
   padding: 8px 16px;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid $border-color;
 
   ul {
     display: flex;
@@ -18,11 +20,11 @@
       a {
         padding: 8px 16px;
         display: block;
-        color: #000;
+        @include fontStyle($font-size-m, $font-color-deep, 700)
       }
 
       .active {
-        color: #1677ff;
+        color: $theme-color;
       }
     }
   }

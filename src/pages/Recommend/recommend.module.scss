@@ -3,7 +3,8 @@
   height: 40px;
   line-height: 40px;
   font-weight: 700;
-  color: rgba(80, 80, 80, 1);
+  font-size: $font-size-m;
+  color: $font-color-deep;
   margin-left: 8px;
 }
 
@@ -34,6 +35,9 @@
 
 .tuneListTitle {
   margin: 16px 8px;
+  font-size: $font-size-m;
+  @include fontNormal(700)
+
 }
 
 .tuneList {
