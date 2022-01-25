@@ -118,7 +118,6 @@ const Recommend: FC<Props> = props => {
                 }}
               >
                 <div className={styles.tuneListLeft}>
-                  <Image lazy src={`${value.picUrl}?param=45y45`} className={styles.img} />
                   <p>{value.name}</p>
                 </div>
                 <div className={styles.tuneListRight}>---</div>
