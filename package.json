@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.7.1",
     "@types/classnames": "^2.3.1",
     "antd-mobile": "^5.0.0-rc.2",
+    "antd-mobile-icons": "^0.2.2",
     "axios": "^0.24.0",
     "classnames": "^2.3.1",
     "js-cookie": "^3.0.1",

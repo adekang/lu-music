@@ -104,7 +104,8 @@ const Recommend: FC<Props> = props => {
         </section>
         <section>
           <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-          {newsongList?.map(value => {
+          {newsongList?.map((value, index) => {
+            console.log("value::", value);
             return (
               <div
                 className={styles.tuneList}
@@ -117,10 +118,11 @@ const Recommend: FC<Props> = props => {
                   goToId(id);
                 }}
               >
-                <div className={styles.tuneListLeft}>
-                  <p>{value.name}</p>
-                </div>
-                <div className={styles.tuneListRight}>---</div>
+                <p className={styles.tuneListLeft}>
+                  <span>{index + 1}</span>
+                  <span>{value.name}</span>
+                </p>
+                <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
               </div>
             );
           })}

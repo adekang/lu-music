@@ -6,9 +6,21 @@
   flex-direction: column;
 }
 
+.header {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  background-color: $theme-color;
+  color: #ffffff;
+
+  h1 {
+    font-size: $font-size-l;
+  }
+}
+
 .navWrapper {
   padding: 8px 16px;
-  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
 
   ul {
     display: flex;

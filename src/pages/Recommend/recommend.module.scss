@@ -44,8 +44,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
   margin: 0 10px;
+  padding: 16px 0;
   position: relative;
 
   &::after {
@@ -59,20 +59,21 @@
   }
 
   .tuneListLeft {
-    display: flex;
+    width: 70%;
     align-items: center;
-    padding: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-    > p {
-      font-size: 16px;
-      line-height: 150%;
-      text-align: left;
-      color: rgba(80, 80, 80, 1);
-    }
+    > span {
+      font-size: $font-size-m;
+      color: #000000;
 
-    > .img {
-      width: 45px;
-      height: 45px;
+      &:first-child {
+        font-size: $font-size-s;
+        padding-right: 16px;
+        color: #999999;
+      }
     }
   }
 }
