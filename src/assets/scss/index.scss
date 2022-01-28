@@ -32,7 +32,7 @@
       a {
         padding: 8px 16px;
         display: block;
-        @include fontStyle($font-size-m, $font-color-deep, 700)
+        @include fontStyle($font-size-m, $font-color-deep, 600)
       }
 
       .active {
