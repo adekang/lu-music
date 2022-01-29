@@ -18,7 +18,7 @@ const Index: FC = function () {
       <nav className={"navWrapper"}>
         <ul>
           <li>
-            <NavLink to="/recommend">主页</NavLink>
+            <NavLink to="recommend">主页</NavLink>
           </li>
           <li>
             <NavLink to="rank">排行</NavLink>

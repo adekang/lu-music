@@ -18,3 +18,18 @@ export const environmentVariable = () => {
   }
   return parps;
 };
+
+export const debounce = function (func: any, delay: number): any {
+  let timer: number | undefined;
+  return (...args: any) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      func.apply(this, args);
+      clearTimeout(timer);
+    }, delay);
+  };
+};

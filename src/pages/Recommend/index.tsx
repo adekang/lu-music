@@ -104,8 +104,7 @@ const Recommend: FC<Props> = props => {
         </section>
         <section>
           <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-          {newsongList?.map((value, index) => {
-            console.log("value::", value);
+          {newsongList?.map((value: any, index) => {
             return (
               <div
                 className={styles.tuneList}
