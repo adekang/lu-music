@@ -132,7 +132,7 @@ const Scroll = forwardRef<any, Props>((props, ref) => {
 
   return (
     <div className={styles.ScrollContainer} ref={scrollContainerRef}>
-      <div>{props.children}</div>
+      {props.children}
     </div>
   );
 });

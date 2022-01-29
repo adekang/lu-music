@@ -32,6 +32,7 @@ const ScrollV2: React.FC<ScrollProps> = ({ wrapHeight, prop, onPullup, onPulldow
   const initBScroll = () => {
     setscrollObj(
       new BScroll(wrapRef.current as HTMLDivElement, {
+
         probetype: 3,
         //  可以使用原生的点击
         click: true,

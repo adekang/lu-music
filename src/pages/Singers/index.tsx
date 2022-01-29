@@ -24,13 +24,15 @@ const Singers: FC = function () {
     <>
       <div className={styles.Container}>
         <Scroll bounceTop={true} pullUp={handlePullUp} pullDown={handlePullDown}>
-          {dataA?.map(value => {
-            return (
-              <h1 className={styles.H1} key={value.id}>
-                {value.name}
-              </h1>
-            );
-          })}
+          <div>
+            {dataA?.map(value => {
+              return (
+                <h1 className={styles.H1} key={value.id}>
+                  {value.name}
+                </h1>
+              );
+            })}
+          </div>
         </Scroll>
       </div>
     </>

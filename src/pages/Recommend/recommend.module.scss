@@ -13,16 +13,18 @@
   flex-wrap: nowrap;
   overflow: auto;
   justify-content: flex-start;
-  margin-left: 8px;
   color: rgba(80, 80, 80, 1);
 
   &::-webkit-scrollbar {
     display: none;
   }
+
+  li {
+    margin-right: 8px;
+  }
 }
 
 .songList {
-  margin-right: 8px;
   width: 105px;
 
   p {

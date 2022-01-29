@@ -1,10 +1,11 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { getBannerRequest, getHotList, getNewSong, getSingSongDetail } from "@/services/comment";
 import { Image, Swiper } from "antd-mobile";
 import { BannerList, SongList } from "@/pages/Recommend/types";
 import styles from "./recommend.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
+import ScrollV2 from "@/components/Scroll/ScrollV2";
 
 interface Props {
   name?: string;
@@ -62,6 +63,18 @@ const Recommend: FC<Props> = props => {
     });
   };
 
+  const categoryRef = useRef<any>();
+
+  useEffect(() => {
+    const Dom = categoryRef.current;
+    const tagElems = Dom.querySelectorAll("li");
+    let totalWidth = 0;
+    tagElems.forEach((ele: any) => {
+      totalWidth += ele.offsetWidth + 8;
+    });
+    Dom.style.width = `${totalWidth - 8}px`;
+  }, [songList]);
+
   return (
     <>
       <div
@@ -72,74 +85,78 @@ const Recommend: FC<Props> = props => {
         }}
       >
         <Scroll bounceTop={true}>
-          <section>
-            <Swiper
-              style={{
-                height: "140px"
-              }}
-              autoplay
-              loop
-            >
-              {bannerList?.map((value, index) => {
-                return (
-                  <Swiper.Item key={index}>
+          <div>
+            <section>
+              <Swiper
+                style={{
+                  height: "140px"
+                }}
+                autoplay
+                loop
+              >
+                {bannerList?.map((value, index) => {
+                  return (
+                    <Swiper.Item key={index}>
+                      <div
+                        className={"swiperItem"}
+                        onClick={() => {
+                          // TODO 跳转链接
+                          console.log(value.typeTitle);
+                        }}
+                      >
+                        <Image src={value.imageUrl} alt={value.typeTitle} />
+                      </div>
+                    </Swiper.Item>
+                  );
+                })}
+              </Swiper>
+            </section>
+            <section>
+              <h1 className={styles.title}>推荐歌单</h1>
+              <Scroll direction={"horizontal"}>
+                <ul ref={categoryRef} className={styles.songListWrapper}>
+                  {songList.length &&
+                    songList?.map(value => {
+                      return (
+                        <li className={styles.songList} key={value.id}>
+                          <Image
+                            lazy
+                            src={`${value.picUrl}?param=150y150`}
+                            style={{ width: 105, height: 105 }}
+                          />
+                          <p>{value.name}</p>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </Scroll>
+            </section>
+            <section>
+              <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
+              {newsongList.length &&
+                newsongList?.map((value: any, index) => {
+                  return (
                     <div
-                      className={"swiperItem"}
-                      onClick={() => {
-                        // TODO 跳转链接
-                        console.log(value.typeTitle);
+                      className={styles.tuneList}
+                      key={value.id}
+                      id={String(value.id)}
+                      onClick={e => {
+                        e.preventDefault();
+                        const id = Number(e.currentTarget.id);
+                        getSongUrl(id);
+                        goToId(id);
                       }}
                     >
-                      <Image src={value.imageUrl} alt={value.typeTitle} />
-                    </div>
-                  </Swiper.Item>
-                );
-              })}
-            </Swiper>
-          </section>
-          <section>
-            <h1 className={styles.title}>推荐歌单</h1>
-            <div className={styles.songListWrapper}>
-              {songList.length &&
-                songList?.map(value => {
-                  return (
-                    <div className={styles.songList} key={value.id}>
-                      <Image
-                        lazy
-                        src={`${value.picUrl}?param=150y150`}
-                        style={{ width: 105, height: 105 }}
-                      />
-                      <p>{value.name}</p>
+                      <p className={styles.tuneListLeft}>
+                        <span>{index + 1}</span>
+                        <span>{value.name}</span>
+                      </p>
+                      <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
                     </div>
                   );
                 })}
-            </div>
-          </section>
-          <section>
-            <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-            {newsongList.length &&
-              newsongList?.map((value: any, index) => {
-                return (
-                  <div
-                    className={styles.tuneList}
-                    key={value.id}
-                    id={String(value.id)}
-                    onClick={e => {
-                      e.preventDefault();
-                      const id = Number(e.currentTarget.id);
-                      getSongUrl(id);
-                      goToId(id);
-                    }}
-                  >
-                    <p className={styles.tuneListLeft}>
-                      <span>{index + 1}</span>
-                      <span>{value.name}</span>
-                    </p>
-                    <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
-                  </div>
-                );
-              })}
-          </section>
+            </section>
+          </div>
         </Scroll>
       </div>
       {songUrl && isSongChange && (
