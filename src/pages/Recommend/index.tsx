@@ -4,23 +4,22 @@ import { Image, Swiper } from "antd-mobile";
 import { BannerList, SongList } from "@/pages/Recommend/types";
 import styles from "./recommend.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
+import Scroll from "@/components/Scroll";
 
 interface Props {
   name?: string;
 }
 
 const Recommend: FC<Props> = props => {
-  const [bannerList, setBannerList] = useState<BannerList[]>();
-  const [songList, setSongList] = useState<SongList[]>();
-  const [newsongList, setNewSongList] = useState<SongList[]>();
+  const [bannerList, setBannerList] = useState<BannerList[]>([]);
+  const [songList, setSongList] = useState<SongList[]>([]);
+  const [newsongList, setNewSongList] = useState<SongList[]>([]);
 
   const navigate = useNavigate();
 
   const goToId = (id: number) => {
     navigate(`./${id}`);
   };
-
-  console.log("渲染了");
 
   useEffect(() => {
     getBannerRequest()
@@ -65,75 +64,91 @@ const Recommend: FC<Props> = props => {
 
   return (
     <>
-      <div>
-        <section>
-          <Swiper autoplay loop>
-            {bannerList?.map((value, index) => {
-              return (
-                <Swiper.Item key={index}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          overflow: "hidden"
+        }}
+      >
+        <Scroll bounceTop={true}>
+          <section>
+            <Swiper
+              style={{
+                height: "140px"
+              }}
+              autoplay
+              loop
+            >
+              {bannerList?.map((value, index) => {
+                return (
+                  <Swiper.Item key={index}>
+                    <div
+                      className={"swiperItem"}
+                      onClick={() => {
+                        // TODO 跳转链接
+                        console.log(value.typeTitle);
+                      }}
+                    >
+                      <Image src={value.imageUrl} alt={value.typeTitle} />
+                    </div>
+                  </Swiper.Item>
+                );
+              })}
+            </Swiper>
+          </section>
+          <section>
+            <h1 className={styles.title}>推荐歌单</h1>
+            <div className={styles.songListWrapper}>
+              {songList.length &&
+                songList?.map(value => {
+                  return (
+                    <div className={styles.songList} key={value.id}>
+                      <Image
+                        lazy
+                        src={`${value.picUrl}?param=150y150`}
+                        style={{ width: 105, height: 105 }}
+                      />
+                      <p>{value.name}</p>
+                    </div>
+                  );
+                })}
+            </div>
+          </section>
+          <section>
+            <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
+            {newsongList.length &&
+              newsongList?.map((value: any, index) => {
+                return (
                   <div
-                    className={"swiperItem"}
-                    onClick={() => {
-                      // TODO 跳转链接
-                      console.log(value.typeTitle);
+                    className={styles.tuneList}
+                    key={value.id}
+                    id={String(value.id)}
+                    onClick={e => {
+                      e.preventDefault();
+                      const id = Number(e.currentTarget.id);
+                      getSongUrl(id);
+                      goToId(id);
                     }}
                   >
-                    <Image src={value.imageUrl} alt={value.typeTitle} />
+                    <p className={styles.tuneListLeft}>
+                      <span>{index + 1}</span>
+                      <span>{value.name}</span>
+                    </p>
+                    <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
                   </div>
-                </Swiper.Item>
-              );
-            })}
-          </Swiper>
-        </section>
-        <section>
-          <h1 className={styles.title}>推荐歌单</h1>
-          <div className={styles.songListWrapper}>
-            {songList?.map(value => {
-              return (
-                <div className={styles.songList} key={value.id}>
-                  <Image
-                    lazy
-                    src={`${value.picUrl}?param=150y150`}
-                    style={{ width: 105, height: 105 }}
-                  />
-                  <p>{value.name}</p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-        <section>
-          <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-          {newsongList?.map((value: any, index) => {
-            return (
-              <div
-                className={styles.tuneList}
-                key={value.id}
-                id={String(value.id)}
-                onClick={e => {
-                  e.preventDefault();
-                  const id = Number(e.currentTarget.id);
-                  getSongUrl(id);
-                  goToId(id);
-                }}
-              >
-                <p className={styles.tuneListLeft}>
-                  <span>{index + 1}</span>
-                  <span>{value.name}</span>
-                </p>
-                <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
-              </div>
-            );
-          })}
-        </section>
-        {songUrl && isSongChange && (
-          <section>
-            <audio controls>
-              <source src={songUrl} type="audio/mpeg" />
-            </audio>
+                );
+              })}
           </section>
-        )}
+        </Scroll>
       </div>
+      {songUrl && isSongChange && (
+        <section>
+          <audio controls>
+            <source src={songUrl} type="audio/mpeg" />
+          </audio>
+        </section>
+      )}
     </>
   );
 };

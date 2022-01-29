@@ -59,12 +59,6 @@ const Scroll = forwardRef<any, Props>((props, ref) => {
         top: bounceTop,
         bottom: bounceBottom
       },
-      //  鼠标滚轮设置
-      mouseWheel: {
-        speed: 20,
-        invert: false,
-        easeTime: 300
-      },
       //  过度动画
       useTransition: true
     });
