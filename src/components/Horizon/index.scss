@@ -1,0 +1,28 @@
+.ListItem {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  overflow: hidden;
+
+  > span {
+    flex: 0 0 auto;
+    font-size: $font-size-m;
+    padding: 5px 8px;
+    border-radius: 10px;
+
+    &:first-of-type {
+      display: block;
+      flex: 0 0 auto;
+      padding: 5px 0;
+      margin-right: 5px;
+      color: grey;
+      vertical-align: middle;
+    }
+
+    &.selected {
+      color: $theme-color;
+      border: 1px solid $theme-color;
+      opacity: 0.8;
+    }
+  }
+}

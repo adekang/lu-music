@@ -42,11 +42,11 @@ const Scroll = forwardRef<any, Props>((props, ref) => {
   } = props;
 
   const pullUpDebounce = useMemo(() => {
-    return debounce(pullUp, 1000);
+    return debounce(pullUp, 300);
   }, [pullUp]);
 
   const pullDownDebounce = useMemo(() => {
-    return debounce(pullDown, 3000);
+    return debounce(pullDown, 300);
   }, [pullDown]);
 
   useEffect(() => {
