@@ -4,10 +4,20 @@ import { getHotSingerListRequest } from "@/services/comment";
 import styles from "./singers.module.scss";
 import { alphaTypes, categoryMap, categoryTypes } from "@/utils";
 import Horizon from "@/components/Horizon";
+import { Image } from "antd-mobile";
 
 const Singers: FC = function () {
-  useEffect(() => {}, []);
+  const [category, setCategory] = useState("");
+  const [alpha, setAlpha] = useState("");
+  const [demo, setDemo] = useState<any>();
 
+  const handleUpdateCategory = (val: string) => {
+    setCategory(val);
+  };
+
+  const handleUpdateAlpha = (val: string) => {
+    setAlpha(val);
+  };
   const handlePullUp = () => {
     console.log("handlePullUp::");
   };
@@ -16,15 +26,12 @@ const Singers: FC = function () {
     console.log("handlePullDown::");
   };
 
-  const [category, setCategory] = useState("");
-  const [alpha, setAlpha] = useState("");
-  const handleUpdateCategory = (val: string) => {
-    setCategory(val);
-  };
-
-  const handleUpdateAlpha = (val: string) => {
-    setAlpha(val);
-  };
+  useEffect(() => {
+    (async function () {
+      const res = await getHotSingerListRequest(10);
+      res.code === 200 && setDemo(res.artists);
+    })();
+  }, []);
 
   return (
     <div>
@@ -35,7 +42,6 @@ const Singers: FC = function () {
           oldVal={category}
           handleClick={handleUpdateCategory}
         />
-
         <Horizon
           list={alphaTypes}
           oldVal={alpha}
@@ -45,7 +51,19 @@ const Singers: FC = function () {
       </div>
       <div className={styles.Container}>
         <Scroll bounceTop={true} pullUp={handlePullUp} pullDown={handlePullDown}>
-          <div></div>
+          <div className={styles.ListWrapper}>
+            {demo &&
+              demo.map((item: any, index: number) => {
+                return (
+                  <div key={item.accountId + "" + index} className={styles.ListItem}>
+                    <div className={styles.ImgWrapper}>
+                      <Image src={`${item.picUrl}?param=300x300`} width="100%" height="100%" lazy />
+                    </div>
+                    <span>{item.name}</span>
+                  </div>
+                );
+              })}
+          </div>
         </Scroll>
       </div>
     </div>
