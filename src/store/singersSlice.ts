@@ -1,8 +1,4 @@
-import {
-  getBannerRequest,
-  getHotSingerListRequest,
-  getSingerListRequest
-} from "@/services/comment";
+import { getHotSingerListRequest, getSingerListRequest } from "@/services/comment";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface SingersState {

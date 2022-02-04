@@ -1,10 +1,10 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Scroll from "@/components/Scroll";
 import styles from "./singers.module.scss";
-import { alphaTypes, categoryMap, categoryTypes } from "@/utils";
+import { alphaTypes, categoryTypes } from "@/utils";
 import Horizon from "@/components/Horizon";
 import Loading from "@/components/Loading";
-import { Image, Toast } from "antd-mobile";
+import { Image } from "antd-mobile";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import {
@@ -31,13 +31,8 @@ const Singers: FC = function () {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (category || alpha) {
-      console.log("运行了");
-      dispatch(getSingerList(category, alpha)).then((res: any) => {
-        console.log("res::", res);
-      });
-      dispatch(changeEnterLoading(true));
-    }
+    dispatch(changeEnterLoading(true));
+    dispatch(getSingerList(category, alpha));
   }, [alpha, category]);
 
   useEffect(() => {
