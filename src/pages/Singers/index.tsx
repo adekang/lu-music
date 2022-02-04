@@ -1,15 +1,44 @@
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 import Scroll from "@/components/Scroll";
-import { getHotSingerListRequest } from "@/services/comment";
 import styles from "./singers.module.scss";
 import { alphaTypes, categoryMap, categoryTypes } from "@/utils";
 import Horizon from "@/components/Horizon";
-import { Image } from "antd-mobile";
+import { Image, Loading, Space, SpinLoading } from "antd-mobile";
+import { RootState, useAppDispatch } from "@/store";
+import { useSelector } from "react-redux";
+import {
+  changeEnterLoading,
+  changePageCount,
+  getHotSingerList,
+  getSingerList,
+  refreshMoreSingerList
+} from "@/store/singersSlice";
 
 const Singers: FC = function () {
   const [category, setCategory] = useState("");
   const [alpha, setAlpha] = useState("");
-  const [demo, setDemo] = useState<any>();
+
+  const singerList = useSelector((state: RootState) => state.singers.singerList);
+  const enterLoading = useSelector((state: RootState) => state.singers.enterLoading);
+  const pageCount = useSelector((state: RootState) => state.singers.pageCount);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (category || alpha) {
+      console.log("运行了");
+      dispatch(getSingerList(category, alpha)).then((res: any) => {
+        console.log("res::", res);
+      });
+      dispatch(changeEnterLoading(true));
+    }
+  }, [alpha, category]);
+
+  useEffect(() => {
+    dispatch(getHotSingerList());
+    dispatch(changeEnterLoading(true));
+    dispatch(changePageCount(0));
+  }, []);
 
   const handleUpdateCategory = (val: string) => {
     setCategory(val);
@@ -18,20 +47,17 @@ const Singers: FC = function () {
   const handleUpdateAlpha = (val: string) => {
     setAlpha(val);
   };
+
   const handlePullUp = () => {
-    console.log("handlePullUp::");
+    dispatch(changePageCount(0));
   };
 
   const handlePullDown = () => {
-    console.log("handlePullDown::");
+    if (category || alpha) {
+      dispatch(refreshMoreSingerList(category, alpha));
+      dispatch(changePageCount(pageCount + 30));
+    }
   };
-
-  useEffect(() => {
-    (async function () {
-      const res = await getHotSingerListRequest(10);
-      res.code === 200 && setDemo(res.artists);
-    })();
-  }, []);
 
   return (
     <div>
@@ -49,20 +75,31 @@ const Singers: FC = function () {
           handleClick={handleUpdateAlpha}
         />
       </div>
+      {enterLoading ? (
+        <Space direction="horizontal" wrap block style={{ "--gap": "16px" }}>
+          <SpinLoading color="primary" style={{ "--size": "48px" }} />
+        </Space>
+      ) : null}
       <div className={styles.Container}>
         <Scroll bounceTop={true} pullUp={handlePullUp} pullDown={handlePullDown}>
           <div className={styles.ListWrapper}>
-            {demo &&
-              demo.map((item: any, index: number) => {
-                return (
-                  <div key={item.accountId + "" + index} className={styles.ListItem}>
-                    <div className={styles.ImgWrapper}>
-                      <Image src={`${item.picUrl}?param=300x300`} width="100%" height="100%" lazy />
+            {singerList.length
+              ? singerList.map((item: any, index: number) => {
+                  return (
+                    <div key={item.accountId + "" + index} className={styles.ListItem}>
+                      <div className={styles.ImgWrapper}>
+                        <Image
+                          src={`${item.picUrl}?param=300x300`}
+                          width="100%"
+                          height="100%"
+                          lazy
+                        />
+                      </div>
+                      <span>{item.name}</span>
                     </div>
-                    <span>{item.name}</span>
-                  </div>
-                );
-              })}
+                  );
+                })
+              : null}
           </div>
         </Scroll>
       </div>

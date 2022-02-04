@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
 import { useDispatch } from "react-redux";
+import singersReducer from "@/store/singersSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer
+    counter: counterReducer,
+    singers: singersReducer
   }
 });
 
