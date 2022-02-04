@@ -4,14 +4,17 @@ import styles from "./singers.module.scss";
 import { alphaTypes, categoryMap, categoryTypes } from "@/utils";
 import Horizon from "@/components/Horizon";
 import Loading from "@/components/Loading";
-import { Image } from "antd-mobile";
+import { Image, Toast } from "antd-mobile";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import {
   changeEnterLoading,
   changePageCount,
+  changePullDownLoading,
+  changePullUpLoading,
   getHotSingerList,
   getSingerList,
+  refreshMoreHotSingerList,
   refreshMoreSingerList
 } from "@/store/singersSlice";
 
@@ -21,6 +24,8 @@ const Singers: FC = function () {
 
   const singerList = useSelector((state: RootState) => state.singers.singerList);
   const enterLoading = useSelector((state: RootState) => state.singers.enterLoading);
+  const pullDownLoading = useSelector((state: RootState) => state.singers.pullDownLoading);
+  const pullUpLoading = useSelector((state: RootState) => state.singers.pullUpLoading);
   const pageCount = useSelector((state: RootState) => state.singers.pageCount);
 
   const dispatch = useAppDispatch();
@@ -36,9 +41,9 @@ const Singers: FC = function () {
   }, [alpha, category]);
 
   useEffect(() => {
-    dispatch(getHotSingerList());
-    dispatch(changeEnterLoading(true));
     dispatch(changePageCount(0));
+    dispatch(changeEnterLoading(true));
+    dispatch(getHotSingerList());
   }, []);
 
   const handleUpdateCategory = (val: string) => {
@@ -49,14 +54,31 @@ const Singers: FC = function () {
     setAlpha(val);
   };
 
+  const changeHotMode = (category: string, alpha: string, hot: boolean) => {
+    if (hot) {
+      dispatch(refreshMoreHotSingerList());
+    } else {
+      dispatch(refreshMoreSingerList(category, alpha));
+    }
+  };
+
   const handlePullUp = () => {
-    dispatch(changePageCount(0));
+    dispatch(changePageCount(pageCount + 30));
+    dispatch(changePullDownLoading(true));
+    if (category === "" && alpha === "") {
+      changeHotMode(category, alpha, true);
+    } else {
+      changeHotMode(category, alpha, false);
+    }
   };
 
   const handlePullDown = () => {
-    if (category || alpha) {
-      dispatch(refreshMoreSingerList(category, alpha));
-      dispatch(changePageCount(pageCount + 30));
+    dispatch(changePageCount(0));
+    dispatch(changePullUpLoading(true));
+    if (category === "" && alpha === "") {
+      dispatch(getHotSingerList());
+    } else {
+      dispatch(getSingerList(category, alpha));
     }
   };
 
@@ -76,7 +98,6 @@ const Singers: FC = function () {
           handleClick={handleUpdateAlpha}
         />
       </div>
-      {enterLoading ? <Loading /> : null}
       <div className={styles.Container}>
         <Scroll bounceTop={true} pullUp={handlePullUp} pullDown={handlePullDown}>
           <div className={styles.ListWrapper}>
@@ -100,6 +121,7 @@ const Singers: FC = function () {
           </div>
         </Scroll>
       </div>
+      {enterLoading || pullDownLoading || pullUpLoading ? <Loading /> : null}
     </div>
   );
 };
