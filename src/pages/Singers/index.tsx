@@ -3,7 +3,8 @@ import Scroll from "@/components/Scroll";
 import styles from "./singers.module.scss";
 import { alphaTypes, categoryMap, categoryTypes } from "@/utils";
 import Horizon from "@/components/Horizon";
-import { Image, Loading, Space, SpinLoading } from "antd-mobile";
+import Loading from "@/components/Loading";
+import { Image } from "antd-mobile";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import {
@@ -75,11 +76,7 @@ const Singers: FC = function () {
           handleClick={handleUpdateAlpha}
         />
       </div>
-      {enterLoading ? (
-        <Space direction="horizontal" wrap block style={{ "--gap": "16px" }}>
-          <SpinLoading color="primary" style={{ "--size": "48px" }} />
-        </Space>
-      ) : null}
+      {enterLoading ? <Loading /> : null}
       <div className={styles.Container}>
         <Scroll bounceTop={true} pullUp={handlePullUp} pullDown={handlePullDown}>
           <div className={styles.ListWrapper}>
