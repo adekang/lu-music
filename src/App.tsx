@@ -7,6 +7,7 @@ import Singers from "@/pages/Singers";
 import Rank from "@/pages/Rank";
 import Recommend from "@/pages/Recommend";
 import Album from "@/pages/Album";
+import Singer from "@/pages/Singer";
 
 const App: FC = function () {
   const element = useRoutes([
@@ -35,6 +36,10 @@ const App: FC = function () {
     {
       path: "recommend/:id",
       element: <Album />
+    },
+    {
+      path: "singers/:id",
+      element: <Singer />
     },
     {
       path: "*",

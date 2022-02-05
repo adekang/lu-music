@@ -76,7 +76,7 @@ export const getAlbumDetailRequest = (id: number) => {
   });
 };
 
-export const getSingerInfoRequest = (id: number) => {
+export const getSingerInfoRequest = (id: string | undefined) => {
   return service({
     url: `/artists?id=${id}`
   });

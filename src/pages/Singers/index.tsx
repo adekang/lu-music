@@ -17,6 +17,7 @@ import {
   refreshMoreHotSingerList,
   refreshMoreSingerList
 } from "@/store/singersSlice";
+import { useNavigate } from "react-router-dom";
 
 const Singers: FC = function () {
   const [category, setCategory] = useState("");
@@ -29,6 +30,7 @@ const Singers: FC = function () {
   const pageCount = useSelector((state: RootState) => state.singers.pageCount);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(changeEnterLoading(true));
@@ -77,6 +79,10 @@ const Singers: FC = function () {
     }
   };
 
+  const goToId = (id: number) => {
+    navigate(`./${id}`);
+  };
+
   return (
     <div>
       <div className={styles.NavContainer}>
@@ -99,7 +105,11 @@ const Singers: FC = function () {
             {singerList.length
               ? singerList.map((item: any, index: number) => {
                   return (
-                    <div key={item.accountId + "" + index} className={styles.ListItem}>
+                    <div
+                      key={item.accountId + "" + index}
+                      onClick={() => goToId(item.id)}
+                      className={styles.ListItem}
+                    >
                       <div className={styles.ImgWrapper}>
                         <Image
                           src={`${item.picUrl}?param=300x300`}
