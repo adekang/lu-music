@@ -49,7 +49,6 @@ const Recommend: FC<Props> = props => {
       .catch((e: unknown) => {
         console.log(e);
       });
-
     return () => {
       setBannerList([]);
       setSongList([]);
