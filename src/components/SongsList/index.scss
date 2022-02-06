@@ -6,7 +6,7 @@
   .first_line {
     box-sizing: border-box;
     padding: 10px 0;
-    margin-left: 10px;
+    margin: 0 8px;
     position: relative;
     justify-content: space-between;
     border-bottom: 1px solid $border-color;
@@ -87,19 +87,18 @@
       display: flex;
       height: 100%;
       padding: 5px 0;
+      margin-right: 8px;
       flex-direction: column;
       justify-content: space-around;
       border-bottom: 1px solid $border-color;
 
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      > span {
+        @include singleEllipsis
+      }
     }
 
     > span {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      @include singleEllipsis
     }
 
     > span:first-child {

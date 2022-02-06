@@ -44,6 +44,12 @@ $highlight-background-color: #fff;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+@mixin singleEllipsis {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
 
 @mixin fontNormal($fw) {
   font-weight: $fw;
