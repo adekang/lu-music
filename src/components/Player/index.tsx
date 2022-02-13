@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import { Image } from "antd-mobile";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import "./index.scss";

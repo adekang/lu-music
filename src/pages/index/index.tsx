@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { SearchOutline, UnorderedListOutline } from "antd-mobile-icons";
 import "@/assets/scss/index.scss";
-import Player from '@/components/Player'
+import Player from "@/components/Player";
 
 const Index: FC = function () {
   return (
@@ -32,7 +32,7 @@ const Index: FC = function () {
       <div className={"outlet"}>
         <Outlet />
       </div>
-      <Player/>
+      <Player />
     </div>
   );
 };

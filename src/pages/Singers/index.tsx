@@ -23,11 +23,9 @@ const Singers: FC = function () {
   const [category, setCategory] = useState("");
   const [alpha, setAlpha] = useState("");
 
-  const singerList = useSelector((state: RootState) => state.singers.singerList);
-  const enterLoading = useSelector((state: RootState) => state.singers.enterLoading);
-  const pullDownLoading = useSelector((state: RootState) => state.singers.pullDownLoading);
-  const pullUpLoading = useSelector((state: RootState) => state.singers.pullUpLoading);
-  const pageCount = useSelector((state: RootState) => state.singers.pageCount);
+  const { singerList, enterLoading, pullDownLoading, pullUpLoading, pageCount } = useSelector(
+    (state: RootState) => state.singers
+  );
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
