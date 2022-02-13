@@ -1,0 +1,66 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.PlayerWrapper {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+
+  .imgWrapper {
+    width: 45px;
+    height: 45px;
+    margin-right: 8px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+
+      &.play {
+        animation: rotate 10s infinite;
+
+        &.pause {
+          animation-play-state: paused;
+        }
+      }
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    line-height: 20px;
+    padding-right: 4px;
+    overflow: hidden;
+
+    h2 {
+      font-size: $font-size-m;
+      font-weight: 600;
+      @include singleEllipsis
+    }
+
+    p {
+      font-size: $font-size-s;
+      color: $font-color-desc;
+      @include singleEllipsis
+    }
+  }
+
+  .control {
+    padding-left: 8px;
+  }
+}
+
+.formatSvg {
+  color: $theme-color;
+  font-size: $iconfont-size-l;
+}
