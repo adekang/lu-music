@@ -58,7 +58,7 @@ const Player: React.FC = () => {
   const handleEnd = () => {
     console.log("handleEnd");
   };
-  const updateTime = (e: { target: { currentTime: React.SetStateAction<number> } }) => {
+  const updateTime = (e: any) => {
     setCurrentTime(e.target.currentTime);
   };
   const handleError = () => {
