@@ -1,10 +1,11 @@
 import { getSingerListRequest, getSongDetailRequest } from "@/services/comment";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { playMode } from "@/utils";
+import { CurrentSong } from "@/components/Player";
 
 interface PlayerState {
   playing: boolean;
-  currentSong: object;
+  currentSong: CurrentSong;
   showPlayList: boolean;
   currentIndex: number;
   playList: unknown[];
@@ -21,14 +22,16 @@ const initialState: PlayerState = {
   mode: playMode.sequence, // 播放模式
   currentIndex: -1, // 当前歌曲在播放列表的索引位置
   showPlayList: false, // 是否展示播放列表
-  currentSong: {}
+  currentSong: {
+    id: -1
+  }
 };
 
 export const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    changeCurrentSong: (state, action: PayloadAction<any>) => {
+    changeCurrentSong: (state, action: PayloadAction<CurrentSong>) => {
       state.currentSong = action.payload;
     },
     changeFllScreen: (state, action: PayloadAction<boolean>) => {
@@ -53,18 +56,16 @@ export const getSingerList = (category: string, alpha: string) => async (dispatc
   }
 };
 
-//加载更多热门歌手
 export const getSongDetail = (id: number) => async (dispatch: any, getState: any) => {
-  const oldSingersList = getState().player;
-
+  // const oldSingersList = getState().player;
   try {
-    const res = await getSongDetailRequest(id);
-    console.log(res);
+    return await getSongDetailRequest(id);
   } catch {
     console.log("获取失败");
+    return "获取失败";
   }
 };
 
-export const { changePlaying } = playerSlice.actions;
+export const { changePlaying, changeCurrentSong } = playerSlice.actions;
 
 export default playerSlice.reducer;

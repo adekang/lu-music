@@ -6,6 +6,9 @@ import styles from "./recommend.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
 import ScrollV2 from "@/components/Scroll/ScrollV2";
+import { useAppDispatch } from "@/store";
+import { changeCurrentSong } from "@/store/playerSlice";
+import { CurrentSong } from "@/components/Player";
 
 interface Props {
   name?: string;
@@ -56,15 +59,12 @@ const Recommend: FC<Props> = props => {
     };
   }, []);
 
-  const [songUrl, setSongUrl] = useState<string>();
-  const [isSongChange, setIsSongChange] = useState(false);
+  const dispatch = useAppDispatch();
 
   const getSongUrl = (id: number) => {
-    setIsSongChange(false);
-    getSingSongDetail({ id }).then((data: { data: { url: string }[] }) => {
+    getSingSongDetail({ id }).then((data: { data: CurrentSong[] }) => {
       const { data: res } = data;
-      res.length && setSongUrl(res[0]?.url);
-      setIsSongChange(true);
+      dispatch(changeCurrentSong(res[0]));
     });
   };
 
@@ -149,7 +149,7 @@ const Recommend: FC<Props> = props => {
                         e.preventDefault();
                         const id = Number(e.currentTarget.id);
                         getSongUrl(id);
-                        goToId(id);
+                        // goToId(id);
                       }}
                     >
                       <p className={styles.tuneListLeft}>
@@ -164,13 +164,6 @@ const Recommend: FC<Props> = props => {
           </div>
         </Scroll>
       </div>
-      {songUrl && isSongChange && (
-        <section>
-          <audio controls>
-            <source src={songUrl} type="audio/mpeg" />
-          </audio>
-        </section>
-      )}
     </>
   );
 };

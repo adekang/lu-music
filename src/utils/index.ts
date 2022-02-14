@@ -233,3 +233,13 @@ export const playMode = {
   loop: 1,
   random: 2
 };
+
+// 处理歌手列表拼接歌手名字
+export const getName = (list: { name: string }[]) => {
+  let str = "";
+  list.map((item: { name: string }, index: number) => {
+    str += index === 0 ? item.name : "/" + item.name;
+    return item;
+  });
+  return str;
+};
