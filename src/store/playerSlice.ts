@@ -42,6 +42,18 @@ export const playerSlice = createSlice({
     },
     changeShowPlayList: (state, action: PayloadAction<boolean>) => {
       state.showPlayList = action.payload;
+    },
+    changeCurrentIndex: (state, action: PayloadAction<number>) => {
+      state.currentIndex = action.payload;
+    },
+    changePlayMode: (state, action: PayloadAction<number>) => {
+      state.mode = action.payload;
+    },
+    changePlayList: (state, action: PayloadAction<any>) => {
+      state.playList = action.payload;
+    },
+    changeSequencePlayList: (state, action: PayloadAction<string[]>) => {
+      state.sequencePlayList = action.payload;
     }
   }
 });
@@ -66,6 +78,6 @@ export const getSongDetail = (id: number) => async (dispatch: any, getState: any
   }
 };
 
-export const { changePlaying, changeCurrentSong } = playerSlice.actions;
+export const { changePlaying, changeCurrentSong, changeFllScreen } = playerSlice.actions;
 
 export default playerSlice.reducer;

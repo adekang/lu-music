@@ -1,11 +1,12 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
-import "./index.scss";
-import SvgIcon from "@/components/svgIcon";
-import { changePlaying, getSongDetail } from "@/store/playerSlice";
+import { changeFllScreen, changePlaying, getSongDetail } from "@/store/playerSlice";
 import { getSongUrl } from "@/services/comment";
-import { getName } from "@/utils";
+import { isEmptyObject } from "@/utils";
+import MiniPlayer from "@/components/Player/MiniPlayer";
+import "./index.scss";
+import NormalPlayer from "@/components/Player/NormalPlayer";
 
 export interface CurrentSong {
   id: number;
@@ -32,10 +33,7 @@ const Player: React.FC = () => {
     fullScreen
   } = useSelector((state: RootState) => state.player);
   const audioRef = useRef<any>();
-  const [AcurrentSong, setCurrentSing] = useState<any>({
-    name: "嚣张",
-    ar: [{ name: "1323" }]
-  });
+  const [CurrentSong, setCurrentSing] = useState<any>({});
 
   useEffect(() => {
     audioRef.current.src = getSongUrl(currentSong.id);
@@ -53,8 +51,6 @@ const Player: React.FC = () => {
     playing ? audioRef.current.play() : audioRef.current.pause();
   }, [playing]);
 
-  console.log(AcurrentSong);
-
   const handleEnd = () => {
     console.log("handleEnd");
   };
@@ -65,42 +61,36 @@ const Player: React.FC = () => {
     console.log("handleError");
   };
 
-  const ChangePlay = () => {
-    dispatch(changePlaying(!playing));
+  const clickPlaying = (e: any, state: boolean) => {
+    e.stopPropagation();
+    dispatch(changePlaying(state));
+  };
+
+  const toggleFullScreen = (state: boolean) => {
+    dispatch(changeFllScreen(state));
   };
 
   return (
     <>
       <div className="PlayerWrapper">
-        <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
-        <div className={"imgWrapper"}>
-          <img
-            className={`play ${playing ? "" : "pause"}`}
-            src={
-              "https://p2.music.126.net/dNiwNZZVX_41Pm3K33OTLg==/109951165370690519.jpg?param=150y150"
-            }
-            alt="属性"
+        {isEmptyObject(CurrentSong) ? null : (
+          <NormalPlayer
+            song={CurrentSong}
+            fullScreen={fullScreen}
+            toggleFullScreen={toggleFullScreen}
           />
-        </div>
-        <div className="text">
-          <h2 className="name">{AcurrentSong?.name || "测试"}</h2>
-          <p className="desc">{"测试测试" || getName(AcurrentSong?.ar)}</p>
-        </div>
-        <div className="control" onClick={ChangePlay}>
-          {playing ? (
-            <div>
-              <SvgIcon iconClass={"play"} fontSize="24px" className="formatSvg" />
-            </div>
-          ) : (
-            <div>
-              <SvgIcon iconClass={"pose"} fontSize="24px" className="formatSvg" />
-            </div>
-          )}
-        </div>
-        <div className="control">
-          <SvgIcon iconClass={"playlist"} fontSize="24px" className={"formatSvg"} />
-        </div>
+        )}
+        {isEmptyObject(CurrentSong) ? null : (
+          <MiniPlayer
+            song={CurrentSong}
+            toggleFullScreen={toggleFullScreen}
+            fullScreen={fullScreen}
+            playing={playing}
+            clickPlaying={clickPlaying}
+          />
+        )}
       </div>
+      <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
     </>
   );
 };
