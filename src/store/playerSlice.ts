@@ -69,11 +69,9 @@ export const getSingerList = (category: string, alpha: string) => async (dispatc
 };
 
 export const getSongDetail = (id: number) => async (dispatch: any, getState: any) => {
-  // const oldSingersList = getState().player;
   try {
     return await getSongDetailRequest(id);
   } catch {
-    console.log("获取失败");
     return "获取失败";
   }
 };

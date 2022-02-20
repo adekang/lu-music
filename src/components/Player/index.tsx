@@ -72,7 +72,7 @@ const Player: React.FC = () => {
 
   return (
     <>
-      <div className="PlayerWrapper">
+      <div>
         {isEmptyObject(CurrentSong) ? null : (
           <NormalPlayer
             song={CurrentSong}
@@ -89,8 +89,8 @@ const Player: React.FC = () => {
             clickPlaying={clickPlaying}
           />
         )}
+        <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
       </div>
-      <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
     </>
   );
 };
