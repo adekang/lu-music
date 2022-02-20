@@ -1,6 +1,4 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/store";
 import "./index.scss";
 import SvgIcon from "@/components/svgIcon";
 import { getName } from "@/utils";
@@ -42,7 +40,11 @@ const MiniPlayer: React.FC<Props> = props => {
           onClick={() => toggleFullScreen?.(true)}
         >
           <div className={"imgWrapper"}>
-            <img className={`play ${playing ? "" : "pause"}`} src={song.al.picUrl} alt="属性" />
+            <img
+              className={`play ${playing ? "" : "pause"}`}
+              src={song.al.picUrl + "?param=100x100"}
+              alt="属性"
+            />
           </div>
           <div className="text">
             <h2 className="name">{song?.name || "测试"}</h2>

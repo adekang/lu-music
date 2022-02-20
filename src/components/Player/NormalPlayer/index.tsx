@@ -33,7 +33,6 @@ const NormalPlayer: React.FC<Props> = props => {
       scale
     };
   };
-
   const transform = prefixStyle("transform");
 
   // 启用帧动画
@@ -42,13 +41,13 @@ const NormalPlayer: React.FC<Props> = props => {
     const { x, y, scale } = _getPosAndScale(); // 获取 miniPlayer 图片中心相对 normalPlayer 唱片中心的偏移
     const animation = {
       0: {
-        transform: `translate3d (${x} px,${y} px,0) scale (${scale})`
+        transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
       },
       60: {
-        transform: `translate3d (0, 0, 0) scale (1.1)`
+        transform: `translate3d(0, 0, 0) scale(1.1)`
       },
       100: {
-        transform: `translate3d (0, 0, 0) scale (1)`
+        transform: `translate3d(0, 0, 0) scale(1)`
       }
     };
     animations.registerAnimation({
@@ -67,15 +66,13 @@ const NormalPlayer: React.FC<Props> = props => {
     animations.unregisterAnimation("move");
     cdWrapperDom.style.animation = "";
   };
-
   const leave = () => {
     if (!cdWrapperRef.current) return;
     const cdWrapperDom = cdWrapperRef.current;
     cdWrapperDom.style.transition = "all 0.4s";
     const { x, y, scale } = _getPosAndScale();
-    cdWrapperDom.style[transform] = `translate3d (${x} px, ${y} px, 0) scale (${scale})`;
+    cdWrapperDom.style[transform] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
   };
-
   const afterLeave = () => {
     if (!cdWrapperRef.current) return;
     const cdWrapperDom = cdWrapperRef.current;
@@ -85,6 +82,7 @@ const NormalPlayer: React.FC<Props> = props => {
     // 不置为 none 现在全屏播放器页面还是存在
     normalPlayerRef.current.style.display = "none";
   };
+
   return (
     <>
       <CSSTransition

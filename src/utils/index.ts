@@ -248,11 +248,11 @@ export const getName = (list: { name: string }[]) => {
 export const isEmptyObject = (obj: any) => !obj || Object.keys(obj).length === 0;
 
 // 给 css3 相关属性增加浏览器前缀，处理浏览器兼容性问题
-let elementStyle = document.createElement("div").style;
+const elementStyle = document.createElement("div").style;
 
-let vendor = (() => {
+const vendor = (() => {
   // 首先通过 transition 属性判断是何种浏览器
-  let transformNames = {
+  const transformNames = {
     webkit: "webkitTransform",
     Moz: "MozTransform",
     O: "OTransfrom",
@@ -260,6 +260,7 @@ let vendor = (() => {
     standard: "Transform"
   };
   for (let key in transformNames) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (elementStyle[transformNames[key]] !== undefined) {
       return key;
