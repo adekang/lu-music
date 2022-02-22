@@ -10,7 +10,7 @@ export type svgProps = {
 };
 
 const SvgIcon: React.FC<svgProps> = memo(
-  ({ iconClass, fill, fontSize = "18px", className, onClick, style }) => {
+  ({ iconClass, fill, fontSize = "13px", className, onClick, style }) => {
     const iconName = useMemo(() => `#icon-${iconClass}`, [iconClass]);
     return (
       <svg
