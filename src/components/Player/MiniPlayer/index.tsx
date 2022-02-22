@@ -23,7 +23,7 @@ const MiniPlayer: React.FC<Props> = props => {
   const { playing, song, fullScreen, clickPlaying, toggleFullScreen } = props;
   const miniPlayerRef = useRef<any>();
 
-  const percent = 0.2;
+  const percent = 1;
 
   return (
     <>

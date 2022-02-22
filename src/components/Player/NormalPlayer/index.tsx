@@ -3,6 +3,7 @@ import "./index.scss";
 import { getName, prefixStyle } from "@/utils";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
+import ProgressBar from "@/components/ProgressBar";
 
 export interface Props {
   song: { al: { picUrl: string }; name: string; ar: any };
@@ -13,6 +14,12 @@ export interface Props {
 
 const NormalPlayer: React.FC<Props> = props => {
   const { song, fullScreen, toggleFullScreen } = props;
+  // const { percent, onProgressChange } = props;
+
+  const percent = 0.5;
+  const onProgressChange = () => {
+    console.log("onProgressChange");
+  };
 
   const normalPlayerRef = useRef<any>();
   const cdWrapperRef = useRef<any>();
@@ -120,6 +127,13 @@ const NormalPlayer: React.FC<Props> = props => {
             </div>
           </div>
           <div className="Bottom">
+            <div className="ProgressWrapper">
+              <span className="time time-l">0:00</span>
+              <div className="progress-bar-wrapper">
+                <ProgressBar percent={percent} percentChange={onProgressChange} />
+              </div>
+              <div className="time time-r">4:17</div>
+            </div>
             <div className="Operators">
               <div className="icon i-left">
                 <i className="iconfont">&#xe625;</i>
