@@ -8,22 +8,24 @@ import ProgressCircle from "@/components/ProgressCircle";
 
 // Icon ，命名相反了
 
-export interface Props {
+export interface PlayerProps {
   song: { al: { picUrl: string }; name: string; ar: any };
   fullScreen?: boolean;
   playing: boolean;
   toggleFullScreen?: (state: boolean) => void;
   clickPlaying?: (e: any, state: boolean) => void;
-  percent?: number;
-  changePlayListDispatch?: boolean;
   togglePlayList?: any;
+  percent: number;
+  duration: number; //总时长
+  currentTime: number; //播放时间
+  onProgressChange: (t: number) => void;
+  handlePrev?: () => void;
+  handleNext?: () => void;
 }
 
-const MiniPlayer: React.FC<Props> = props => {
-  const { playing, song, fullScreen, clickPlaying, toggleFullScreen } = props;
+const MiniPlayer: React.FC<PlayerProps> = props => {
+  const { percent, playing, song, fullScreen, clickPlaying, toggleFullScreen } = props;
   const miniPlayerRef = useRef<any>();
-
-  const percent = 1;
 
   return (
     <>

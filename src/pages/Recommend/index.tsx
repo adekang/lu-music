@@ -7,7 +7,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
 import ScrollV2 from "@/components/Scroll/ScrollV2";
 import { useAppDispatch } from "@/store";
-import { changeCurrentSong } from "@/store/playerSlice";
+import { changeCurrentSong, changePlayList } from "@/store/playerSlice";
 import { CurrentSong } from "@/components/Player";
 
 interface Props {
@@ -64,7 +64,8 @@ const Recommend: FC<Props> = props => {
   const getSongUrl = (id: number) => {
     getSingSongDetail({ id }).then((data: { data: CurrentSong[] }) => {
       const { data: res } = data;
-      dispatch(changeCurrentSong(res[0]));
+      console.log(res);
+      dispatch(changePlayList(res));
     });
   };
 

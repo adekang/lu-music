@@ -8,7 +8,7 @@ interface PlayerState {
   currentSong: CurrentSong;
   showPlayList: boolean;
   currentIndex: number;
-  playList: unknown[];
+  playList: any[];
   mode: number;
   sequencePlayList: string[];
   fullScreen: boolean;
@@ -23,7 +23,25 @@ const initialState: PlayerState = {
   currentIndex: -1, // 当前歌曲在播放列表的索引位置
   showPlayList: false, // 是否展示播放列表
   currentSong: {
-    id: -1
+    id: -1,
+    al: {
+      picUrl: "http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg"
+    },
+    name: "拾梦纪",
+    ar: [
+      {
+        id: 12084589,
+        name: "妖扬",
+        tns: [],
+        alias: []
+      },
+      {
+        id: 12578371,
+        name: "金天",
+        tns: [],
+        alias: []
+      }
+    ]
   }
 };
 
@@ -76,6 +94,7 @@ export const getSongDetail = (id: number) => async (dispatch: any, getState: any
   }
 };
 
-export const { changePlaying, changeCurrentSong, changeFllScreen } = playerSlice.actions;
+export const { changePlayList,changePlaying, changeCurrentIndex, changeCurrentSong, changeFllScreen } =
+  playerSlice.actions;
 
 export default playerSlice.reducer;
