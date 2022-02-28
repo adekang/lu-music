@@ -7,8 +7,13 @@ import { CSSTransition } from "react-transition-group";
 import ProgressCircle from "@/components/ProgressCircle";
 
 // Icon ，命名相反了
-interface  Props {
-  song: { al: { picUrl: string }; name: string; ar: any };
+interface Props {
+  song: {
+    picUrl?: string;
+    al: { picUrl: string };
+    name: string;
+    ar: any;
+  };
   fullScreen?: boolean;
   playing: boolean;
   toggleFullScreen?: (state: boolean) => void;
@@ -42,7 +47,7 @@ const MiniPlayer: React.FC<Props> = props => {
           <div className={"imgWrapper"}>
             <img
               className={`play ${playing ? "" : "pause"}`}
-              src={song.al.picUrl + "?param=100x100"}
+              src={song?.picUrl || song.al.picUrl + "?param=100x100"}
               alt="属性"
             />
           </div>

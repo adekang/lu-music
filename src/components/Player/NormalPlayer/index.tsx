@@ -6,7 +6,12 @@ import animations from "create-keyframe-animation";
 import ProgressBar from "@/components/ProgressBar";
 
 export interface PlayerProps {
-  song: { al: { picUrl: string }; name: string; ar: any };
+  song: {
+    picUrl?: string;
+    al: { picUrl: string };
+    name: string;
+    ar: any;
+  };
   fullScreen?: boolean;
   playing: boolean;
   toggleFullScreen?: (state: boolean) => void;
@@ -123,7 +128,7 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
         <div className="NormalPlayerWrapper" ref={normalPlayerRef}>
           <div className="background">
             <img
-              src={song.al.picUrl + "?param=300x300"}
+              src={song?.picUrl || song.al.picUrl + "?param=300x300"}
               width="100%"
               height="100%"
               alt="歌曲图片"
@@ -140,7 +145,11 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
           <div className="Middle" ref={cdWrapperRef}>
             <div className="CDWrapper">
               <div className="cd">
-                <img className="image play" src={song.al.picUrl + "?param=400x400"} alt="" />
+                <img
+                  className="image play"
+                  src={song?.picUrl || song.al.picUrl + "?param=400x400"}
+                  alt=""
+                />
               </div>
             </div>
           </div>

@@ -1,14 +1,20 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { getBannerRequest, getHotList, getNewSong, getSingSongDetail } from "@/services/comment";
+import {
+  getAlbumDetailRequest,
+  getBannerRequest,
+  getHotList,
+} from "@/services/comment";
 import { Image, Swiper } from "antd-mobile";
 import { BannerList, SongList } from "@/pages/Recommend/types";
 import styles from "./recommend.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
-import ScrollV2 from "@/components/Scroll/ScrollV2";
 import { useAppDispatch } from "@/store";
-import { changeCurrentSong, changePlayList } from "@/store/playerSlice";
-import { CurrentSong } from "@/components/Player";
+import {
+  changeCurrentIndex,
+  changePlayList,
+  changeSequencePlayList
+} from "@/store/playerSlice";
 
 interface Props {
   name?: string;
@@ -44,10 +50,11 @@ const Recommend: FC<Props> = props => {
       .catch((e: unknown) => {
         console.log(e);
       });
-    getNewSong()
-      .then((data: { result: never }) => {
-        const { result } = data;
-        setNewSongList(result);
+    // TODO 获取的是歌单
+    getAlbumDetailRequest(6727687679)
+      .then((data: { playlist: { tracks: any } }) => {
+        const { playlist } = data;
+        setNewSongList(playlist.tracks);
       })
       .catch((e: unknown) => {
         console.log(e);
@@ -60,15 +67,6 @@ const Recommend: FC<Props> = props => {
   }, []);
 
   const dispatch = useAppDispatch();
-
-  const getSongUrl = (id: number) => {
-    getSingSongDetail({ id }).then((data: { data: CurrentSong[] }) => {
-      const { data: res } = data;
-      console.log(res);
-      dispatch(changePlayList(res));
-    });
-  };
-
   const categoryRef = useRef<any>();
 
   useEffect(() => {
@@ -148,16 +146,20 @@ const Recommend: FC<Props> = props => {
                       id={String(value.id)}
                       onClick={e => {
                         e.preventDefault();
-                        const id = Number(e.currentTarget.id);
-                        getSongUrl(id);
+                        // const id = Number(e.currentTarget.id);
                         // goToId(id);
+
+                        console.log("newsongList::", newsongList);
+                        dispatch(changePlayList(newsongList));
+                        dispatch(changeCurrentIndex(index));
+                        dispatch(changeSequencePlayList(newsongList));
                       }}
                     >
                       <p className={styles.tuneListLeft}>
                         <span>{index + 1}</span>
                         <span>{value.name}</span>
                       </p>
-                      <div className={styles.tuneListRight}>{value?.song.artists[0].name}</div>
+                      <div className={styles.tuneListRight}>{value?.ar[0].name}</div>
                     </div>
                   );
                 })}

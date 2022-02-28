@@ -70,7 +70,7 @@ export const playerSlice = createSlice({
     changePlayList: (state, action: PayloadAction<any>) => {
       state.playList = action.payload;
     },
-    changeSequencePlayList: (state, action: PayloadAction<string[]>) => {
+    changeSequencePlayList: (state, action: PayloadAction<any[]>) => {
       state.sequencePlayList = action.payload;
     }
   }
@@ -94,7 +94,14 @@ export const getSongDetail = (id: number) => async (dispatch: any, getState: any
   }
 };
 
-export const {changePlayMode, changePlayList,changePlaying, changeCurrentIndex, changeCurrentSong, changeFllScreen } =
-  playerSlice.actions;
+export const {
+  changeSequencePlayList,
+  changePlayMode,
+  changePlayList,
+  changePlaying,
+  changeCurrentIndex,
+  changeCurrentSong,
+  changeFllScreen
+} = playerSlice.actions;
 
 export default playerSlice.reducer;
