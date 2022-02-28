@@ -14,8 +14,8 @@ interface Props {
 
 const Recommend: FC<Props> = props => {
   const [bannerList, setBannerList] = useState<BannerList[]>([]);
-  const [songList, setSongList] = useState<SongList[]>([]);
-  const [newsongList, setNewSongList] = useState<SongList[]>([]);
+  const [hotList, setHotList] = useState<SongList[]>([]);
+  const [hotSongList, setHotSongList] = useState<SongList[]>([]);
 
   const navigate = useNavigate();
 
@@ -37,26 +37,31 @@ const Recommend: FC<Props> = props => {
     })
       .then((data: { result: SongList[] }) => {
         const { result } = data;
-        setSongList(result);
-      })
-      .catch((e: unknown) => {
-        console.log(e);
-      });
-    // TODO 获取的是歌单
-    getAlbumDetailRequest(6727687679)
-      .then((data: { playlist: { tracks: any } }) => {
-        const { playlist } = data;
-        setNewSongList(playlist.tracks);
+        setHotList(result);
       })
       .catch((e: unknown) => {
         console.log(e);
       });
     return () => {
       setBannerList([]);
-      setSongList([]);
-      setNewSongList([]);
+      setHotList([]);
     };
   }, []);
+  useEffect(() => {
+    if (hotList.length === 0) return;
+    getAlbumDetailRequest(hotList[0]?.id as number)
+      .then((data: { playlist: { tracks: any } }) => {
+        const { playlist } = data;
+        setHotSongList(playlist.tracks);
+      })
+      .catch((e: unknown) => {
+        console.log(e);
+      });
+
+    return () => {
+      setHotSongList([]);
+    };
+  }, [hotList]);
 
   const dispatch = useAppDispatch();
   const categoryRef = useRef<any>();
@@ -69,7 +74,7 @@ const Recommend: FC<Props> = props => {
       totalWidth += ele.offsetWidth + 8;
     });
     Dom.style.width = `${totalWidth - 8}px`;
-  }, [songList]);
+  }, [hotList]);
 
   return (
     <>
@@ -111,8 +116,8 @@ const Recommend: FC<Props> = props => {
               <h1 className={styles.title}>推荐歌单</h1>
               <Scroll direction={"horizontal"}>
                 <ul ref={categoryRef} className={styles.songListWrapper}>
-                  {songList.length &&
-                    songList?.map(value => {
+                  {hotList.length &&
+                    hotList?.map(value => {
                       return (
                         <li className={styles.songList} key={value.id}>
                           <Image
@@ -129,8 +134,8 @@ const Recommend: FC<Props> = props => {
             </section>
             <section>
               <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-              {newsongList.length &&
-                newsongList?.map((value: any, index) => {
+              {hotSongList.length &&
+                hotSongList?.map((value: any, index) => {
                   return (
                     <div
                       className={styles.tuneList}
@@ -140,9 +145,9 @@ const Recommend: FC<Props> = props => {
                         e.preventDefault();
                         // const id = Number(e.currentTarget.id);
                         // goToId(id);
-                        dispatch(changePlayList(newsongList));
+                        dispatch(changePlayList(hotSongList));
                         dispatch(changeCurrentIndex(index));
-                        dispatch(changeSequencePlayList(newsongList));
+                        dispatch(changeSequencePlayList(hotSongList));
                       }}
                     >
                       <p className={styles.tuneListLeft}>

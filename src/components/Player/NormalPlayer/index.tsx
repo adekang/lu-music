@@ -5,7 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 import ProgressBar from "@/components/ProgressBar";
 import { useAppDispatch } from "@/store";
-import { changePlayList, changeShowPlayList } from '@/store/playerSlice'
+import { changeShowPlayList } from "@/store/playerSlice";
 
 export interface PlayerProps {
   song: {
