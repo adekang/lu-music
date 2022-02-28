@@ -148,7 +148,10 @@ const Player: React.FC = () => {
     setPreSong(current);
     audioRef.current.src = getSongUrl(current.id);
     setTimeout(() => {
-      audioRef.current.play();
+      // 注意，play 方法返回的是一个 promise 对象
+      audioRef.current.play ().then (() => {
+        songReady.current = true;
+      });
     });
     dispatch(changePlaying(true));
     setCurrentTime(0); //从头开始播放
