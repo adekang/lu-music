@@ -6,13 +6,22 @@ import {
   changeCurrentSong,
   changeFllScreen,
   changePlaying,
+  changePlayList,
+  changePlayMode,
   getSongDetail
 } from "@/store/playerSlice";
 import { getSongUrl } from "@/services/comment";
-import { isEmptyObject } from "@/utils";
+import { findIndex, isEmptyObject, playMode, shuffle } from '@/utils'
 import MiniPlayer from "@/components/Player/MiniPlayer";
 import "./index.scss";
 import NormalPlayer from "@/components/Player/NormalPlayer";
+import { Toast } from "antd-mobile";
+
+Toast.config({
+  duration: 250,
+  position: "bottom",
+  maskClickable: false
+});
 
 export interface CurrentSong {
   id: number;
@@ -152,7 +161,11 @@ const Player: React.FC = () => {
   }, [playing]);
 
   const handleEnd = () => {
-    console.log("handleEnd");
+    if (mode === playMode.loop) {
+      handleLoop();
+    } else {
+      handleNext();
+    }
   };
   const updateTime = (e: any) => {
     setCurrentTime(e.target.currentTime);
@@ -209,6 +222,33 @@ const Player: React.FC = () => {
     dispatch(changeCurrentIndex(index));
   };
 
+  const changeMode = () => {
+    const newMode = (mode + 1) % 3;
+    if (newMode === 0) {
+      //顺序模式
+      dispatch(changePlayList(sequencePlayList));
+      const index = findIndex(currentSong, sequencePlayList);
+      dispatch(changeCurrentIndex(index));
+      Toast.show({
+        content: "顺序循环"
+      });
+    } else if (newMode === 1) {
+      dispatch(changePlayList(sequencePlayList));
+      Toast.show({
+        content: "单曲循环"
+      });
+    } else if (newMode === 2) {
+      const newList = shuffle(sequencePlayList);
+      const index = findIndex(currentSong, newList);
+      dispatch(changePlayList(sequencePlayList));
+      dispatch(changeCurrentIndex(index));
+      Toast.show({
+        content: "随机播放"
+      });
+    }
+    dispatch(changePlayMode(newMode));
+  };
+
   //歌曲播放进度
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
@@ -226,6 +266,10 @@ const Player: React.FC = () => {
             currentTime={currentTime}
             onProgressChange={onProgressChange}
             percent={percent}
+            handlePrev={handlePrev}
+            handleNext={handleNext}
+            mode={mode}
+            changeMode={changeMode}
           />
         )}
         {isEmptyObject(currentSong) ? null : (
@@ -235,12 +279,7 @@ const Player: React.FC = () => {
             fullScreen={fullScreen}
             playing={playing}
             clickPlaying={clickPlaying}
-            duration={duration}
-            currentTime={currentTime}
-            onProgressChange={onProgressChange}
             percent={percent}
-            handlePrev={handlePrev}
-            handleNext={handleNext}
           />
         )}
         <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />

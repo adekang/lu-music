@@ -1,14 +1,31 @@
 import React, { useRef } from "react";
 import "./index.scss";
-import { formatPlayTime, getName, prefixStyle } from "@/utils";
+import { formatPlayTime, getName, playMode, prefixStyle } from "@/utils";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 import ProgressBar from "@/components/ProgressBar";
-import { PlayerProps } from "@/components/Player/MiniPlayer";
+
+export interface PlayerProps {
+  song: { al: { picUrl: string }; name: string; ar: any };
+  fullScreen?: boolean;
+  playing: boolean;
+  toggleFullScreen?: (state: boolean) => void;
+  clickPlaying?: (e: any, state: boolean) => void;
+  togglePlayList?: any;
+  percent: number;
+  duration: number; //总时长
+  currentTime: number; //播放时间
+  onProgressChange: (t: number) => void;
+  handlePrev?: () => void;
+  handleNext?: () => void;
+  mode: number;
+  changeMode: () => void;
+}
 
 const NormalPlayer: React.FC<PlayerProps> = props => {
-  const { playing, song, percent, fullScreen, currentTime, duration } = props;
-  const { clickPlaying, toggleFullScreen, onProgressChange, handlePrev, handleNext } = props;
+  const { playing, mode, song, percent, fullScreen, currentTime, duration } = props;
+  const { changeMode, clickPlaying, toggleFullScreen, onProgressChange, handlePrev, handleNext } =
+    props;
 
   const normalPlayerRef = useRef<any>();
   const cdWrapperRef = useRef<any>();
@@ -79,6 +96,18 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
     normalPlayerRef.current.style.display = "none";
   };
 
+  //getPlayMode方法
+  const getPlayMode = () => {
+    let content;
+    if (mode === playMode.sequence) {
+      content = "&#xe625;";
+    } else if (mode === playMode.loop) {
+      content = "&#xe653;";
+    } else {
+      content = "&#xe61b;";
+    }
+    return content;
+  };
   return (
     <>
       <CSSTransition
@@ -124,11 +153,13 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
               <div className="time time-r">{formatPlayTime(duration)}</div>
             </div>
             <div className="Operators">
-              <div className="icon i-left">
-                <i className="iconfont">&#xe625;</i>
+              <div className="icon i-left" onClick={changeMode}>
+                <i className="iconfont" dangerouslySetInnerHTML={{ __html: getPlayMode() }} />
               </div>
               <div className="icon i-left" onClick={handlePrev}>
-                <i className="iconfont">&#xe6e1;</i>
+                <i className="iconfont">
+                  <i className="iconfont">&#xe6e1;</i>
+                </i>
               </div>
               <div className="icon i-center">
                 <i

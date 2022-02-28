@@ -94,7 +94,7 @@ export const getSongDetail = (id: number) => async (dispatch: any, getState: any
   }
 };
 
-export const { changePlayList,changePlaying, changeCurrentIndex, changeCurrentSong, changeFllScreen } =
+export const {changePlayMode, changePlayList,changePlaying, changeCurrentIndex, changeCurrentSong, changeFllScreen } =
   playerSlice.actions;
 
 export default playerSlice.reducer;
