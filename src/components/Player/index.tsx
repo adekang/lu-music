@@ -7,15 +7,15 @@ import {
   changeFllScreen,
   changePlaying,
   changePlayList,
-  changePlayMode,
-  getSongDetail
+  changePlayMode
 } from "@/store/playerSlice";
 import { getSongUrl } from "@/services/comment";
-import { findIndex, isEmptyObject, playMode, shuffle } from '@/utils'
+import { findIndex, isEmptyObject, playMode, shuffle } from "@/utils";
 import MiniPlayer from "@/components/Player/MiniPlayer";
 import "./index.scss";
 import NormalPlayer from "@/components/Player/NormalPlayer";
 import { Toast } from "antd-mobile";
+import PlayList from "@/components/PlayList";
 
 Toast.config({
   duration: 250,
@@ -29,7 +29,6 @@ export interface CurrentSong {
   name: string;
   ar: any;
 }
-
 
 const Player: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,7 +74,7 @@ const Player: React.FC = () => {
     audioRef.current.src = getSongUrl(current.id);
     setTimeout(() => {
       // 注意，play 方法返回的是一个 promise 对象
-      audioRef.current.play ().then (() => {
+      audioRef.current.play().then(() => {
         songReady.current = true;
       });
     });
@@ -199,6 +198,7 @@ const Player: React.FC = () => {
             handleNext={handleNext}
             mode={mode}
             changeMode={changeMode}
+            showPlayList={showPlayList}
           />
         )}
         {isEmptyObject(currentSong) ? null : (
@@ -209,9 +209,11 @@ const Player: React.FC = () => {
             playing={playing}
             clickPlaying={clickPlaying}
             percent={percent}
+            showPlayList={showPlayList}
           />
         )}
         <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
+        <PlayList />
       </div>
     </>
   );

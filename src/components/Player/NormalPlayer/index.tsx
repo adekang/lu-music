@@ -4,6 +4,8 @@ import { formatPlayTime, getName, playMode, prefixStyle } from "@/utils";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 import ProgressBar from "@/components/ProgressBar";
+import { useAppDispatch } from "@/store";
+import { changePlayList, changeShowPlayList } from '@/store/playerSlice'
 
 export interface PlayerProps {
   song: {
@@ -25,6 +27,7 @@ export interface PlayerProps {
   handleNext?: () => void;
   mode: number;
   changeMode: () => void;
+  showPlayList: boolean;
 }
 
 const NormalPlayer: React.FC<PlayerProps> = props => {
@@ -52,7 +55,12 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
     };
   };
   const transform = prefixStyle("transform");
+  const dispatch = useAppDispatch();
 
+  const handleTogglePlayList = (e: { stopPropagation: () => void }) => {
+    dispatch(changeShowPlayList(true));
+    e.stopPropagation();
+  };
   // 启用帧动画
   const enter = () => {
     normalPlayerRef.current.style.display = "block";
@@ -148,7 +156,7 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
                 <img
                   className="image play"
                   src={song?.picUrl || song.al.picUrl + "?param=400x400"}
-                  alt=""
+                  alt="歌曲图片"
                 />
               </div>
             </div>
@@ -182,7 +190,7 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
               <div className="icon i-right" onClick={handleNext}>
                 <i className="iconfont">&#xe718;</i>
               </div>
-              <div className="icon i-right">
+              <div className="icon i-right" onClick={handleTogglePlayList}>
                 <i className="iconfont">&#xe640;</i>
               </div>
             </div>

@@ -18,7 +18,7 @@ $border-color: #e4e4e4;
 $border-red-color: #C10D0C;
 
 $background-color: #f2f3f4;
-$background-color-shadow: rgba (0, 0, 0, 0.3);
+$background-color-shadow: rgba(0, 0, 0, 0.3);
 $highlight-background-color: #fff;
 
 $theme-color-shadow: "rgba(212, 68, 57, .5)";
@@ -58,4 +58,17 @@ $theme-color-shadow: "rgba(212, 68, 57, .5)";
 @mixin fontNormal($fw) {
   font-weight: $fw;
   color: $font-color-deep;
+}
+
+@mixin extendClick {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+  }
+;
 }

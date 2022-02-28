@@ -1,20 +1,12 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import {
-  getAlbumDetailRequest,
-  getBannerRequest,
-  getHotList,
-} from "@/services/comment";
+import { getAlbumDetailRequest, getBannerRequest, getHotList } from "@/services/comment";
 import { Image, Swiper } from "antd-mobile";
 import { BannerList, SongList } from "@/pages/Recommend/types";
 import styles from "./recommend.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
 import { useAppDispatch } from "@/store";
-import {
-  changeCurrentIndex,
-  changePlayList,
-  changeSequencePlayList
-} from "@/store/playerSlice";
+import { changeCurrentIndex, changePlayList, changeSequencePlayList } from "@/store/playerSlice";
 
 interface Props {
   name?: string;
@@ -148,8 +140,6 @@ const Recommend: FC<Props> = props => {
                         e.preventDefault();
                         // const id = Number(e.currentTarget.id);
                         // goToId(id);
-
-                        console.log("newsongList::", newsongList);
                         dispatch(changePlayList(newsongList));
                         dispatch(changeCurrentIndex(index));
                         dispatch(changeSequencePlayList(newsongList));

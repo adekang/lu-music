@@ -1,6 +1,6 @@
 import { getSingerListRequest, getSongDetailRequest } from "@/services/comment";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { playMode } from "@/utils";
+import { findIndex, playMode } from "@/utils";
 import { CurrentSong } from "@/components/Player";
 
 interface PlayerState {
@@ -22,27 +22,7 @@ const initialState: PlayerState = {
   mode: playMode.sequence, // 播放模式
   currentIndex: -1, // 当前歌曲在播放列表的索引位置
   showPlayList: false, // 是否展示播放列表
-  currentSong: {
-    id: -1,
-    al: {
-      picUrl: "http://p1.music.126.net/M19SOoRMkcHmJvmGflXjXQ==/109951164627180052.jpg"
-    },
-    name: "拾梦纪",
-    ar: [
-      {
-        id: 12084589,
-        name: "妖扬",
-        tns: [],
-        alias: []
-      },
-      {
-        id: 12578371,
-        name: "金天",
-        tns: [],
-        alias: []
-      }
-    ]
-  }
+  currentSong: {}
 };
 
 export const playerSlice = createSlice({
@@ -94,7 +74,42 @@ export const getSongDetail = (id: number) => async (dispatch: any, getState: any
   }
 };
 
+export const deleteSong = (song: { id: any }) => (dispatch: any, getState: any) => {
+  // 也可用 loadsh 库的 deepClone 方法。这里深拷贝是基于纯函数的考虑，不对参数 state 做修改
+  const oldPlayList = JSON.parse(JSON.stringify(getState().player.playList));
+  const oldSequenceList = JSON.parse(JSON.stringify(getState().player.sequencePlayList));
+  let oldCurrentIndex = JSON.parse(JSON.stringify(getState().player.currentIndex));
+  // 找对应歌曲在播放列表中的索引
+
+  const fpIndex = findIndex(song, oldPlayList);
+  // 在播放列表中将其删除
+  oldPlayList.splice(fpIndex, 1);
+  // 如果删除的歌曲排在当前播放歌曲前面，那么 currentIndex--，让当前的歌正常播放
+  if (fpIndex < oldCurrentIndex) oldCurrentIndex--;
+  // 在 sequenceList 中直接删除歌曲即可
+  const fsIndex = findIndex(song, oldSequenceList);
+  oldSequenceList.splice(fsIndex, 1);
+
+  dispatch(changeCurrentIndex(oldCurrentIndex));
+  dispatch(changePlayList(oldPlayList));
+  dispatch(changeSequencePlayList(oldSequenceList));
+};
+
+export const clearSongs = () => (dispatch: any) => {
+  dispatch(changePlayList([]));
+  dispatch(changeSequencePlayList([]));
+  // 2. 初始 currentIndex
+  dispatch(changeCurrentIndex(-1));
+  // 3. 关闭 PlayList 的显示
+  dispatch(changeShowPlayList(false));
+  // 4. 将当前歌曲置空
+  dispatch(changeCurrentSong({}));
+  // 5. 重置播放状态
+  dispatch(changePlaying(false));
+};
+
 export const {
+  changeShowPlayList,
   changeSequencePlayList,
   changePlayMode,
   changePlayList,

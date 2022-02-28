@@ -5,6 +5,8 @@ import { getName } from "@/utils";
 import { CSSTransition } from "react-transition-group";
 // import { ProgressCircle } from "antd-mobile";
 import ProgressCircle from "@/components/ProgressCircle";
+import { changePlayList, changePlayMode, changeShowPlayList } from '@/store/playerSlice'
+import { useAppDispatch } from "@/store";
 
 // Icon ，命名相反了
 interface Props {
@@ -18,13 +20,20 @@ interface Props {
   playing: boolean;
   toggleFullScreen?: (state: boolean) => void;
   clickPlaying?: (e: any, state: boolean) => void;
-  togglePlayList?: any;
   percent: number;
+  showPlayList: boolean;
+  // togglePlayList: () => void;
 }
 
 const MiniPlayer: React.FC<Props> = props => {
   const { percent, playing, song, fullScreen, clickPlaying, toggleFullScreen } = props;
   const miniPlayerRef = useRef<any>();
+  const dispatch = useAppDispatch();
+
+  const handleTogglePlayList = (e: { stopPropagation: () => void }) => {
+    dispatch(changeShowPlayList(true));
+    e.stopPropagation();
+  };
 
   return (
     <>
@@ -74,7 +83,7 @@ const MiniPlayer: React.FC<Props> = props => {
               )}
             </ProgressCircle>
           </div>
-          <div className="control">
+          <div className="control" onClick={handleTogglePlayList}>
             <SvgIcon iconClass={"playlist"} fontSize="24px" className={"formatSvg"} />
           </div>
         </div>
