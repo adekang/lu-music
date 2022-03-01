@@ -20,7 +20,7 @@ export default defineConfig(configEnv => {
     plugins: createVitePlugins(),
     css: cssOption,
     server: {
-      host: false,
+      host: true,
       port: VITE_APP_PORT,
       open: VITE_APP_OPEN,
       proxy
