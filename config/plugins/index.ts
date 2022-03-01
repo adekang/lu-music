@@ -12,7 +12,7 @@ import legacy from "@vitejs/plugin-legacy";
 import { VITE_APP_ESLINT, VITE_APP_VISUALIZER, VITE_APP_LEGACY } from "../index";
 import configConsole from './consloe'
 
-export default function createVitePlugins() {
+export default function createVitePlugins(command: string, mode: string) {
   const vitePlugins: (Plugin | Plugin[])[] = [
     /**
      * @description 必须默认项
@@ -30,6 +30,6 @@ export default function createVitePlugins() {
         additionalLegacyPolyfills: ["regenerator-runtime/runtime"]
       })
     );
-  vitePlugins.push(configConsole())
+  vitePlugins.push(configConsole(command, mode));
   return vitePlugins;
 }
