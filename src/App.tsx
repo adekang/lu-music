@@ -8,6 +8,7 @@ import Rank from "@/pages/Rank";
 import Recommend from "@/pages/Recommend";
 import Album from "@/pages/Album";
 import Singer from "@/pages/Singer";
+import Player from '@/components/Player'
 
 const App: FC = function () {
   const element = useRoutes([
@@ -61,6 +62,7 @@ const App: FC = function () {
       {/*  </Route>*/}
       {/*</Routes>*/}
       {element}
+      <Player/>
     </div>
   );
 };

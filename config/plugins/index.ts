@@ -10,6 +10,7 @@ import configVisualizerConfig from "./visualizer";
 import configStyleImport from "./styleImport";
 import legacy from "@vitejs/plugin-legacy";
 import { VITE_APP_ESLINT, VITE_APP_VISUALIZER, VITE_APP_LEGACY } from "../index";
+import configConsole from './consloe'
 
 export default function createVitePlugins() {
   const vitePlugins: (Plugin | Plugin[])[] = [
@@ -29,5 +30,6 @@ export default function createVitePlugins() {
         additionalLegacyPolyfills: ["regenerator-runtime/runtime"]
       })
     );
+  vitePlugins.push(configConsole())
   return vitePlugins;
 }

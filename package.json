@@ -67,6 +67,7 @@
     "vite": "^2.5.4",
     "vite-plugin-checker": "^0.3.4",
     "vite-plugin-style-import": "^1.2.1",
-    "vite-plugin-svg-icons": "^1.0.4"
+    "vite-plugin-svg-icons": "^1.0.4",
+    "vite-plugin-vconsole": "^1.2.0"
   }
 }

@@ -32,7 +32,6 @@ const Index: FC = function () {
       <div className={"outlet"}>
         <Outlet />
       </div>
-      <Player />
     </div>
   );
 };

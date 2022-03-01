@@ -6259,6 +6259,11 @@ vite-plugin-svg-icons@^1.0.4:
     svg-baker "1.7.0"
     svgo "^2.8.0"
 
+vite-plugin-vconsole@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmmirror.com/vite-plugin-vconsole/-/vite-plugin-vconsole-1.2.0.tgz#91cfa2110f95e0df0e8470dd7bbf59e2c9928cf8"
+  integrity sha512-VnpfLjw/rONgwPo8Zbk1bdkj6/lNqcN2dk52c+17UnpIX38NmbKx2OjqUlquyh7rE6cr8Kdc5mdVR6A0Go6I9g==
+
 vite@^2.5.4:
   version "2.7.13"
   resolved "https://registry.npmmirror.com/vite/download/vite-2.7.13.tgz#99b56e27dfb1e4399e407cf94648f5c7fb9d77f5"
