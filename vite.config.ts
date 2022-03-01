@@ -7,7 +7,7 @@ import proxy from "./config/setupProxy";
 import build from "./config/build";
 
 export default defineConfig(configEnv => {
-  // console.log(`config::`, configEnv)
+  console.log(`config::`, configEnv)
   const { command, mode } = configEnv
   // const isBuild = command === 'build';
   return {
