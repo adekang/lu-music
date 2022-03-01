@@ -22,7 +22,7 @@ const initialState: PlayerState = {
   mode: playMode.sequence, // 播放模式
   currentIndex: -1, // 当前歌曲在播放列表的索引位置
   showPlayList: false, // 是否展示播放列表
-  currentSong: {}
+  currentSong: {} as CurrentSong
 };
 
 export const playerSlice = createSlice({
@@ -103,7 +103,7 @@ export const clearSongs = () => (dispatch: any) => {
   // 3. 关闭 PlayList 的显示
   dispatch(changeShowPlayList(false));
   // 4. 将当前歌曲置空
-  dispatch(changeCurrentSong({}));
+  dispatch(changeCurrentSong({} as CurrentSong));
   // 5. 重置播放状态
   dispatch(changePlaying(false));
 };

@@ -83,7 +83,7 @@ const PlayList: React.FC = () => {
       text = "随机播放";
     }
     return (
-      <div>
+      <div className="ModeWrapper">
         <i
           className="iconfont"
           onClick={e => changeMode(e)}
@@ -105,6 +105,7 @@ const PlayList: React.FC = () => {
       dispatch(changeCurrentIndex(index));
     } else if (newMode === 1) {
       //单曲循环
+      console.log("单曲循环");
       dispatch(changePlayList(sequencePlayList));
     } else if (newMode === 2) {
       //随机播放
