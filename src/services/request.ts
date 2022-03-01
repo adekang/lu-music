@@ -103,7 +103,7 @@ import { environmentVariable } from "@/utils";
 
 const isPrd = environmentVariable() === "dev";
 
-export const baseUrl = isPrd ? "http://121.41.42.16:3000" : "http://localhost:3000";
+export const baseUrl = isPrd ? "http://121.41.42.16:3000" : "http://121.41.42.16:3000";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
