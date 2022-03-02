@@ -16,7 +16,7 @@ $iconfont-size-l: 24px;
 
 $border-color: #e4e4e4;
 $border-red-color: #C10D0C;
-
+$border-color-v2: rgba(228, 228, 228, 0.1);
 $background-color: #f2f3f4;
 $background-color-shadow: rgba(0, 0, 0, 0.3);
 $highlight-background-color: #fff;
@@ -39,6 +39,12 @@ $theme-color-shadow: "rgba(212, 68, 57, .5)";
 @mixin wh($w, $h) {
   width: $w;
   height: $h;
+}
+
+@mixin bgFull {
+  background-position: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 @mixin ellipsis {

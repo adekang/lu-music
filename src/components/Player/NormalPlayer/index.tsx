@@ -188,8 +188,10 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
             <div className="back" onClick={() => toggleFullScreen?.(false)}>
               <i className="iconfont icon-back">&#xe662;</i>
             </div>
-            <h1 className="title">{song.name}</h1>
-            <h1 className="subtitle">{getName(song.ar)}</h1>
+            <div className="text">
+              <h1 className="title">{song.name}</h1>
+              <h1 className="subtitle">{getName(song.ar)}</h1>
+            </div>
           </div>
           <div className="Middle" ref={cdWrapperRef} onClick={toggleCurrentState}>
             <CSSTransition timeout={400} classNames="fade" in={currentState.current !== "lyric"}>
@@ -199,9 +201,10 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
                   visibility: currentState.current !== "lyric" ? "visible" : "hidden"
                 }}
               >
+                <div className={`needle ${playing ? "" : "pause"}`} />
                 <div className="cd">
                   <img
-                    className="image play"
+                    className={`image play ${playing ? "" : "pause"}`}
                     src={song?.picUrl || song.al.picUrl + "?param=400x400"}
                     alt="歌曲图片"
                   />
