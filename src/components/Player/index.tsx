@@ -9,13 +9,16 @@ import {
   changePlayList,
   changePlayMode
 } from "@/store/playerSlice";
-import { getSongUrl } from "@/services/comment";
+import { getLyricRequest, getSongUrl } from "@/services/comment";
 import { findIndex, isEmptyObject, playMode, shuffle } from "@/utils";
 import MiniPlayer from "@/components/Player/MiniPlayer";
 import "./index.scss";
 import NormalPlayer from "@/components/Player/NormalPlayer";
 import { Toast } from "antd-mobile";
 import PlayList from "@/components/PlayList";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Lyric from "@/utils/lyric-parser.js";
 
 Toast.config({
   duration: 250,
@@ -72,16 +75,55 @@ const Player: React.FC = () => {
     setPreSong(current);
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
     audioRef.current.src = getSongUrl(current.id);
+    setCurrentTime(0); //从头开始播放
+
     setTimeout(() => {
       // 注意，play 方法返回的是一个 promise 对象
       audioRef.current.play().then(() => {
         songReady.current = true;
       });
     });
+
+    getLyric(current.id);
     dispatch(changePlaying(true));
-    setCurrentTime(0); //从头开始播放
     setDuration((current.dt / 1000) | 0); //时长
   }, [playList, playing, currentIndex]);
+
+  const currentLyric = useRef<any>();
+  const [currentPlayingLyric, setPlayingLyric] = useState("");
+  const currentLineNum = useRef(0);
+
+  const handleLyric = ({ lineNum, txt }: any) => {
+    if (!currentLyric.current) return;
+    currentLineNum.current = lineNum;
+    setPlayingLyric(txt);
+  };
+
+  const getLyric = (id: number) => {
+    let lyric = "";
+    if (currentLyric.current) {
+      currentLyric.current.stop();
+    }
+    // 避免 songReady 恒为 false 的情况
+    getLyricRequest(id)
+      .then((data: any) => {
+        lyric = data.lrc.lyric;
+        if (!lyric) {
+          currentLyric.current = null;
+          return;
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        currentLyric.current = new Lyric(lyric, handleLyric);
+        currentLyric.current.play();
+        currentLineNum.current = 0;
+        currentLyric.current.seek(0);
+      })
+      .catch(() => {
+        songReady.current = true;
+        audioRef.current.play();
+      });
+  };
 
   useEffect(() => {
     console.log("playing::", playing);
@@ -106,6 +148,9 @@ const Player: React.FC = () => {
   const clickPlaying = (e: any, state: boolean) => {
     e.stopPropagation();
     dispatch(changePlaying(state));
+    if (currentLyric.current) {
+      currentLyric.current.togglePlay(currentTime * 1000);
+    }
   };
 
   const toggleFullScreen = (state: boolean) => {
@@ -118,6 +163,9 @@ const Player: React.FC = () => {
     audioRef.current.currentTime = newTime;
     if (!playing) {
       dispatch(changePlaying(true));
+    }
+    if (currentLyric.current) {
+      currentLyric.current.seek(newTime * 1000);
     }
   };
 
@@ -199,6 +247,9 @@ const Player: React.FC = () => {
             mode={mode}
             changeMode={changeMode}
             showPlayList={showPlayList}
+            currentLyric={currentLyric.current}
+            currentPlayingLyric={currentPlayingLyric}
+            currentLineNum={currentLineNum.current}
           />
         )}
         {isEmptyObject(currentSong) ? null : (
