@@ -17,7 +17,7 @@ import {
   refreshMoreHotSingerList,
   refreshMoreSingerList
 } from "@/store/singersSlice";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const Singers: FC = function () {
   const [category, setCategory] = useState("");

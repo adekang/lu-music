@@ -30,7 +30,6 @@ const Singer: FC = function () {
       setSinger(data.artist);
       setHotSongs(data.hotSongs);
     })();
-
     return () => {
       setSinger({});
       setHotSongs([]);
@@ -39,7 +38,6 @@ const Singer: FC = function () {
 
   useEffect(() => {
     const Dom = imageWrapper.current;
-    console.log(Dom.offsetWidt);
     Dom.style.background = `url(${singer.picUrl}) no-repeat 0 0% / cover`;
   }, [singer]);
 

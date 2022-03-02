@@ -1,5 +1,5 @@
 import React, { FC, useEffect, lazy } from "react";
-import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
+import { Navigate, Route, RouteObject, Routes, useRoutes } from "react-router-dom";
 import styles from "./app.module.scss";
 import Layout from "@/pages/index";
 import NotFound from "@/pages/NotFound";
@@ -8,52 +8,22 @@ import Rank from "@/pages/Rank";
 import Recommend from "@/pages/Recommend";
 import Album from "@/pages/Album";
 import Singer from "@/pages/Singer";
-import Player from '@/components/Player'
+import Index from "@/pages/index";
+
+import Player from "@/components/Player";
+import routes from "@/router/route";
 
 const App: FC = function () {
-  const element = useRoutes([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          index: true,
-          element: <Navigate to="/recommend" />
-        },
-        {
-          path: "rank",
-          element: <Rank />
-        },
-        {
-          path: "singers",
-          element: <Singers />
-        },
-        {
-          path: "recommend",
-          element: <Recommend />
-        }
-      ]
-    },
-    {
-      path: "recommend/:id",
-      element: <Album />
-    },
-    {
-      path: "singers/:id",
-      element: <Singer />
-    },
-    {
-      path: "*",
-      element: <NotFound />
-    }
-  ]);
+  const element = useRoutes(routes);
 
   return (
     <div className={styles.AppWrapper}>
       {/*<Routes>*/}
       {/*  <Route path="/" element={<Index />}>*/}
       {/*    <Route path="rank" element={<Rank />} />*/}
-      {/*    <Route path="singers" element={<Singers />} />*/}
+      {/*    <Route path="singers" element={<Singers />}>*/}
+      {/*      <Route path=":id" element={<Singer />} />*/}
+      {/*    </Route>*/}
       {/*    <Route path="recommend" element={<Recommend />}>*/}
       {/*      <Route path=":id" element={<Album />} />*/}
       {/*    </Route>*/}
@@ -62,7 +32,7 @@ const App: FC = function () {
       {/*  </Route>*/}
       {/*</Routes>*/}
       {element}
-      <Player/>
+      <Player />
     </div>
   );
 };
