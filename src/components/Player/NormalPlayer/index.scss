@@ -157,7 +157,7 @@
     width: 25vw;
     height: 40vw;
     z-index: 100;
-    background-image: url('../src/components/Player/needle.png');
+    //background-image: url('../src/components/Player/needle.png');
     @include bgFull;
     transform-origin: 4.5vw 4.5vw;
     transition: all 0.3s;
@@ -173,7 +173,7 @@
     position: absolute;
     width: 75%;
     height: 75vw;
-    background-image: url(../src/components/Player/disc.png);
+    //background-image: url('../src/components/Player/disc.png');
     border: 4px solid $border-color-v2;
     border-radius: 50%;
     @include bgFull;

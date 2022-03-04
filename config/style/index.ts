@@ -14,6 +14,7 @@ const cssOption: CSSOptions = {
       javascriptEnabled: true
     },
     scss: {
+      charset: false,
       additionalData: '@import "./src/assets/scss/varible.scss";'
     }
   }

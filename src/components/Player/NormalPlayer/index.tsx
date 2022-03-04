@@ -7,6 +7,8 @@ import ProgressBar from "@/components/ProgressBar";
 import { useAppDispatch } from "@/store";
 import { changeShowPlayList } from "@/store/playerSlice";
 import Scroll from "@/components/Scroll";
+import needle from "../needle.png";
+import disc from "../disc.png";
 
 export interface PlayerProps {
   song: {
@@ -201,8 +203,8 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
                   visibility: currentState.current !== "lyric" ? "visible" : "hidden"
                 }}
               >
-                <div className={`needle ${playing ? "" : "pause"}`} />
-                <div className="cd">
+                <div className={`needle ${playing ? "" : "pause"}`} style={{backgroundImage:`url(https://s2.loli.net/2022/03/04/fRHmLyJ2aGj9sn1.png)`}}/>
+                <div className="cd" style={{backgroundImage:`url(https://s2.loli.net/2022/03/04/yuleQnLGXqBi2UR.png)`}}>
                   <img
                     className={`image play ${playing ? "" : "pause"}`}
                     src={song?.picUrl || song.al.picUrl + "?param=400x400"}
