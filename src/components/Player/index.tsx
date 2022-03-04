@@ -56,11 +56,6 @@ const Player: React.FC = () => {
   });
   const audioRef = useRef<any>();
 
-  //先mock一份currentIndex
-  useEffect(() => {
-    dispatch(changeCurrentIndex(0));
-  }, []);
-
   useEffect(() => {
     if (
       !playList.length ||

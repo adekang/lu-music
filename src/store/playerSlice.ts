@@ -68,10 +68,58 @@ export const getSingerList = (category: string, alpha: string) => async (dispatc
 
 export const getSongDetail = (id: number) => async (dispatch: any, getState: any) => {
   try {
-    return await getSongDetailRequest(id);
+    const data = await getSongDetailRequest(id);
+    const song = data.songs[0];
+    dispatch(insertSong(song));
   } catch {
     return "获取失败";
   }
+};
+
+export const insertSong = (song: any) => (dispatch: any, getState: any) => {
+  const oldPlayList = JSON.parse(JSON.stringify(getState().player.playList));
+  const oldSequenceList = JSON.parse(JSON.stringify(getState().player.sequencePlayList));
+  let oldCurrentIndex = JSON.parse(JSON.stringify(getState().player.currentIndex));
+  // 看看有没有同款
+  const fpIndex = findIndex(song, oldPlayList);
+  console.log("fpIndex::", fpIndex);
+  console.log("oldCurrentIndex1", oldCurrentIndex);
+  // 如果是当前歌曲直接不处理
+  // if (fpIndex === oldCurrentIndex && oldCurrentIndex !== -1) return getState().player;
+  if (fpIndex === oldCurrentIndex && oldCurrentIndex !== -1) return;
+  oldCurrentIndex++;
+
+  // 把歌放进去，放到当前播放曲目的下一个位置
+  oldPlayList.splice(oldCurrentIndex, 0, song);
+  // 如果列表中已经存在要添加的歌，暂且称它 oldSong
+  if (fpIndex > -1) {
+    // 如果 oldSong 的索引在目前播放歌曲的索引小，那么删除它，同时当前 index 要减一
+    // 删掉之前的oldSong
+    if (oldCurrentIndex > fpIndex) {
+      oldPlayList.splice(fpIndex, 1);
+      oldCurrentIndex--;
+    } else {
+      // 否则直接删掉 oldSong
+      oldPlayList.splice(fpIndex + 1, 1);
+    }
+  }
+  // 同理，处理 sequenceList
+  let sequenceIndex = findIndex(oldPlayList[oldCurrentIndex], oldSequenceList) + 1;
+  const fsIndex = findIndex(song, oldSequenceList);
+  // 插入歌曲
+  oldSequenceList.splice(sequenceIndex, 0, song);
+  if (fsIndex > -1) {
+    // 跟上面类似的逻辑。如果在前面就删掉，index--; 如果在后面就直接删除
+    if (sequenceIndex > fsIndex) {
+      oldSequenceList.splice(fsIndex, 1);
+      sequenceIndex--;
+    } else {
+      oldSequenceList.splice(fsIndex + 1, 1);
+    }
+  }
+  dispatch(changeCurrentIndex(oldCurrentIndex));
+  dispatch(changePlayList(oldPlayList));
+  dispatch(changeSequencePlayList(oldSequenceList));
 };
 
 export const deleteSong = (song: { id: any }) => (dispatch: any, getState: any) => {
@@ -82,6 +130,7 @@ export const deleteSong = (song: { id: any }) => (dispatch: any, getState: any) 
   // 找对应歌曲在播放列表中的索引
 
   const fpIndex = findIndex(song, oldPlayList);
+
   // 在播放列表中将其删除
   oldPlayList.splice(fpIndex, 1);
   // 如果删除的歌曲排在当前播放歌曲前面，那么 currentIndex--，让当前的歌正常播放

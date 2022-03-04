@@ -3,12 +3,14 @@ import counterReducer from "./counterSlice";
 import { useDispatch } from "react-redux";
 import singersReducer from "@/store/singersSlice";
 import playerReducer from "@/store/playerSlice";
+import searchReducer from "@/store/searchSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     singers: singersReducer,
-    player: playerReducer
+    player: playerReducer,
+    search: searchReducer
   }
 });
 

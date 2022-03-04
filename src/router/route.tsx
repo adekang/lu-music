@@ -7,6 +7,7 @@ import Recommend from "@/pages/Recommend";
 import Album from "@/pages/Album";
 import Singer from "@/pages/Singer";
 import { Navigate, RouteObject } from "react-router-dom";
+import Search from "@/pages/Search";
 
 const routes: RouteObject[] = [
   {
@@ -28,6 +29,10 @@ const routes: RouteObject[] = [
       {
         path: "recommend",
         element: <Recommend />
+      },
+      {
+        path: "search",
+        element: <Search />
       },
       {
         path: "recommend/:id",

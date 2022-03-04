@@ -1,10 +1,12 @@
 import React, { FC } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SearchOutline, UnorderedListOutline } from "antd-mobile-icons";
 import "@/assets/scss/index.scss";
 import Player from "@/components/Player";
 
 const Index: FC = function () {
+  const navigate = useNavigate();
+
   return (
     <div className={"indexWrapper"}>
       <nav className={"header"}>
@@ -12,7 +14,11 @@ const Index: FC = function () {
           <UnorderedListOutline />
         </h1>
         <h1>lu music</h1>
-        <h1>
+        <h1
+          onClick={() => {
+            navigate("search");
+          }}
+        >
           <SearchOutline />
         </h1>
       </nav>
