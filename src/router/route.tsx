@@ -1,13 +1,23 @@
 import React from "react";
 import Layout from "@/pages/index";
 import NotFound from "@/pages/NotFound";
-import Singers from "@/pages/Singers";
-import Rank from "@/pages/Rank";
-import Recommend from "@/pages/Recommend";
-import Album from "@/pages/Album";
-import Singer from "@/pages/Singer";
+// import Singers from "@/pages/Singers";
+// import Rank from "@/pages/Rank";
+// import Recommend from "@/pages/Recommend";
+// import Album from "@/pages/Album";
+// import Singer from "@/pages/Singer";
+// import Search from "@/pages/Search";
+
 import { Navigate, RouteObject } from "react-router-dom";
-import Search from "@/pages/Search";
+
+const Recommend = React.lazy(() => import("../pages/Recommend"));
+const Singers = React.lazy(() => import("../pages/Singers"));
+const Rank = React.lazy(() => import("../pages/Rank"));
+const Search = React.lazy(() => import("../pages/Search"));
+const Album = React.lazy(() => import("../pages/Album"));
+const Singer = React.lazy(() => import("../pages/Singer"));
+
+
 
 const routes: RouteObject[] = [
   {
@@ -20,35 +30,67 @@ const routes: RouteObject[] = [
       },
       {
         path: "rank",
-        element: <Rank />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Rank />
+          </React.Suspense>
+        )
       },
       {
         path: "singers",
-        element: <Singers />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Singers />
+          </React.Suspense>
+        )
       },
       {
         path: "recommend",
-        element: <Recommend />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Recommend />
+          </React.Suspense>
+        )
       },
       {
         path: "search",
-        element: <Search />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Search />
+          </React.Suspense>
+        )
       },
       {
         path: "recommend/:id",
-        element: <Album />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Album />
+          </React.Suspense>
+        )
       },
       {
         path: "singers/:id",
-        element: <Singer />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Singer />
+          </React.Suspense>
+        )
       },
       {
         path: "album/:id",
-        element: <Album />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Album />
+          </React.Suspense>
+        )
       },
       {
         path: "rank/:id",
-        element: <Album />
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Album />
+          </React.Suspense>
+        )
       }
     ]
   },
