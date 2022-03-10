@@ -29,8 +29,7 @@ const Search: FC = function () {
   useEffect(() => {
     setShow(true);
     // 用了 redux 缓存，不再赘述
-    if (!hotList.length) console.log("get");
-    dispatch(getHotKeyWords());
+    if (!hotList.length) dispatch(getHotKeyWords());
   }, []);
 
   const searchBack = useCallback(() => {

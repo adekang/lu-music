@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./index.scss";
 import { debounce } from "@/utils";
+import { LeftOutline } from 'antd-mobile-icons'
 
 interface Props {
   back: () => void;
@@ -46,9 +47,9 @@ const SearchBox: React.FC<Props> = props => {
 
   return (
     <div className="SearchBoxWrapper">
-      <i className="iconfont icon-back" onClick={() => props.back()}>
-        &#xe655;
-      </i>
+      <div className='icon-back' onClick={() => props.back()}>
+        <LeftOutline />
+      </div>
       <input
         ref={queryRef}
         className="box"
