@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from "react";
 import Scroll from "@/components/Scroll";
 import styles from "./singers.module.scss";
 import { alphaTypes, categoryTypes } from "@/utils";
@@ -17,7 +17,7 @@ import {
   refreshMoreHotSingerList,
   refreshMoreSingerList
 } from "@/store/singersSlice";
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Singers: FC = function () {
   const [category, setCategory] = useState("");
@@ -77,10 +77,6 @@ const Singers: FC = function () {
     }
   };
 
-  const goToId = (id: number) => {
-    navigate(`./${id}`);
-  };
-
   return (
     <div>
       <div className={styles.NavContainer}>
@@ -105,7 +101,7 @@ const Singers: FC = function () {
                   return (
                     <div
                       key={item.accountId + "" + index}
-                      onClick={() => goToId(item.id)}
+                      onClick={() => navigate(`/singers/${item.id}`)}
                       className={styles.ListItem}
                     >
                       <div className={styles.ImgWrapper}>
@@ -128,4 +124,4 @@ const Singers: FC = function () {
     </div>
   );
 };
-export default  memo(Singers);
+export default memo(Singers);
