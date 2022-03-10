@@ -7,6 +7,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Scroll from "@/components/Scroll";
 import { useAppDispatch } from "@/store";
 import { changeCurrentIndex, changePlayList, changeSequencePlayList } from "@/store/playerSlice";
+import Loading from "@/components/Loading";
 
 interface Props {
   name?: string;
@@ -19,9 +20,7 @@ const Recommend: FC<Props> = props => {
 
   const navigate = useNavigate();
 
-  const goToId = (id: number) => {
-    navigate(`./${id}`);
-  };
+  const [enterLoading, setEnterLoading] = useState(true);
 
   useEffect(() => {
     getBannerRequest()
@@ -53,6 +52,7 @@ const Recommend: FC<Props> = props => {
       .then((data: { playlist: { tracks: any } }) => {
         const { playlist } = data;
         setHotSongList(playlist.tracks);
+        setEnterLoading(false);
       })
       .catch((e: unknown) => {
         console.log(e);
@@ -116,57 +116,56 @@ const Recommend: FC<Props> = props => {
               <h1 className={styles.title}>推荐歌单</h1>
               <Scroll direction={"horizontal"}>
                 <ul ref={categoryRef} className={styles.songListWrapper}>
-                  {hotList.length &&
-                    hotList?.map(value => {
-                      return (
-                        <li
-                          className={styles.songList}
-                          key={value.id}
-                          onClick={() => {
-                            navigate(`./${value.id}`);
-                          }}
-                        >
-                          <Image
-                            lazy
-                            src={`${value.picUrl}?param=150y150`}
-                            style={{ width: 105, height: 105 }}
-                          />
-                          <p>{value.name}</p>
-                        </li>
-                      );
-                    })}
+                  {hotList?.map(value => {
+                    return (
+                      <li
+                        className={styles.songList}
+                        key={value.id}
+                        onClick={() => {
+                          navigate(`./${value.id}`);
+                        }}
+                      >
+                        <Image
+                          lazy
+                          src={`${value.picUrl}?param=150y150`}
+                          style={{ width: 105, height: 105 }}
+                        />
+                        <p>{value.name}</p>
+                      </li>
+                    );
+                  })}
                 </ul>
               </Scroll>
             </section>
             <section>
               <h1 className={styles.tuneListTitle}>推荐歌曲</h1>
-              {hotSongList.length &&
-                hotSongList?.map((value: any, index) => {
-                  return (
-                    <div
-                      className={styles.tuneList}
-                      key={value.id}
-                      id={String(value.id)}
-                      onClick={e => {
-                        e.preventDefault();
-                        // const id = Number(e.currentTarget.id);
-                        // goToId(id);
-                        dispatch(changePlayList(hotSongList));
-                        dispatch(changeCurrentIndex(index));
-                        dispatch(changeSequencePlayList(hotSongList));
-                      }}
-                    >
-                      <p className={styles.tuneListLeft}>
-                        <span>{index + 1}</span>
-                        <span>{value.name}</span>
-                      </p>
-                      <div className={styles.tuneListRight}>{value?.ar[0].name}</div>
-                    </div>
-                  );
-                })}
+              {hotSongList?.map((value: any, index) => {
+                return (
+                  <div
+                    className={styles.tuneList}
+                    key={value.id}
+                    id={String(value.id)}
+                    onClick={e => {
+                      e.preventDefault();
+                      // const id = Number(e.currentTarget.id);
+                      // goToId(id);
+                      dispatch(changePlayList(hotSongList));
+                      dispatch(changeCurrentIndex(index));
+                      dispatch(changeSequencePlayList(hotSongList));
+                    }}
+                  >
+                    <p className={styles.tuneListLeft}>
+                      <span>{index + 1}</span>
+                      <span>{value.name}</span>
+                    </p>
+                    <div className={styles.tuneListRight}>{value?.ar[0].name}</div>
+                  </div>
+                );
+              })}
             </section>
           </div>
         </Scroll>
+        {enterLoading ? <Loading /> : null}
       </div>
     </>
   );
