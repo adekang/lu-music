@@ -74,9 +74,14 @@ const Player: React.FC = () => {
 
     setTimeout(() => {
       // 注意，play 方法返回的是一个 promise 对象
-      audioRef.current.play().then(() => {
-        songReady.current = true;
-      });
+      audioRef.current.play().then(
+        () => {
+          songReady.current = true;
+        },
+        (err: any) => {
+          return err;
+        }
+      );
     });
 
     getLyric(current.id);
@@ -135,16 +140,24 @@ const Player: React.FC = () => {
   const updateTime = (e: any) => {
     setCurrentTime(e.target.currentTime);
   };
-  const handleError = () => {
+  const handleError = (err: any) => {
     songReady.current = true;
-    alert("播放出错");
+    Toast.show({
+      content: "播放错误",
+      position: "top"
+    });
+    if (currentLyric.current) {
+      currentLyric.current.togglePlay(currentTime * 500);
+    }
+    dispatch(changePlaying(false));
+    console.log(err);
   };
 
   const clickPlaying = (e: any, state: boolean) => {
     e.stopPropagation();
     dispatch(changePlaying(state));
     if (currentLyric.current) {
-      currentLyric.current.togglePlay(currentTime * 1000);
+      currentLyric.current.togglePlay(currentTime * 500);
     }
   };
 
@@ -258,7 +271,7 @@ const Player: React.FC = () => {
             showPlayList={showPlayList}
           />
         )}
-        <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} />
+        <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} crossOrigin="anonymous"/>
         <PlayList />
       </div>
     </>

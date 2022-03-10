@@ -80,6 +80,13 @@ export const insertSong = (song: any) => (dispatch: any, getState: any) => {
   const oldPlayList = JSON.parse(JSON.stringify(getState().player.playList));
   const oldSequenceList = JSON.parse(JSON.stringify(getState().player.sequencePlayList));
   let oldCurrentIndex = JSON.parse(JSON.stringify(getState().player.currentIndex));
+
+  if (!oldPlayList.length && !oldSequenceList.length) {
+    dispatch(changeCurrentIndex(0));
+    dispatch(changePlayList([song]));
+    dispatch(changeSequencePlayList([song]));
+    return;
+  }
   // 看看有没有同款
   const fpIndex = findIndex(song, oldPlayList);
   console.log("fpIndex::", fpIndex);

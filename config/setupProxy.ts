@@ -7,7 +7,7 @@ const proxy: Record<string, string | ProxyOptions> = {
   "/foo": "http://localhost:4567",
   // 选项写法
   "/api": {
-    target: "http://121.41.42.16:3000",
+    target: "http://121.41.42.16",
     changeOrigin: true,
     rewrite: path => path.replace(/^\//, "")
     // 更多请参看：https://cn.vitejs.dev/config/#server-proxy

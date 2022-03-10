@@ -4,13 +4,15 @@ import { useDispatch } from "react-redux";
 import singersReducer from "@/store/singersSlice";
 import playerReducer from "@/store/playerSlice";
 import searchReducer from "@/store/searchSlice";
+import rankReducer from "@/store/rankSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     singers: singersReducer,
     player: playerReducer,
-    search: searchReducer
+    search: searchReducer,
+    rank: rankReducer
   }
 });
 

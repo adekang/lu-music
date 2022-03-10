@@ -116,7 +116,7 @@ const service = createRequest({
   responseStatusMap: {},
   headers: {
     // 'X-SERVICE-GROUP': getCookie(cookieKey)
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   }
 });
 

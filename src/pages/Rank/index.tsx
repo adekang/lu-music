@@ -1,45 +1,126 @@
 import React, { FC, useEffect } from "react";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
-import { decrement, increment, updateAge, fetchName } from "@/store/counterSlice";
+import Scroll from "@/components/Scroll";
+import { getRankList } from "@/store/rankSlice";
+import { useNavigate } from "react-router-dom";
+import { filterIndex } from "@/utils";
+import "./index.scss";
+import Loading from "@/components/Loading";
 
 const Rank: FC = function () {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const counter = useSelector((state: RootState) => state.counter);
+  const { loading, rankList } = useSelector((state: RootState) => state.rank);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const getSongs = () => {
-    dispatch(fetchName()).then(res => {
-      console.log(res);
-    });
-  };
+  const globalStartIndex = filterIndex(rankList);
+  const officialList = rankList.slice(0, globalStartIndex);
+  const globalList = rankList.slice(globalStartIndex);
 
   useEffect(() => {
-    getSongs();
+    if (!rankList.length) {
+      dispatch(getRankList());
+    }
   }, []);
 
-  return (
-    <div>
-      <div>
-        <button aria-label="Increment value" onClick={() => dispatch(increment())}>
-          -
-        </button>
-        <span>{count}</span>
-        <button aria-label="Decrement value" onClick={() => dispatch(decrement())}>
-          +
-        </button>
+  const enterDetail = (id: number) => {
+    navigate(`./${id}`);
+  };
 
-        {counter.loading ? <h1>加载中</h1> : <h1>加载完成</h1>}
-        <input
-          type="number"
-          onBlur={e => {
-            const newAge = e.target.value;
-            dispatch(updateAge(Number(newAge)));
-          }}
-        />
-        <h1>{counter.age}</h1>
+  const renderSongList = (list: any[]) => {
+    return list.length ? (
+      <ul className="RankSongList">
+        {list.map((item: any, index: any) => {
+          return (
+            <li key={index}>
+              {index + 1}. {item.first} - {item.second}
+            </li>
+          );
+        })}
+      </ul>
+    ) : null;
+  };
+
+  // 这是渲染榜单列表函数，传入 global 变量来区分不同的布局方式
+  const renderRankList = (list: any, global?: any) => {
+    return (
+      <ul
+        className="RankList"
+        style={
+          global
+            ? {
+                display: "flex"
+              }
+            : {
+                display: ""
+              }
+        }
+      >
+        {list.map((item: any) => {
+          return (
+            <li
+              style={
+                item.tracks.length
+                  ? {
+                      display: "flex"
+                    }
+                  : {
+                      display: ""
+                    }
+              }
+              className="RankListItem"
+              key={item.updateTime}
+              onClick={() => enterDetail(item.id)}
+            >
+              <div
+                className="img_wrapper"
+                style={
+                  item.tracks.length
+                    ? {
+                        width: "27vw",
+                        height: "27vw"
+                      }
+                    : {
+                        width: "32vw",
+                        height: "32vw"
+                      }
+                }
+              >
+                <img src={item.coverImgUrl} alt="" />
+                <div className="decorate" />
+                <span className="update_frequecy">{item.updateFrequency}</span>
+              </div>
+              {renderSongList(item.tracks)}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  // 榜单数据未加载出来之前都给隐藏
+  const displayStyle = loading ? { display: "none" } : { display: "" };
+
+  return (
+    <>
+      <div className="RankContainer">
+        <Scroll>
+          <div>
+            <h1 className="offical" style={displayStyle}>
+              {" "}
+              官方榜{" "}
+            </h1>
+            {renderRankList(officialList)}
+            <h1 className="global" style={displayStyle}>
+              {" "}
+              全球榜{" "}
+            </h1>
+            {renderRankList(globalList, true)}
+            {loading ? <Loading /> : null}
+          </div>
+        </Scroll>
       </div>
-    </div>
+    </>
   );
 };
 export default Rank;
