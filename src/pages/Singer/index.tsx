@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 import Scroll from "@/components/Scroll";
 import { CSSTransition } from "react-transition-group";
 import "./index.scss";
@@ -131,4 +131,4 @@ const Singer: FC = function () {
     </CSSTransition>
   );
 };
-export default Singer;
+export default memo(Singer);

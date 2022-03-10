@@ -1,6 +1,8 @@
 import React from "react";
 import "./index.scss";
 import { PlayOutline } from "antd-mobile-icons";
+import { useAppDispatch } from "@/store";
+import { changeCurrentIndex, changePlayList, changeSequencePlayList } from "@/store/playerSlice";
 
 // 处理歌手列表拼接歌手名字
 export const getName = (list: { name: string }[]) => {
@@ -15,21 +17,29 @@ export const getName = (list: { name: string }[]) => {
 interface Props {
   songs: any;
   showCollect: boolean;
+  collectCount?: number;
+  musicAnimation?: any;
+  showBackground?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
 const SongsList = React.forwardRef((props: Props, refs: any) => {
-  const { songs, showCollect } = props;
+  const { songs, showCollect, collectCount, showBackground } = props;
 
-  const collectCount = 999;
   const totalCount = songs.length;
 
+  const dispatch = useAppDispatch();
+  const selectItem = (e: any, index: number) => {
+    dispatch(changeCurrentIndex(index));
+    dispatch(changeSequencePlayList(songs));
+    dispatch(changePlayList(songs));
+  };
   const songList = (list: any) => {
     const res = [];
     for (let i = 0; i < list.length; i++) {
       const item = list[i];
       res.push(
-        <li key={item.id}>
+        <li key={item.id} onClick={e => selectItem(e, i)}>
           <span className="index">{i + 1}</span>
           <div className="info">
             <span>{item.name}</span>
@@ -53,7 +63,7 @@ const SongsList = React.forwardRef((props: Props, refs: any) => {
     );
   };
   return (
-    <div className="SongList" ref={refs}>
+    <div className="SongList" ref={refs} style={{ background: `${showBackground ? "#fff" : ""}` }}>
       <div className="first_line">
         <div className="play_all">
           <span className="iconfont">

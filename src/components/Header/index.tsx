@@ -4,8 +4,9 @@ import { LeftOutline } from "antd-mobile-icons";
 
 interface Props {
   title: string;
-  onClose: () => void;
+  onClose?: () => void;
   isMarquee?: boolean;
+  handleClick?: () => void;
 }
 
 // eslint-disable-next-line react/display-name

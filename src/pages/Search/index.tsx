@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import "./index.scss";
@@ -191,4 +191,4 @@ const Search: FC = function () {
     </CSSTransition>
   );
 };
-export default Search;
+export default memo(Search);

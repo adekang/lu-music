@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, memo, useEffect, useRef, useState } from "react";
 import "./index.scss";
 import SvgIcon from "@/components/svgIcon";
 import { getName } from "@/utils";
 import { CSSTransition } from "react-transition-group";
 // import { ProgressCircle } from "antd-mobile";
 import ProgressCircle from "@/components/ProgressCircle";
-import { changePlayList, changePlayMode, changeShowPlayList } from '@/store/playerSlice'
+import { changePlayList, changePlayMode, changeShowPlayList } from "@/store/playerSlice";
 import { useAppDispatch } from "@/store";
 
 // Icon ，命名相反了
@@ -92,4 +92,4 @@ const MiniPlayer: React.FC<Props> = props => {
   );
 };
 
-export default MiniPlayer;
+export default memo(MiniPlayer);

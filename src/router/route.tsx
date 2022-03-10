@@ -41,6 +41,14 @@ const routes: RouteObject[] = [
       {
         path: "singers/:id",
         element: <Singer />
+      },
+      {
+        path: "album/:id",
+        element: <Album />
+      },
+      {
+        path: "rank/:id",
+        element: <Album />
       }
     ]
   },

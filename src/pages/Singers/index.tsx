@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useState } from 'react'
 import Scroll from "@/components/Scroll";
 import styles from "./singers.module.scss";
 import { alphaTypes, categoryTypes } from "@/utils";
@@ -128,4 +128,4 @@ const Singers: FC = function () {
     </div>
   );
 };
-export default Singers;
+export default  memo(Singers);

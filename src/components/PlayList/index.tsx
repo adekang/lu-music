@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
@@ -241,4 +241,4 @@ const PlayList: React.FC = () => {
   );
 };
 
-export default PlayList;
+export default memo(PlayList);

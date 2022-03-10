@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import {
@@ -271,11 +271,17 @@ const Player: React.FC = () => {
             showPlayList={showPlayList}
           />
         )}
-        <audio ref={audioRef} onEnded={handleEnd} onTimeUpdate={updateTime} onError={handleError} crossOrigin="anonymous"/>
+        <audio
+          ref={audioRef}
+          onEnded={handleEnd}
+          onTimeUpdate={updateTime}
+          onError={handleError}
+          crossOrigin="anonymous"
+        />
         <PlayList />
       </div>
     </>
   );
 };
 
-export default Player;
+export default memo(Player);

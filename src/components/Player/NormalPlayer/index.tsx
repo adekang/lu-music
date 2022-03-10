@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import "./index.scss";
 import { formatPlayTime, getName, playMode, prefixStyle } from "@/utils";
 import { CSSTransition } from "react-transition-group";
@@ -203,8 +203,18 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
                   visibility: currentState.current !== "lyric" ? "visible" : "hidden"
                 }}
               >
-                <div className={`needle ${playing ? "" : "pause"}`} style={{backgroundImage:`url(https://s2.loli.net/2022/03/04/fRHmLyJ2aGj9sn1.png)`}}/>
-                <div className="cd" style={{backgroundImage:`url(https://s2.loli.net/2022/03/04/yuleQnLGXqBi2UR.png)`}}>
+                <div
+                  className={`needle ${playing ? "" : "pause"}`}
+                  style={{
+                    backgroundImage: `url(https://s2.loli.net/2022/03/04/fRHmLyJ2aGj9sn1.png)`
+                  }}
+                />
+                <div
+                  className="cd"
+                  style={{
+                    backgroundImage: `url(https://s2.loli.net/2022/03/04/yuleQnLGXqBi2UR.png)`
+                  }}
+                >
                   <img
                     className={`image play ${playing ? "" : "pause"}`}
                     src={song?.picUrl || song.al.picUrl + "?param=400x400"}
@@ -284,4 +294,4 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
   );
 };
 
-export default NormalPlayer;
+export default memo(NormalPlayer);

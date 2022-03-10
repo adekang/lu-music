@@ -119,7 +119,13 @@ const Recommend: FC<Props> = props => {
                   {hotList.length &&
                     hotList?.map(value => {
                       return (
-                        <li className={styles.songList} key={value.id}>
+                        <li
+                          className={styles.songList}
+                          key={value.id}
+                          onClick={() => {
+                            navigate(`./${value.id}`);
+                          }}
+                        >
                           <Image
                             lazy
                             src={`${value.picUrl}?param=150y150`}
