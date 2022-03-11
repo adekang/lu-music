@@ -9,6 +9,8 @@ import configEslint from "./eslint";
 import configVisualizerConfig from "./visualizer";
 import configStyleImport from "./styleImport";
 import legacy from "@vitejs/plugin-legacy";
+import { visualizer } from 'rollup-plugin-visualizer';
+
 import {
   VITE_APP_ESLINT,
   VITE_APP_VISUALIZER,
@@ -23,7 +25,8 @@ export default function createVitePlugins(command: string, mode: string) {
      * @description 必须默认项
      */
     reactRefresh(),
-    configSvgIcons()
+    configSvgIcons(),
+    visualizer()
     // configStyleImport(),
   ];
   VITE_APP_ESLINT && vitePlugins.push(...configEslint());
