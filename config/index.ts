@@ -10,7 +10,7 @@ export const VITE_APP_PORT = 3000;
 /**
  * @description 公共基础路径
  */
-export const VITE_APP_BASE = "/lu-music/";
+export const VITE_APP_BASE = "./";
 /**
  * @description 是否自动在浏览器中打开应用程序
  */
