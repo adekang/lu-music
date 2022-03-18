@@ -1,35 +1,16 @@
 import service from "./request";
 import { BannerList, Response, SongList } from "@/pages/Recommend/types";
 import { categoryMap } from "@/services/utils";
+import { request } from "./request";
 
-// export const getBannerRequest = () => service.get<{ banners: BannerList[] }>('/banner')
-
-/**
- * @param data
- */
-// export const getHotList = (params: { limit: number }) =>
-//   service.get<{ result: SongList[] }>('/personalized', {
-//     params
-//   })
+export const checkMusic = (params: { id: number }) =>
+  request.get("/check/music", {
+    params
+  });
 
 export const getHotList = (data: { limit: number }) => {
   return service({
     url: "/personalized",
-    data
-  });
-};
-
-export const getNewSong = () => {
-  return service({
-    url: "/personalized/newsong"
-  });
-};
-
-// 获取歌曲详情
-// 必选参数 : ids: 音乐 id, 如 id=347230
-export const getSingSongDetail = (data: { id: number }) => {
-  return service({
-    url: "/song/url",
     data
   });
 };
@@ -85,6 +66,7 @@ export const getSingerInfoRequest = (id: string | undefined) => {
 // export const getSongUrl = (id: number) => {
 //   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 // };
+
 //拼接出歌曲的url链接
 export const getSongUrl = (id: number) => {
   return service({

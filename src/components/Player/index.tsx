@@ -9,7 +9,7 @@ import {
   changePlayList,
   changePlayMode
 } from "@/store/playerSlice";
-import { getLyricRequest, getSongUrl } from "@/services/comment";
+import { checkMusic, getLyricRequest, getSongUrl } from "@/services/comment";
 import { findIndex, isEmptyObject, playMode, shuffle } from "@/utils";
 import MiniPlayer from "@/components/Player/MiniPlayer";
 import "./index.scss";
@@ -32,6 +32,11 @@ export interface CurrentSong {
   name: string;
   ar: any;
 }
+
+const checkMusicIsOK = async (id: number) => {
+  const { data } = await checkMusic({ id });
+  return data;
+};
 
 const Player: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,21 +80,21 @@ const Player: React.FC = () => {
     dispatch(changeCurrentSong(current));
     setPreSong(current);
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
+    checkMusicIsOK(current.id).then(res => {
+      if (res.message !== "ok") {
+        handleNext();
+        return;
+      }
+    });
+
     getSongUrl(current.id)
       .then((data: { data: { url: string }[] }) => {
-        console.log(data.data[0].url);
-        if (data.data[0].url == null) {
-          Toast.show({
-            content: "该歌曲暂无版权，将为您播放下一首歌曲"
-          });
-          handleNext();
-          return;
-        }
         audioRef.current.src = data.data[0].url;
       })
       .catch((err: any) => {
         return `${err} 歌曲加载错误`;
       });
+
     setCurrentTime(0); //从头开始播放
 
     setTimeout(() => {
