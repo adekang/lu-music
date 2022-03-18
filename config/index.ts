@@ -22,7 +22,7 @@ export const VITE_APP_ESLINT = false;
 /**
  * @description 是否在打包环境下，开启打包的分析可视化图
  */
-export const VITE_APP_VISUALIZER = true;
+export const VITE_APP_VISUALIZER = false;
 /**
  * @description 是否在打包环境下，去除console.log
  */

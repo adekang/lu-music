@@ -63,9 +63,16 @@ function handleError(instance, createConfig) {
   instance.interceptors.response.use(
     response => {
       // http status 200
-      const { data, config } = response || {};
       // const { needDetail, needHttpResponse } = config || {}
-      const responseData = data || {};
+
+      /* 之前的 */
+      // const { data, config } = response || {};
+      // const responseData = data || {};
+
+/* TODO 修改后的 这里将status 合并到了返回的数据中，后续数据报错，请用上面代码，并对 checkMusic 做修改 */
+      const { data, config, status } = response || {};
+
+      const responseData = { status, ...data } || {};
 
       if (isRspSuccess(responseData, config)) {
         return responseData;

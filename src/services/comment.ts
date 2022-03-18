@@ -1,11 +1,16 @@
 import service from "./request";
 import { BannerList, Response, SongList } from "@/pages/Recommend/types";
 import { categoryMap } from "@/services/utils";
-import { request } from "./request";
+// import { request } from "./request";
 
-export const checkMusic = (params: { id: number }) =>
-  request.get("/check/music", {
-    params
+// export const checkMusic = (params: { id: number }) =>
+//   request.get("/check/music", {
+//     params
+//   });
+export const checkMusic = (data: { id: number }) =>
+  service({
+    url: "/check/music",
+    data
   });
 
 export const getHotList = (data: { limit: number }) => {

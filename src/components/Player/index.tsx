@@ -34,8 +34,7 @@ export interface CurrentSong {
 }
 
 const checkMusicIsOK = async (id: number) => {
-  const { data } = await checkMusic({ id });
-  return data;
+  return await checkMusic({ id });
 };
 
 const Player: React.FC = () => {
