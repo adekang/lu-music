@@ -66,6 +66,8 @@ const Player: React.FC = () => {
   //   return url;
   // };
 
+  const [currentUrl, setCurrentUrl] = useState<string>();
+
   useEffect(() => {
     if (
       !playList.length ||
@@ -79,7 +81,9 @@ const Player: React.FC = () => {
     dispatch(changeCurrentSong(current));
     setPreSong(current);
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
-    checkMusicIsOK(current.id).then(res => {
+
+    // TODO  getSongUrl 比 checkMusic 先执行无法检验歌曲付费
+    checkMusic({ id: current.id }).then((res: { message: string }) => {
       if (res.message !== "ok") {
         Toast.show({
           content: res.message,
@@ -91,7 +95,7 @@ const Player: React.FC = () => {
     });
 
     getSongUrl(current.id)
-      .then((data: { data: { url: string }[] }) => {
+      .then((data: any) => {
         audioRef.current.src = data.data[0].url;
       })
       .catch((err: any) => {
@@ -110,12 +114,11 @@ const Player: React.FC = () => {
           return err;
         }
       );
-    });
-
+    }, 100);
     getLyric(current.id);
     dispatch(changePlaying(true));
     setDuration((current.dt / 1000) | 0); //时长
-  }, [playList, playing, currentIndex]);
+  }, [playList, playing, currentIndex, currentUrl]);
 
   const currentLyric = useRef<any>();
   const [currentPlayingLyric, setPlayingLyric] = useState("");
