@@ -82,8 +82,14 @@ export const getSingerInfoRequest = (id: string | undefined) => {
   });
 };
 //拼接出歌曲的url链接
+// export const getSongUrl = (id: number) => {
+//   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+// };
+//拼接出歌曲的url链接
 export const getSongUrl = (id: number) => {
-  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+  return service({
+    url: `/song/url?id=${id}`
+  });
 };
 
 export const getLyricRequest = (id: number) => {

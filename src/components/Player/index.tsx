@@ -56,6 +56,12 @@ const Player: React.FC = () => {
   });
   const audioRef = useRef<any>();
 
+  // const getUrl = (id: number) => {
+  //   let url;
+  //
+  //   return url;
+  // };
+
   useEffect(() => {
     if (
       !playList.length ||
@@ -69,7 +75,21 @@ const Player: React.FC = () => {
     dispatch(changeCurrentSong(current));
     setPreSong(current);
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
-    audioRef.current.src = getSongUrl(current.id);
+    getSongUrl(current.id)
+      .then((data: { data: { url: string }[] }) => {
+        console.log(data.data[0].url);
+        if (data.data[0].url == null) {
+          Toast.show({
+            content: "该歌曲暂无版权，将为您播放下一首歌曲"
+          });
+          handleNext();
+          return;
+        }
+        audioRef.current.src = data.data[0].url;
+      })
+      .catch((err: any) => {
+        return `${err} 歌曲加载错误`;
+      });
     setCurrentTime(0); //从头开始播放
 
     setTimeout(() => {

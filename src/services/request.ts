@@ -103,7 +103,7 @@ import { environmentVariable } from "@/utils";
 
 const isPrd = environmentVariable() === "dev";
 
-export const baseUrl = isPrd ? "http://121.41.42.16:3000" : "https://music-api-five.vercel.app";
+export const baseUrl = isPrd ? "http://www.codeman.ink/api" : "https://music-api-five.vercel.app";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
