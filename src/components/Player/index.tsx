@@ -81,6 +81,10 @@ const Player: React.FC = () => {
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
     checkMusicIsOK(current.id).then(res => {
       if (res.message !== "ok") {
+        Toast.show({
+          content: res.message,
+          position: "top"
+        });
         handleNext();
         return;
       }
