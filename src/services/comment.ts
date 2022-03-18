@@ -108,3 +108,11 @@ export const getSongDetailRequest = (id: number) => {
     url: `/song/detail?ids=${id}`
   });
 };
+
+export const phoneLogin = (data: { phone: number; password: string }) => {
+  return service({
+    url: "/login/cellphone",
+    method: "post",
+    data
+  });
+};

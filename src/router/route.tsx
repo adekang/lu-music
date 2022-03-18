@@ -16,8 +16,7 @@ const Rank = React.lazy(() => import("../pages/Rank"));
 const Search = React.lazy(() => import("../pages/Search"));
 const Album = React.lazy(() => import("../pages/Album"));
 const Singer = React.lazy(() => import("../pages/Singer"));
-
-
+const Login = React.lazy(() => import("../pages/Login"));
 
 const routes: RouteObject[] = [
   {
@@ -33,6 +32,14 @@ const routes: RouteObject[] = [
         element: (
           <React.Suspense fallback={<>...</>}>
             <Rank />
+          </React.Suspense>
+        )
+      },
+      {
+        path: "login",
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <Login />
           </React.Suspense>
         )
       },

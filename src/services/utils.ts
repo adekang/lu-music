@@ -1,4 +1,6 @@
 // 歌手种类
+import Cookies from "js-cookie";
+
 export const categoryTypes = [
   {
     name: "华语男",
@@ -197,4 +199,27 @@ export const playMode = {
   sequence: 0,
   loop: 1,
   random: 2
+};
+
+export const getCookie = (key: string) => {
+  return Cookies.get(key);
+};
+
+export const setSession = (key: string, value: any) => {
+  window.sessionStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getSession = (key: string) => {
+  try {
+    return JSON.parse(window.sessionStorage.getItem(key) || "");
+  } catch (e) {}
+};
+export const setLocalStorage = (key: string, value: any) => {
+  window.localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getLocalStorage = (key: string) => {
+  try {
+    return JSON.parse(window.localStorage.getItem(key) || "");
+  } catch (e) {}
 };
