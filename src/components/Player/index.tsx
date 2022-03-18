@@ -33,10 +33,6 @@ export interface CurrentSong {
   ar: any;
 }
 
-const checkMusicIsOK = async (id: number) => {
-  return await checkMusic({ id });
-};
-
 const Player: React.FC = () => {
   const dispatch = useAppDispatch();
   //目前播放时间
@@ -60,14 +56,6 @@ const Player: React.FC = () => {
   });
   const audioRef = useRef<any>();
 
-  // const getUrl = (id: number) => {
-  //   let url;
-  //
-  //   return url;
-  // };
-
-  const [currentUrl, setCurrentUrl] = useState<string>();
-
   useEffect(() => {
     if (
       !playList.length ||
@@ -82,43 +70,42 @@ const Player: React.FC = () => {
     setPreSong(current);
     songReady.current = false; // 把标志位置为 false, 表示现在新的资源没有缓冲完成，不能切歌
 
-    // TODO  getSongUrl 比 checkMusic 先执行无法检验歌曲付费
-    checkMusic({ id: current.id }).then((res: { message: string }) => {
-      if (res.message !== "ok") {
-        Toast.show({
-          content: res.message,
-          position: "top"
-        });
-        handleNext();
-        return;
-      }
-    });
-
-    getSongUrl(current.id)
-      .then((data: any) => {
-        audioRef.current.src = data.data[0].url;
+    checkMusic({ id: current.id })
+      .then((res: { message: string }) => {
+        if (res.message !== "ok") {
+          Toast.show({
+            content: res.message,
+            position: "top"
+          });
+          handleNext();
+          return;
+        }
+        getSongUrl(current.id)
+          .then((data: any) => {
+            audioRef.current.src = data.data[0].url;
+            // 注意，play 方法返回的是一个 promise 对象
+            audioRef.current.play().then(
+              () => {
+                songReady.current = true;
+              },
+              (err: any) => {
+                return err;
+              }
+            );
+          })
+          .catch((err: any) => {
+            return `${err} 歌曲加载错误`;
+          });
       })
       .catch((err: any) => {
-        return `${err} 歌曲加载错误`;
+        return `${err} 歌曲付费`;
       });
 
     setCurrentTime(0); //从头开始播放
-
-    setTimeout(() => {
-      // 注意，play 方法返回的是一个 promise 对象
-      audioRef.current.play().then(
-        () => {
-          songReady.current = true;
-        },
-        (err: any) => {
-          return err;
-        }
-      );
-    }, 100);
     getLyric(current.id);
     dispatch(changePlaying(true));
     setDuration((current.dt / 1000) | 0); //时长
-  }, [playList, playing, currentIndex, currentUrl]);
+  }, [playList, playing, currentIndex]);
 
   const currentLyric = useRef<any>();
   const [currentPlayingLyric, setPlayingLyric] = useState("");
