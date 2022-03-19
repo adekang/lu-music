@@ -11,7 +11,7 @@ const Index: FC = function () {
   console.log("cookie--cookie::>>", getCookie("cookie"));
   console.log("cookie--token::>>", getCookie("token"));
   console.log("localStorage--account::>>", getLocalStorage("account"));
-  console.log("localStorage--account::>>", getLocalStorage("account"));
+  console.log("localStorage--account::>>", getLocalStorage("profile"));
 
   return (
     <div className={"indexWrapper"}>
