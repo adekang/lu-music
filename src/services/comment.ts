@@ -109,9 +109,17 @@ export const getSongDetailRequest = (id: number) => {
   });
 };
 
-export const phoneLogin = (data: { phone: number; password: string }) => {
+export const phoneLogin = (data: { phone: number; md5_password: string }) => {
   return service({
     url: "/login/cellphone",
+    method: "post",
+    data
+  });
+};
+
+export const checkLogin = (data: { cookie: string | undefined }) => {
+  return service({
+    url: "/login/status",
     method: "post",
     data
   });

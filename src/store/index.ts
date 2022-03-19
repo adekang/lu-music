@@ -5,6 +5,7 @@ import singersReducer from "@/store/singersSlice";
 import playerReducer from "@/store/playerSlice";
 import searchReducer from "@/store/searchSlice";
 import rankReducer from "@/store/rankSlice";
+import loginReducer from "@/store/loginSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     singers: singersReducer,
     player: playerReducer,
     search: searchReducer,
-    rank: rankReducer
+    rank: rankReducer,
+    login: loginReducer
   }
 });
 
