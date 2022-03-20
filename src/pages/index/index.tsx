@@ -5,7 +5,6 @@ import "@/assets/scss/index.scss";
 
 const Index: FC = function () {
   const navigate = useNavigate();
-
   return (
     <div className={"indexWrapper"}>
       <nav className={"header"}>
