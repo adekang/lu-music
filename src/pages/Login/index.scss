@@ -4,7 +4,68 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background: #f2f3f4;
 
+  &.fly-enter, &.fly-appear {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  &.fly-enter-active, &.fly-appear-active {
+    transition: all .3s;
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.fly-exit {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.fly-exit-active {
+    transition: all .3s;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 16px 0;
+  border-radius: 4%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0 3px 12px;
+
+  > .formItem {
+    margin: 8px;
+    padding: 8px 0;
+
+    input {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 4px;
+      font-size: $font-size-m;
+      outline-style: none;
+      background-color: transparent;
+
+      &:focus {
+        outline: 0;
+        border-bottom: 1px solid $theme-color;
+      }
+
+      &::-ms-reveal,
+      &::-ms-clear {
+        display: none;
+      }
+    }
+  }
+
+  > .fromSubmit {
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+
+    > button {
+      margin: 0 8px;
+    }
+  }
 }
 

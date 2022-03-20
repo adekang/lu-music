@@ -17,6 +17,7 @@ const Search = React.lazy(() => import("../pages/Search"));
 const Album = React.lazy(() => import("../pages/Album"));
 const Singer = React.lazy(() => import("../pages/Singer"));
 const Login = React.lazy(() => import("../pages/Login"));
+const UserInfo = React.lazy(() => import("../pages/UserInfo"));
 
 const routes: RouteObject[] = [
   {
@@ -48,6 +49,14 @@ const routes: RouteObject[] = [
         element: (
           <React.Suspense fallback={<>...</>}>
             <Singers />
+          </React.Suspense>
+        )
+      },
+      {
+        path: "user",
+        element: (
+          <React.Suspense fallback={<>...</>}>
+            <UserInfo />
           </React.Suspense>
         )
       },

@@ -7,13 +7,14 @@ import { checkLogin, phoneLogin } from "@/services/comment";
 import Cookies from "js-cookie";
 import { getSession, setLocalStorage, setSession } from "@/services/utils";
 import md5 from "blueimp-md5";
-import { changeUserInfo } from "@/store/loginSlice";
+import { Button } from "antd-mobile";
+import Header from "@/components/Header";
+import { CSSTransition } from "react-transition-group";
 
 const Login: FC = function () {
   const { userInfo, loading, loginStates } = useSelector((state: RootState) => state.login);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  console.log(userInfo)
 
   const phoneNumberRef = useRef<any>();
   const passwordRef = useRef<any>();
@@ -34,6 +35,7 @@ const Login: FC = function () {
 
           setLocalStorage("account", data.account);
           setLocalStorage("profile", data.profile);
+          navigate("user");
         }
       })
       .catch(() => {
@@ -53,16 +55,48 @@ const Login: FC = function () {
         });
   };
 
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setShow(true);
+  }, []);
   return (
-    <>
+    <CSSTransition
+      in={show}
+      timeout={300}
+      appear={true}
+      classNames="fly"
+      unmountOnExit
+      onExited={() => navigate(-1)}
+    >
       <div className="LoginContainer">
-        <input ref={phoneNumberRef} type="number" name="phoneNumber" />
-        <input ref={passwordRef} type="password" name="password" />
-        <button onClick={loginButton}>登录</button>
-        <br />
-        <button onClick={checkLoginHandler}>检查登录</button>
+        <Header
+          title="登录"
+          onClose={() => {
+            setShow(false);
+          }}
+        />
+        <form method="POST" className="LoginForm">
+          <div className="formItem">
+            <input ref={phoneNumberRef} type="number" placeholder="手机号" name="phoneNumber" />
+          </div>
+          <div className="formItem">
+            <input ref={passwordRef} type="password" placeholder="密码" name="password" />
+          </div>
+          <div className="fromSubmit">
+            <Button color="danger" size="mini" onClick={loginButton}>
+              登录
+            </Button>
+            <Button color="danger" size="mini" onClick={checkLoginHandler}>
+              检查登录
+            </Button>
+            <Button color="danger" size="mini" fill="none" onClick={checkLoginHandler}>
+              邮箱登录
+            </Button>
+          </div>
+        </form>
       </div>
-    </>
+    </CSSTransition>
   );
 };
 export default Login;
