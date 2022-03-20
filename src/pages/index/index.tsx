@@ -1,21 +1,35 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { SearchOutline, UnorderedListOutline } from "antd-mobile-icons";
 import "@/assets/scss/index.scss";
+import Sidebar from "@/pages/Sidebar";
 
 const Index: FC = function () {
   const navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+
+  const onClose = () => {
+    setShow(false);
+  };
+
   return (
     <div className={"indexWrapper"}>
       <nav className={"header"}>
         <h1
           onClick={() => {
-            navigate("login");
+            setShow(true);
           }}
         >
           <UnorderedListOutline />
         </h1>
-        <h1>lu music</h1>
+        <h1
+          onClick={() => {
+            navigate("user");
+          }}
+        >
+          lu music
+        </h1>
         <h1
           onClick={() => {
             navigate("search");
@@ -40,6 +54,8 @@ const Index: FC = function () {
       <div className={"outlet"}>
         <Outlet />
       </div>
+
+      <Sidebar show={show} onClose={onClose} />
     </div>
   );
 };

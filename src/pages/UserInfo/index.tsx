@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { Toast } from "antd-mobile";
 import useLoginCheck from "@/hooks/useLoginCheck";
+import { useNavigate } from "react-router-dom";
 
 const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
+  const navigate = useNavigate();
 
   const isLogin = useLoginCheck();
 
@@ -17,7 +19,12 @@ const UserInfo: React.FC = () => {
 
   return (
     <div className="userInfoWrapper">
-      <Header title="用户信息" />
+      <Header
+        title="用户信息"
+        onClose={() => {
+          navigate("/");
+        }}
+      />
       <div className="userinfoContainer">
         <h1>{userInfo.userId}</h1>
         <img src={`${userInfo.avatarUrl}?param=150y150`} alt="avatar" />
