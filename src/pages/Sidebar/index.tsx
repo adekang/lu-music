@@ -29,6 +29,13 @@ const Sidebar: React.FC<Props> = props => {
       onExited={() => onClose}
     >
       <div className="sideBarWrapper">
+        <div
+          className="mask"
+          onClick={e => {
+            e.stopPropagation();
+            onClose();
+          }}
+        />
         <div className="sideBarContainer">
           <ul>
             <li onClick={() => goTo("/login")}>登录注册</li>
