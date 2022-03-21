@@ -25,7 +25,7 @@ const UserInfo: React.FC = () => {
           navigate("/");
         }}
       />
-      <div className="userinfoContainer">
+      <div className="userInfoContainer">
         <h1>{userInfo.userId}</h1>
         <img src={`${userInfo.avatarUrl}?param=150y150`} alt="avatar" />
         <h1>{userInfo.nickname}</h1>
