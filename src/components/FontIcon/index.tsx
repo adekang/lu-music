@@ -13,7 +13,10 @@ const FontIcon: FC<Props> = props => {
   return (
     <>
       <span className={styles.iconFontWrapper} style={{ ...style }} onClick={onClick}>
-        <i className={`iconfont ${className !== "" ? className : styles.icon} `}>{icon}</i>
+        <i
+          className={`iconfont ${className !== "" ? className : styles.icon} `}
+          dangerouslySetInnerHTML={{ __html: icon }}
+        />
       </span>
     </>
   );

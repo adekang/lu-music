@@ -35,6 +35,18 @@
   z-index: 10;
   width: 65%;
   height: 100%;
+  padding: 8px;
+  overflow: auto;
+
+
+  .logOut {
+    margin-top: 8px;
+    border-radius: 8px;
+    width: 100%;
+    letter-spacing: 2px;
+    color: $font-color-light;
+    background-color: $theme-color;
+  }
 }
 
 .mask {
@@ -47,11 +59,11 @@
   height: 100%;
   z-index: 1;
 }
+
 .cardWrapper {
-  border: 1px solid red;
-  margin: 8px 8px;
   background-color: #fff;
   border-radius: 8px;
+  margin: 8px 0;
 
   .text {
     padding: 8px;
@@ -59,12 +71,30 @@
     font-size: 13px;
     border-bottom: 1px solid #ccc;
   }
+
   .card {
     padding: 8px;
+
     > li {
-      
-      border: 1px solid red;
-      padding: 4px;
+      padding: 8px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: $font-size-s;
+
+      .icon-l {
+        flex: 0 0 10%;
+      }
+
+      > span {
+        padding-left: 8px;
+        flex: 0 1 80%;
+        @include singleEllipsis
+      }
+
+      .icon-r {
+        flex: 0 0 10%;
+      }
     }
   }
 }

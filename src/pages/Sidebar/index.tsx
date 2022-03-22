@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import FontIcon from "@/components/IconCom";
+import FontIcon from "@/components/FontIcon";
+import { CardList } from "@/types/CardList";
+import { cardList } from "@/pages/Sidebar/mock";
+import { Button } from "antd-mobile";
 
 interface Props {
   show: boolean;
@@ -20,6 +23,39 @@ const Sidebar: React.FC<Props> = props => {
     navigate(to);
     onClose();
   };
+
+  const cardRender = (list: CardList[]) => {
+    if (list.length === 0) return;
+    return (
+      <>
+        {list.map((item, index) => {
+          return (
+            <div className="cardWrapper" key={index}>
+              {item.title && <p className="text">{item.title}</p>}
+              <ul className="card">
+                {item.options.length
+                  ? item.options.map((options, index) => {
+                      return (
+                        <li key={index} onClick={()=>goTo(options.goto as string)}>
+                          <div className="icon-l">
+                            <FontIcon icon={options.icon_l} />
+                          </div>
+                          <span>{options.text}</span>
+                          <div className="icon-r">
+                            <FontIcon icon={options.icon_r} />
+                          </div>
+                        </li>
+                      );
+                    })
+                  : null}
+              </ul>
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <CSSTransition
       in={show}
@@ -38,25 +74,8 @@ const Sidebar: React.FC<Props> = props => {
           }}
         />
         <div className="sideBarContainer">
-          <ul>
-            <li onClick={() => goTo("/login")}>登录注册</li>
-          </ul>
-          <h1>sideBar</h1>
-          <button onClick={onClose}>关闭</button>
-          <div className="cardWrapper">
-            <p className="text">其他</p>
-            <ul className="card">
-              <li>
-                <span className="icon-l">
-                  <FontIcon icon="&#xe644;" />
-                </span>
-                <span>设置</span>
-                <span className="icon-r">
-                  <FontIcon icon="&#xe662;" />
-                </span>
-              </li>
-            </ul>
-          </div>
+          {cardRender(cardList)}
+          <Button className="logOut">推出登录</Button>
         </div>
       </div>
     </CSSTransition>
