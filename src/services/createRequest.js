@@ -100,8 +100,12 @@ const createRequest = createConfig => {
   const instance = createInstance(createConfig);
   const res = ({ url, method = "get", data, ...config }) => {
     if (method.toLowerCase() === "get") {
-      const query = querystring.stringify(data);
-      return instance.get(`${url}${query ? `?${query}` : ""}`, config);
+      // const query = querystring.stringify(data);
+      // return instance.get(`${url}${query ? `?${query}` : ""}`, config);
+
+      const params = new URLSearchParams(data);
+      const query = params.toString();
+      return instance.get(`${url}${query !== "" ? `?${query}` : ""}`, config);
     }
     return instance[method.toLowerCase()](url, data, config);
   };
