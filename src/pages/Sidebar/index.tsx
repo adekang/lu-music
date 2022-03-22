@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import FontIcon from "@/components/IconCom";
 
 interface Props {
   show: boolean;
@@ -42,6 +43,20 @@ const Sidebar: React.FC<Props> = props => {
           </ul>
           <h1>sideBar</h1>
           <button onClick={onClose}>关闭</button>
+          <div className="cardWrapper">
+            <p className="text">其他</p>
+            <ul className="card">
+              <li>
+                <span className="icon-l">
+                  <FontIcon icon="&#xe644;" />
+                </span>
+                <span>设置</span>
+                <span className="icon-r">
+                  <FontIcon icon="&#xe662;" />
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </CSSTransition>

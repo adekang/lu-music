@@ -8,12 +8,14 @@
   height: 100%;
   z-index: 1000;
 
-  &.fly-enter, &.fly-appear {
+  &.fly-enter,
+  &.fly-appear {
     transform: translate3d(-100%, 0, 0);
   }
 
-  &.fly-enter-active, &.fly-appear-active {
-    transition: all .3s;
+  &.fly-enter-active,
+  &.fly-appear-active {
+    transition: all 0.3s;
     transform: translate3d(0, 0, 0);
   }
 
@@ -22,7 +24,7 @@
   }
 
   &.fly-exit-active {
-    transition: all .3s;
+    transition: all 0.3s;
     transform: translate3d(-100%, 0, 0);
   }
 }
@@ -45,4 +47,24 @@
   height: 100%;
   z-index: 1;
 }
+.cardWrapper {
+  border: 1px solid red;
+  margin: 8px 8px;
+  background-color: #fff;
+  border-radius: 8px;
 
+  .text {
+    padding: 8px;
+
+    font-size: 13px;
+    border-bottom: 1px solid #ccc;
+  }
+  .card {
+    padding: 8px;
+    > li {
+      
+      border: 1px solid red;
+      padding: 4px;
+    }
+  }
+}
