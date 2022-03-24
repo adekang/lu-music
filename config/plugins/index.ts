@@ -7,7 +7,7 @@ import reactRefresh from "@vitejs/plugin-react-refresh";
 import configSvgIcons from "./svgIcons";
 import configEslint from "./eslint";
 import configVisualizerConfig from "./visualizer";
-import configStyleImport from "./styleImport";
+// import configStyleImport from "./styleImport";
 import legacy from "@vitejs/plugin-legacy";
 import { visualizer } from 'rollup-plugin-visualizer';
 

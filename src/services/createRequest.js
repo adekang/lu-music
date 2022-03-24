@@ -1,4 +1,3 @@
-import querystring from "querystring";
 import axios from "axios";
 
 const API_TIME_OUT = 20000;
