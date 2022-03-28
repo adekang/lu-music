@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import "./index.scss";
 import { formatPlayTime, getName, playMode, prefixStyle } from "@/utils";
 import { CSSTransition } from "react-transition-group";
@@ -7,8 +7,8 @@ import ProgressBar from "@/components/ProgressBar";
 import { useAppDispatch } from "@/store";
 import { changeShowPlayList } from "@/store/playerSlice";
 import Scroll from "@/components/Scroll";
-import needle from "../needle.png";
-import disc from "../disc.png";
+import needle from "../../../assets/needle.png";
+import disc from "../../../assets/disc.png";
 
 export interface PlayerProps {
   song: {
@@ -124,6 +124,7 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
     // 一定要注意现在要把 normalPlayer 这个 DOM 给隐藏掉，因为 CSSTransition 的工作只是把动画执行一遍
     // 不置为 none 现在全屏播放器页面还是存在
     normalPlayerRef.current.style.display = "none";
+    setCurrentState("");
   };
 
   //getPlayMode方法
@@ -139,16 +140,20 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
     return content;
   };
 
-  const currentState = useRef<any>("");
+  const [currentState, setCurrentState] = useState<"" | "lyric">("");
+  // const currentState = useRef<"" | "lyric">("");
   const lyricScrollRef = useRef<any>();
   const lyricLineRefs = useRef<any>([]);
 
-  const toggleCurrentState = () => {
-    if (currentState.current !== "lyric") {
-      currentState.current = "lyric";
+  const toggleLyricShow = () => {
+    console.log(currentState === "lyric" ? "歌词模式" : "CD模式");
+    let nextState: "" | "lyric" = "";
+    if (currentState !== "lyric") {
+      nextState = "lyric";
     } else {
-      currentState.current = "";
+      nextState = "";
     }
+    setCurrentState(nextState);
   };
 
   useEffect(() => {
@@ -195,24 +200,24 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
               <h1 className="subtitle">{getName(song.ar)}</h1>
             </div>
           </div>
-          <div className="Middle" ref={cdWrapperRef} onClick={toggleCurrentState}>
-            <CSSTransition timeout={400} classNames="fade" in={currentState.current !== "lyric"}>
+          <div className="Middle" ref={cdWrapperRef} onClick={toggleLyricShow}>
+            <CSSTransition timeout={400} classNames="fade" in={currentState !== "lyric"}>
               <div
                 className="CDWrapper"
                 style={{
-                  visibility: currentState.current !== "lyric" ? "visible" : "hidden"
+                  visibility: currentState === "lyric" ? "hidden" : "visible"
                 }}
               >
                 <div
                   className={`needle ${playing ? "" : "pause"}`}
                   style={{
-                    backgroundImage: `url(https://s2.loli.net/2022/03/04/fRHmLyJ2aGj9sn1.png)`
+                    backgroundImage: `url(${needle})`
                   }}
                 />
                 <div
                   className="cd"
                   style={{
-                    backgroundImage: `url(https://s2.loli.net/2022/03/04/yuleQnLGXqBi2UR.png)`
+                    backgroundImage: `url(${disc})`
                   }}
                 >
                   <img
@@ -224,13 +229,13 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
                 <p className="playing_lyric">{currentPlayingLyric}</p>
               </div>
             </CSSTransition>
-            <CSSTransition timeout={400} classNames="fade" in={currentState.current === "lyric"}>
+            <CSSTransition timeout={400} classNames="fade" in={currentState === "lyric"}>
               <div className="LyricContainer">
                 <Scroll ref={lyricScrollRef}>
                   <div
                     className="LyricWrapper lyric_wrapper"
                     style={{
-                      visibility: currentState.current === "lyric" ? "visible" : "hidden"
+                      visibility: currentState === "lyric" ? "visible" : "hidden"
                     }}
                   >
                     {currentLyric ? (

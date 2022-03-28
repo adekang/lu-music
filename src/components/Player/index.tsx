@@ -165,7 +165,7 @@ const Player: React.FC = () => {
       position: "top"
     });
     if (currentLyric.current) {
-      currentLyric.current.togglePlay(currentTime * 500);
+      currentLyric.current.togglePlay(currentTime * 1000);
     }
     dispatch(changePlaying(false));
     console.log(err);
@@ -175,7 +175,7 @@ const Player: React.FC = () => {
     e.stopPropagation();
     dispatch(changePlaying(state));
     if (currentLyric.current) {
-      currentLyric.current.togglePlay(currentTime * 500);
+      currentLyric.current.togglePlay(currentTime * 1000);
     }
   };
 

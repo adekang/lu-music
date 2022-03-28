@@ -9,22 +9,27 @@ export type svgProps = {
   onClick?: React.MouseEventHandler<SVGSVGElement>;
 };
 
-const SvgIcon: React.FC<svgProps> = memo(
-  ({ iconClass, fill, fontSize = "13px", className, onClick, style }) => {
-    const iconName = useMemo(() => `#icon-${iconClass}`, [iconClass]);
-    return (
-      <svg
-        fontSize={fontSize!}
-        style={{ ...svgStyle, fontSize, ...style }}
-        aria-hidden="true"
-        className={className!}
-        onClick={onClick}
-      >
-        <use xlinkHref={iconName} fill={fill!} />
-      </svg>
-    );
-  }
-);
+const SvgIcon: React.FC<svgProps> = ({
+  iconClass,
+  fill,
+  fontSize = "13px",
+  className,
+  onClick,
+  style
+}) => {
+  const iconName = useMemo(() => `#icon-${iconClass}`, [iconClass]);
+  return (
+    <svg
+      fontSize={fontSize!}
+      style={{ ...svgStyle, fontSize, ...style }}
+      aria-hidden="true"
+      className={className!}
+      onClick={onClick}
+    >
+      <use xlinkHref={iconName} fill={fill!} />
+    </svg>
+  );
+};
 
 const svgStyle = {
   width: "1em",
@@ -35,4 +40,4 @@ const svgStyle = {
   fontSize: "1.1em"
 };
 
-export default SvgIcon;
+export default memo(SvgIcon);
