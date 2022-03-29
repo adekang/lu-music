@@ -7,8 +7,8 @@ import proxy from "./config/setupProxy";
 import build from "./config/build";
 
 export default defineConfig(configEnv => {
-  console.log(`config::`, configEnv)
-  const { command, mode } = configEnv
+  console.log(`config::`, configEnv);
+  const { command, mode } = configEnv;
   // const isBuild = command === 'build';
   return {
     base: VITE_APP_BASE,
@@ -17,7 +17,7 @@ export default defineConfig(configEnv => {
         "@": path.resolve(__dirname, "src")
       }
     },
-    plugins: createVitePlugins(command,mode),
+    plugins: createVitePlugins(command, mode),
     css: cssOption,
     server: {
       host: true,
@@ -25,6 +25,6 @@ export default defineConfig(configEnv => {
       open: VITE_APP_OPEN,
       proxy
     },
-    build
+    build,
   };
 });

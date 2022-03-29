@@ -1,6 +1,8 @@
 import { BuildOptions } from "vite";
-import { VITE_APP_CONSOLE, VITE_APP_DEBUGGER, VITE_APP_SOURCEMAP } from "../config";
+import { VITE_APP_CONSOLE, VITE_APP_DEBUGGER, VITE_APP_SOURCEMAP } from "./index";
+
 const build: BuildOptions = {
+  minify: 'terser',
   terserOptions: {
     compress: {
       keep_infinity: true,

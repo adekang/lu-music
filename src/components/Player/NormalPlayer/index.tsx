@@ -146,7 +146,6 @@ const NormalPlayer: React.FC<PlayerProps> = props => {
   const lyricLineRefs = useRef<any>([]);
 
   const toggleLyricShow = () => {
-    console.log(currentState === "lyric" ? "歌词模式" : "CD模式");
     let nextState: "" | "lyric" = "";
     if (currentState !== "lyric") {
       nextState = "lyric";
