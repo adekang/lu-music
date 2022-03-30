@@ -3,13 +3,16 @@ import { getLocalStorage } from "@/services/utils";
 import { changeLoginStates, changeUserInfo } from "@/store/loginSlice";
 import Cookies from "js-cookie";
 import { checkLogin } from "@/services/comment";
-import { useAppDispatch } from "@/store";
+import { RootState, useAppDispatch } from "@/store";
 import { Toast } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useLoginCheck = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
+
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -28,34 +31,31 @@ const useLoginCheck = () => {
           vipType: profile.vipType
         })
       );
-      dispatch(changeLoginStates(true));
-    } else {
-      dispatch(changeLoginStates(false));
     }
   }, [isLogin]);
 
   const loginCheck = () => {
     const cookieToken = Cookies.get("cookie");
-
-    cookieToken &&
-      checkLogin({ cookie: encodeURIComponent(cookieToken) })
-        .then((data: any) => {
-          if (data.data.code === 200) {
-            setIsLogin(true);
-          } else {
-            Toast.show({
-              position: "top",
-              content: "用户还没有登录，请登录！"
-            });
-            navigate("/login");
-          }
-        })
-        .catch((err: any) => {
-          return err;
-        });
+    checkLogin({ cookie: encodeURIComponent(cookieToken as string) })
+      .then((data: any) => {
+        if (data.data.account !== null) {
+          dispatch(changeLoginStates(true));
+          setIsLogin(true);
+        } else {
+          Toast.show({
+            position: "top",
+            content: "用户还没有登录，请登录！"
+          });
+          navigate("/login");
+        }
+      })
+      .catch((err: any) => {
+        dispatch(changeLoginStates(false));
+        return err;
+      });
   };
 
-  return { isLogin };
+  return { loginCheck };
 };
 
 export default useLoginCheck;

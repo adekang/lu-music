@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import "./index.scss";
 import { useSelector } from "react-redux";
@@ -11,11 +11,11 @@ const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
   const navigate = useNavigate();
 
-  const isLogin = useLoginCheck();
+  const { loginCheck } = useLoginCheck();
 
   useEffect(() => {
-    console.log("loginStates::>>", loginStates);
-  }, [loginStates]);
+    loginCheck();
+  }, []);
 
   return (
     <div className="userInfoWrapper">
@@ -25,12 +25,14 @@ const UserInfo: React.FC = () => {
           navigate("/");
         }}
       />
-      <div className="userInfoContainer">
-        <h1>{userInfo.userId}</h1>
-        <img src={`${userInfo.avatarUrl}?param=150y150`} alt="avatar" />
-        <h1>{userInfo.nickname}</h1>
-        <h1>{userInfo.vipType}</h1>
-      </div>
+      {loginStates ? (
+        <div className="userInfoContainer">
+          <h1>{userInfo.userId}</h1>
+          <img src={`${userInfo.avatarUrl}?param=150y150`} alt="avatar" />
+          <h1>{userInfo.nickname}</h1>
+          <h1>{userInfo.vipType}</h1>
+        </div>
+      ) : null}
     </div>
   );
 };

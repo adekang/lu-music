@@ -3,13 +3,14 @@ import { RootState, useAppDispatch } from "@/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
-import { checkLogin, phoneLogin } from "@/services/comment";
+import { phoneLogin } from "@/services/comment";
 import Cookies from "js-cookie";
-import { getSession, setLocalStorage, setSession } from "@/services/utils";
+import { setLocalStorage, setSession } from "@/services/utils";
 import md5 from "blueimp-md5";
 import { Button } from "antd-mobile";
 import Header from "@/components/Header";
 import { CSSTransition } from "react-transition-group";
+import { changeLoginStates } from "@/store/loginSlice";
 
 const Login: FC = function () {
   const { userInfo, loading, loginStates } = useSelector((state: RootState) => state.login);
@@ -25,34 +26,23 @@ const Login: FC = function () {
     const md5_password = md5(password);
     phoneLogin({ phone, md5_password })
       .then((data: any) => {
-        const token = getSession("token");
-        if (data.code === 200 && token !== data.token) {
+        if (data.account !== null) {
           Cookies.set("token", data.token, { expires: 7 });
           Cookies.set("cookie", data.cookie, { expires: 7 });
 
           setSession("token", data.token);
           setSession("cookie", data.cookie);
-
+          dispatch(changeLoginStates(true));
           setLocalStorage("account", data.account);
           setLocalStorage("profile", data.profile);
-          navigate("user");
+          navigate("/user");
+        } else {
+          dispatch(changeLoginStates(false));
         }
       })
       .catch(() => {
         return "登录失败";
       });
-  };
-
-  const checkLoginHandler = () => {
-    const cookieToken = Cookies.get("cookie");
-    cookieToken &&
-      checkLogin({ cookie: encodeURIComponent(cookieToken) })
-        .then((data: any) => {
-          console.log(data);
-        })
-        .catch((err: any) => {
-          return err;
-        });
   };
 
   const [show, setShow] = useState(false);
@@ -67,7 +57,7 @@ const Login: FC = function () {
       appear={true}
       classNames="fly"
       unmountOnExit
-      onExited={() => navigate(-1)}
+      onExited={() => navigate("/")}
     >
       <div className="LoginContainer">
         <Header
@@ -87,10 +77,7 @@ const Login: FC = function () {
             <Button color="danger" size="mini" onClick={loginButton}>
               登录
             </Button>
-            <Button color="danger" size="mini" onClick={checkLoginHandler}>
-              检查登录
-            </Button>
-            <Button color="danger" size="mini" fill="none" onClick={checkLoginHandler}>
+            <Button color="danger" size="mini" fill="none">
               邮箱登录
             </Button>
           </div>

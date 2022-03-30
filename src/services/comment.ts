@@ -113,7 +113,10 @@ export const phoneLogin = (data: { phone: number; md5_password: string }) => {
   return service({
     url: "/login/cellphone",
     method: "post",
-    data
+    data: {
+      timestamp: new Date().getTime(),
+      ...data
+    }
   });
 };
 
@@ -121,6 +124,16 @@ export const checkLogin = (data: { cookie: string | undefined }) => {
   return service({
     url: "/login/status",
     method: "post",
-    data
+    data: {
+      timestamp: new Date().getTime(),
+      ...data
+    }
+  });
+};
+
+export const logout = () => {
+  return service({
+    url: "/logout",
+    method: "post"
   });
 };

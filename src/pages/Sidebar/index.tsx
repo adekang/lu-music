@@ -8,6 +8,9 @@ import FontIcon from "@/components/FontIcon";
 import { CardList } from "@/types/CardList";
 import { cardList } from "@/pages/Sidebar/mock";
 import { Button } from "antd-mobile";
+import { checkLogin, logout } from "@/services/comment";
+import Cookies from "js-cookie";
+import useLoginCheck from "@/hooks/useLoginCheck";
 
 interface Props {
   show: boolean;
@@ -24,6 +27,20 @@ const Sidebar: React.FC<Props> = props => {
     onClose();
   };
 
+  const logoutHandler = useCallback(() => {
+    logout();
+  }, []);
+
+  const checkLoginHandler = () => {
+    const cookieToken = Cookies.get("cookie");
+    checkLogin({ cookie: encodeURIComponent(cookieToken as string) })
+      .then((data: any) => {
+        console.log(data);
+      })
+      .catch((err: any) => {
+        return err;
+      });
+  };
   const cardRender = (list: CardList[]) => {
     if (list.length === 0) return;
     return (
@@ -36,7 +53,7 @@ const Sidebar: React.FC<Props> = props => {
                 {item.options.length
                   ? item.options.map((options, index) => {
                       return (
-                        <li key={index} onClick={()=>goTo(options.goto as string)}>
+                        <li key={index} onClick={() => goTo(options.goto as string)}>
                           <div className="icon-l">
                             <FontIcon icon={options.icon_l} />
                           </div>
@@ -75,7 +92,12 @@ const Sidebar: React.FC<Props> = props => {
         />
         <div className="sideBarContainer">
           {cardRender(cardList)}
-          <Button className="logOut">推出登录</Button>
+          <Button className="logOut" onClick={logoutHandler}>
+            推出登录
+          </Button>
+          <Button className="logOut" onClick={checkLoginHandler}>
+            检查登录
+          </Button>
         </div>
       </div>
     </CSSTransition>
