@@ -37,6 +37,7 @@ const Login: FC = function () {
           setLocalStorage("profile", data.profile);
           navigate("/user");
         } else {
+          console.log("没有登录成功");
           dispatch(changeLoginStates(false));
         }
       })

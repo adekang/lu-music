@@ -35,6 +35,7 @@ const useLoginCheck = () => {
   }, [isLogin]);
 
   const loginCheck = () => {
+    console.log("loginCheck::>");
     const cookieToken = Cookies.get("cookie");
     checkLogin({ cookie: encodeURIComponent(cookieToken as string) })
       .then((data: any) => {

@@ -65,7 +65,7 @@
     "ts-jest": "^27.0.5",
     "typescript": "^4.3.2",
     "vconsole": "3.12.1",
-    "vite": "2.8.0",
+    "vite": "2.9.0",
     "vite-plugin-checker": "^0.3.4",
     "vite-plugin-style-import": "^1.2.1",
     "vite-plugin-svg-icons": "^1.0.4",

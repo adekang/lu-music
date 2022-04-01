@@ -5,7 +5,9 @@ const isPrd = environmentVariable() === "dev";
 
 // http://121.41.42.16:3000
 // http://www.codeman.ink/api
-export const baseUrl = isPrd ? "http://121.41.42.16:3000" : "https://vue-music-trtst-com.vercel.app";
+export const baseUrl = isPrd
+  ? "http://121.41.42.16:3000"
+  : "https://vue-music-trtst-com.vercel.app";
 
 // // axios 的实例及拦截器配置
 // const request = axios.create({
@@ -101,8 +103,6 @@ export function del(url: string) {
 // 最后把封装好的axios导出
 // export { request };
 
-
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import createRequest from "./createRequest.js";
@@ -113,7 +113,7 @@ const service = createRequest({
   withCredentials: true,
   responseStatusMap: {},
   headers: {
-    // 'X-SERVICE-GROUP': getCookie(cookieKey)
+    // "X-SERVICE-GROUP": getCookie("cookie"),
     "Content-Type": "application/json"
   }
 });
