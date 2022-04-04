@@ -13,12 +13,17 @@ import {
   getUserLikedSongsIDs,
   getUserPlaylist
 } from "@/services/user";
+import { Playlist } from "@/types/user";
+import { CSSTransition } from "react-transition-group";
+import Scroll from "@/components/Scroll";
 
 const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
   const navigate = useNavigate();
   const { loginCheck } = useLoginCheck();
   const uid = userInfo.userId;
+
+  const [userPlayList, setUserPlayList] = useState<Playlist[]>([]);
 
   useEffect(() => {
     loginCheck();
@@ -31,7 +36,9 @@ const UserInfo: React.FC = () => {
           const data = await getSubCountInfo({ limit: 10 });
           const resA = await getLikedAlbums({ limit: 10 });
           const resB = await getUserLikedSongsIDs(uid);
-          const resC = await getUserPlaylist({ uid });
+          // 用户的歌单
+          const playList = await getUserPlaylist({ uid });
+          setUserPlayList(playList.playlist);
         } catch (e) {
           return e;
         }
@@ -42,7 +49,16 @@ const UserInfo: React.FC = () => {
   const collectionRender = () => {
     return (
       <>
-        <div>collectionRender</div>
+        {userPlayList.length
+          ? userPlayList?.map(item => {
+              return (
+                <div key={item.id} className="collectionContainer">
+                  <Image className="img" src={`${item.coverImgUrl}?param=50y50`} />
+                  <p>{item.name}</p>
+                </div>
+              );
+            })
+          : null}
       </>
     );
   };
@@ -62,6 +78,7 @@ const UserInfo: React.FC = () => {
       </>
     );
   };
+
   return (
     <div className="userInfoWrapper">
       <Header
@@ -87,7 +104,11 @@ const UserInfo: React.FC = () => {
           <section className="userTab">
             <Tabs>
               <Tabs.Tab title="收藏歌单" key="fruits">
-                菠萝
+                <div className="collectionWrapper">
+                  <Scroll>
+                    <div>{collectionRender()}</div>
+                  </Scroll>
+                </div>
               </Tabs.Tab>
               <Tabs.Tab title="我的喜欢" key="vegetables">
                 西红柿

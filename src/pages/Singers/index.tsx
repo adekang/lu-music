@@ -77,6 +77,7 @@ const Singers: FC = function () {
     }
   };
 
+
   return (
     <div>
       <div className={styles.NavContainer}>

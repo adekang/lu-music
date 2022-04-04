@@ -25,10 +25,34 @@
 }
 
 .userTab {
-  padding: 16px 8px;
+  margin: 18px 0;
+}
 
+
+.collectionWrapper {
+  position: fixed;
+  top: 200px;
+  bottom: 0;
+  width: 100%;
+  border: 1px solid red;
 
 }
 
+
+.collectionContainer {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+  .img {
+    width: 50px;
+    height: auto;
+  }
+
+  p {
+    padding-left: 16px;
+    @include singleEllipsis
+  }
+}
 
 
