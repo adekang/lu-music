@@ -40,11 +40,15 @@
 }
 
 .collectionListItem {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
-  position: relative;
-  padding: 8px 8px 0 8px;
+  padding: 8px 8px 0;
+
+  .img_wrapper {
+    height: 0;
+    width: 45px;
+    padding-bottom: 45px;
+  }
 
   p {
     padding-left: 16px;

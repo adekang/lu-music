@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import "./index.scss";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/store";
-import { Tabs, Toast } from "antd-mobile";
+import { RootState } from "@/store";
+import { Tabs } from "antd-mobile";
 import useLoginCheck from "@/hooks/useLoginCheck";
 import { useNavigate } from "react-router-dom";
-import { Image, Space } from "antd-mobile";
+import { Image } from "antd-mobile";
 import {
   getLikedAlbums,
   getSubCountInfo,
@@ -14,10 +14,10 @@ import {
   getUserPlaylist
 } from "@/services/user";
 import { Playlist } from "@/types/user";
-import { CSSTransition } from "react-transition-group";
 import Scroll from "@/components/Scroll";
-import LazyLoad, { forceCheck } from "react-lazyload";
+import { forceCheck } from "react-lazyload";
 import musicLoad from "@/assets/music.png";
+import LazyImage from "@/components/LazyImage";
 
 const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
@@ -55,12 +55,9 @@ const UserInfo: React.FC = () => {
           ? userPlayList?.map(item => {
               return (
                 <div key={item.id} className="collectionListItem">
-                  <Image
-                    className="img"
-                    src={`${item.coverImgUrl}?param=50y50`}
-                    width="50px"
-                    height="50px"
-                  />
+                  <div className="img_wrapper">
+                    <LazyImage imgSrc={`${item.coverImgUrl}?param=50y50`} loadImg={musicLoad} />
+                  </div>
                   <p>{item.name}</p>
                 </div>
               );
@@ -109,8 +106,6 @@ const UserInfo: React.FC = () => {
               src={`${userInfo.avatarUrl}?param=150y150`}
               width={64}
               height={64}
-              fit="cover"
-              alt={"avatar"}
               style={{ borderRadius: 32 }}
             />
             <h1>{userInfo.nickname}</h1>
@@ -120,7 +115,7 @@ const UserInfo: React.FC = () => {
             <Tabs>
               <Tabs.Tab title="收藏歌单" key="fruits">
                 <div className="collectionList">
-                  <Scroll bounceTop={true} ref={collectionRef}>
+                  <Scroll bounceTop={true} ref={collectionRef} onScroll={forceCheck}>
                     <div ref={divRef}>{collectionRender()}</div>
                   </Scroll>
                 </div>
