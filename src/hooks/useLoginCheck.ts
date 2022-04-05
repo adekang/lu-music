@@ -46,6 +46,7 @@ const useLoginCheck = () => {
         position: "top",
         content: "用户还没有登录，请登录！"
       });
+      dispatch(changeLoginStates(false));
       navigate("/login");
     }
 
