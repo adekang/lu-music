@@ -16,6 +16,8 @@ import {
 import { Playlist } from "@/types/user";
 import { CSSTransition } from "react-transition-group";
 import Scroll from "@/components/Scroll";
+import LazyLoad, { forceCheck } from "react-lazyload";
+import musicLoad from "@/assets/music.png";
 
 const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
@@ -52,8 +54,13 @@ const UserInfo: React.FC = () => {
         {userPlayList.length
           ? userPlayList?.map(item => {
               return (
-                <div key={item.id} className="collectionContainer">
-                  <Image className="img" src={`${item.coverImgUrl}?param=50y50`} />
+                <div key={item.id} className="collectionListItem">
+                  <Image
+                    className="img"
+                    src={`${item.coverImgUrl}?param=50y50`}
+                    width="50px"
+                    height="50px"
+                  />
                   <p>{item.name}</p>
                 </div>
               );
@@ -78,6 +85,14 @@ const UserInfo: React.FC = () => {
       </>
     );
   };
+
+  const collectionRef = useRef<any>();
+  const divRef = useRef<any>();
+
+  useEffect(() => {
+    console.log(divRef.current?.offsetHeight);
+    userPlayList.length !== 0 && collectionRef.current?.refresh();
+  }, [userPlayList]);
 
   return (
     <div className="userInfoWrapper">
@@ -104,9 +119,9 @@ const UserInfo: React.FC = () => {
           <section className="userTab">
             <Tabs>
               <Tabs.Tab title="收藏歌单" key="fruits">
-                <div className="collectionWrapper">
-                  <Scroll>
-                    <div>{collectionRender()}</div>
+                <div className="collectionList">
+                  <Scroll bounceTop={true} ref={collectionRef}>
+                    <div ref={divRef}>{collectionRender()}</div>
                   </Scroll>
                 </div>
               </Tabs.Tab>

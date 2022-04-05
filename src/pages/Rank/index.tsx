@@ -107,13 +107,11 @@ const Rank: FC = function () {
         <Scroll>
           <div>
             <h1 className="offical" style={displayStyle}>
-              {" "}
-              官方榜{" "}
+              官方榜
             </h1>
             {renderRankList(officialList)}
             <h1 className="global" style={displayStyle}>
-              {" "}
-              全球榜{" "}
+              全球榜
             </h1>
             {renderRankList(globalList, true)}
             {loading ? <Loading /> : null}
