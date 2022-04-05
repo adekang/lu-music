@@ -16,6 +16,10 @@ import LazyImage from "@/components/LazyImage";
 import { getSongDetail } from "@/store/playerSlice";
 
 const UserInfo: React.FC = () => {
+  useEffect(() => {
+    loginCheck();
+  }, []);
+
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -29,9 +33,6 @@ const UserInfo: React.FC = () => {
   const collectionRef = useRef<any>();
   const divRef = useRef<any>();
 
-  useEffect(() => {
-    loginCheck();
-  }, []);
 
   useEffect(() => {
     (async function () {

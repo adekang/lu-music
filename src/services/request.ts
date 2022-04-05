@@ -6,7 +6,7 @@ const isPrd = environmentVariable() === "dev";
 // http://121.41.42.16:3000
 // http://www.codeman.ink/api
 export const baseUrl = isPrd
-  ? "http://www.codeman.ink/api"
+  ? "http://121.41.42.16:3000"
   : "https://vue-music-trtst-com.vercel.app";
 
 // // axios 的实例及拦截器配置

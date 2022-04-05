@@ -35,25 +35,39 @@ const useLoginCheck = () => {
   }, [isLogin]);
 
   const loginCheck = () => {
-    console.log("loginCheck::>");
     const cookieToken = Cookies.get("cookie");
-    checkLogin({ cookie: encodeURIComponent(cookieToken as string) })
-      .then((data: any) => {
-        if (data.data.account !== null) {
-          dispatch(changeLoginStates(true));
-          setIsLogin(true);
-        } else {
-          Toast.show({
-            position: "top",
-            content: "用户还没有登录，请登录！"
-          });
-          navigate("/login");
-        }
-      })
-      .catch((err: any) => {
-        dispatch(changeLoginStates(false));
-        return err;
+    console.log("loginCheck::>", cookieToken);
+
+    if (cookieToken !== undefined) {
+      dispatch(changeLoginStates(true));
+      setIsLogin(true);
+    } else {
+      Toast.show({
+        position: "top",
+        content: "用户还没有登录，请登录！"
       });
+      navigate("/login");
+    }
+
+    // const token = cookieToken ? cookieToken : 1;
+    // checkLogin({ cookie: encodeURIComponent(token) })
+    // .then((data: any) => {
+    // console.log("data::", data);
+    //   if (data.data.account !== null) {
+    //     dispatch(changeLoginStates(true));
+    //     setIsLogin(true);
+    //   } else {
+    //     Toast.show({
+    //       position: "top",
+    //       content: "用户还没有登录，请登录！"
+    //     });
+    //     navigate("/login");
+    //   }
+    // })
+    // .catch((err: any) => {
+    // dispatch(changeLoginStates(false));
+    // return err;
+    // });
   };
 
   return { loginCheck };
