@@ -103,9 +103,17 @@ export const getResultSongsListRequest = (query: string) => {
   });
 };
 
-export const getSongDetailRequest = (id: number) => {
+/**
+ * 获取歌曲详情
+ * 说明 : 说明 : 调用此接口 , 传入音乐 id(支持多个 id, 用 , 隔开), 可获得歌曲详情(dt为歌曲时长)
+ * - ids : 音乐 id
+ * @param {number} ids
+ * @param ids
+ */
+
+export const getSongDetailRequest = (ids: number) => {
   return service({
-    url: `/song/detail?ids=${id}`
+    url: `/song/detail?ids=${ids}`
   });
 };
 

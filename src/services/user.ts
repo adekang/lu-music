@@ -81,3 +81,23 @@ export function getUserPlaylist(data: { uid: number; limit?: number; offset?: nu
     }
   });
 }
+
+/**
+ * 获取用户播放记录
+ * 说明 : 登录后调用此接口 , 传入用户 id, 可以获取用户歌单
+ * - uid : 用户 id
+ * - type : type=1 时只返回 weekData, type=0 时返回 allData
+ * @param {number} data.uid
+ * @param {number=} data.type
+ * @param data
+ */
+export function getUserRecordList(data: { uid: number; type?: number }) {
+  const timestamp = new Date().getTime();
+  return service({
+    url: "/user/record",
+    data: {
+      timestamp,
+      ...data
+    }
+  });
+}

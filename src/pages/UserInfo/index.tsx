@@ -2,30 +2,32 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import "./index.scss";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState, useAppDispatch } from "@/store";
 import { Tabs } from "antd-mobile";
 import useLoginCheck from "@/hooks/useLoginCheck";
 import { useNavigate } from "react-router-dom";
 import { Image } from "antd-mobile";
-import {
-  getLikedAlbums,
-  getSubCountInfo,
-  getUserLikedSongsIDs,
-  getUserPlaylist
-} from "@/services/user";
+import { getUserLikedSongsIDs, getUserPlaylist, getUserRecordList } from "@/services/user";
 import { Playlist } from "@/types/user";
 import Scroll from "@/components/Scroll";
 import { forceCheck } from "react-lazyload";
 import musicLoad from "@/assets/music.png";
 import LazyImage from "@/components/LazyImage";
+import { getSongDetail } from "@/store/playerSlice";
 
 const UserInfo: React.FC = () => {
   const { userInfo, loginStates } = useSelector((state: RootState) => state.login);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { loginCheck } = useLoginCheck();
   const uid = userInfo.userId;
 
-  const [userPlayList, setUserPlayList] = useState<Playlist[]>([]);
+  const [userCollectList, setUserCollectList] = useState<Playlist[]>([]);
+  // const [userFavoriteListIds, setUserFavoriteListIds] = useState<any[]>([]);
+  // const [userCollectInfo, setUserCollectInfo] = useState<any[]>([]);
+  const [userRecordList, setUserRecordList] = useState<any[]>([]);
+  const collectionRef = useRef<any>();
+  const divRef = useRef<any>();
 
   useEffect(() => {
     loginCheck();
@@ -35,12 +37,13 @@ const UserInfo: React.FC = () => {
     (async function () {
       if (uid !== 0) {
         try {
-          const data = await getSubCountInfo({ limit: 10 });
-          const resA = await getLikedAlbums({ limit: 10 });
-          const resB = await getUserLikedSongsIDs(uid);
-          // 用户的歌单
-          const playList = await getUserPlaylist({ uid });
-          setUserPlayList(playList.playlist);
+          // const favoriteListIds = await getUserLikedSongsIDs(uid);
+          const userRecordList = await getUserRecordList({ uid, type: 1 });
+          // 用户收藏歌单
+          const { playlist } = await getUserPlaylist({ uid });
+          setUserCollectList(playlist);
+          // setUserFavoriteListIds(favoriteListIds.ids);
+          setUserRecordList(userRecordList.weekData);
         } catch (e) {
           return e;
         }
@@ -48,13 +51,34 @@ const UserInfo: React.FC = () => {
     })();
   }, [uid]);
 
+  useEffect(() => {
+    userCollectList.length !== 0 && collectionRef.current?.refresh();
+  }, [userCollectList]);
+
+  const selectItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+    dispatch(getSongDetail(id));
+  };
+
+  const favoriteRender = () => {
+    return (
+      <>
+        <div>favoriteRender</div>
+      </>
+    );
+  };
+
   const collectionRender = () => {
     return (
       <>
-        {userPlayList.length
-          ? userPlayList?.map(item => {
+        {userCollectList.length
+          ? userCollectList?.map((item, index) => {
+              if (index === 0) return;
               return (
-                <div key={item.id} className="collectionListItem">
+                <div
+                  key={index}
+                  className="collectionListItem"
+                  onClick={() => navigate(`/album/${item.id}`)}
+                >
                   <div className="img_wrapper">
                     <LazyImage imgSrc={`${item.coverImgUrl}?param=50y50`} loadImg={musicLoad} />
                   </div>
@@ -67,29 +91,27 @@ const UserInfo: React.FC = () => {
     );
   };
 
-  const favoriteRender = () => {
+  const recordListRender = () => {
     return (
       <>
-        <div>favoriteRender</div>
+        {userRecordList.length &&
+          userRecordList.map((item, index) => {
+            return (
+              <div
+                key={item.song.id + "" + index}
+                className="collectionListItem"
+                onClick={e => selectItem(e, Number(item.song.id))}
+              >
+                <div className="img_wrapper">
+                  <Image src={`${item.song.al.picUrl}?param=50y50`} lazy />
+                </div>
+                <p>{item.song.name}</p>
+              </div>
+            );
+          })}
       </>
     );
   };
-
-  const latelyPlayReander = () => {
-    return (
-      <>
-        <div>latelyPlayReander</div>
-      </>
-    );
-  };
-
-  const collectionRef = useRef<any>();
-  const divRef = useRef<any>();
-
-  useEffect(() => {
-    console.log(divRef.current?.offsetHeight);
-    userPlayList.length !== 0 && collectionRef.current?.refresh();
-  }, [userPlayList]);
 
   return (
     <div className="userInfoWrapper">
@@ -120,11 +142,15 @@ const UserInfo: React.FC = () => {
                   </Scroll>
                 </div>
               </Tabs.Tab>
-              <Tabs.Tab title="我的喜欢" key="vegetables">
-                西红柿
-              </Tabs.Tab>
+              {/*<Tabs.Tab title="我的喜欢" key="vegetables">*/}
+              {/*  西红柿*/}
+              {/*</Tabs.Tab>*/}
               <Tabs.Tab title="最近播放" key="animals">
-                蚂蚁
+                <div className="collectionList">
+                  <Scroll>
+                    <div>{recordListRender()}</div>
+                  </Scroll>
+                </div>
               </Tabs.Tab>
             </Tabs>
           </section>
