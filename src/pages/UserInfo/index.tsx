@@ -33,7 +33,6 @@ const UserInfo: React.FC = () => {
   const collectionRef = useRef<any>();
   const divRef = useRef<any>();
 
-
   useEffect(() => {
     (async function () {
       if (uid !== 0) {
@@ -50,6 +49,11 @@ const UserInfo: React.FC = () => {
         }
       }
     })();
+
+    return () => {
+      setUserCollectList([]);
+      setUserRecordList([]);
+    };
   }, [uid]);
 
   useEffect(() => {
