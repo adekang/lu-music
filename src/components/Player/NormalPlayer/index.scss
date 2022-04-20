@@ -7,7 +7,6 @@
   }
 }
 
-
 .NormalPlayerWrapper {
   position: fixed;
   left: 0;
@@ -69,7 +68,7 @@
   align-items: center;
   border-bottom: 1px solid $border-color-v2;
   width: 100%;
-  padding: 8px 6px;
+  padding: 6px 6px;
 
   .back {
     z-index: 50;
@@ -96,17 +95,16 @@
     text-align: center;
     font-size: $font-size-m;
     color: $font-color-desc;
-    @include singleEllipsis
+    @include singleEllipsis;
   }
 
   .subtitle {
-    line-height: 10px;
+    line-height: 15px;
     text-align: center;
     font-size: $font-size-s;
     color: $font-color-desc;
-    @include singleEllipsis
+    @include singleEllipsis;
   }
-
 }
 
 .Middle {
@@ -209,7 +207,6 @@
   }
 }
 
-
 .Bottom {
   position: absolute;
   bottom: 50px;
@@ -242,7 +239,6 @@
   .progress-bar-wrapper {
     flex: 1;
   }
-
 }
 
 .Operators {
@@ -252,12 +248,10 @@
   .icon {
     font-weight: 300;
     flex: 1;
-    color: $font-color-desc
+    color: $font-color-desc;
   }
-;
-
   &.disable {
-    color: $theme-color-shadow
+    color: $theme-color-shadow;
   }
 
   i {
@@ -284,7 +278,7 @@
 }
 
 .icon-favorite {
-  color: $theme-color
+  color: $theme-color;
 }
 
 .LyricContainer {
@@ -294,9 +288,28 @@
   top: 0;
   bottom: 0;
   /* 遮罩 会有模糊效果，看个人喜欢*/
-  mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, hsla(0, 0%, 100%, 0)), color-stop(10%, hsla(0, 0%, 100%, .6)), color-stop(25%, #fff), color-stop(75%, #fff), color-stop(85%, hsla(0, 0%, 100%, .6)), to(hsla(0, 0%, 100%, 0)));
-  mask-image: linear-gradient(linear, left top, left bottom, color-stop(0, hsla(0, 0%, 100%, 0)), color-stop(10%, hsla(0, 0%, 100%, .6)), color-stop(25%, #fff), color-stop(75%, #fff), color-stop(85%, hsla(0, 0%, 100%, .6)), to(hsla(0, 0%, 100%, 0)));
-
+  mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, hsla(0, 0%, 100%, 0)),
+    color-stop(10%, hsla(0, 0%, 100%, 0.6)),
+    color-stop(25%, #fff),
+    color-stop(75%, #fff),
+    color-stop(85%, hsla(0, 0%, 100%, 0.6)),
+    to(hsla(0, 0%, 100%, 0))
+  );
+  mask-image: linear-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, hsla(0, 0%, 100%, 0)),
+    color-stop(10%, hsla(0, 0%, 100%, 0.6)),
+    color-stop(25%, #fff),
+    color-stop(75%, #fff),
+    color-stop(85%, hsla(0, 0%, 100%, 0.6)),
+    to(hsla(0, 0%, 100%, 0))
+  );
 }
 
 .LyricWrapper {
@@ -323,5 +336,3 @@
     }
   }
 }
-
-
