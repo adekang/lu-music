@@ -9,7 +9,7 @@ export type svgProps = {
   onClick?: React.MouseEventHandler<SVGSVGElement>;
 };
 
-const SvgIcon: React.FC<svgProps> = ({
+const SvgIcon: React.FC<Partial<svgProps>> = ({
   iconClass,
   fill,
   fontSize = "13px",
@@ -40,4 +40,5 @@ const svgStyle = {
   fontSize: "1.1em"
 };
 
+SvgIcon.displayName = "SvgIcon";
 export default memo(SvgIcon);
