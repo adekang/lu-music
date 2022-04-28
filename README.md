@@ -29,7 +29,7 @@ pnpm dev
 
 ## 技术栈
 
-react@17 / react-router-don@6 /  Axios / Redux / Vite@2
+react@17 / react-router-dom@6 /  Axios / Redux / Vite@2
 
 # 效果图预览展示
 
