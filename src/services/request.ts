@@ -111,6 +111,7 @@ const service = createRequest({
   baseURL: baseUrl,
   timeout: 5000,
   withCredentials: true,
+  changeOrigin: true,
   responseStatusMap: {},
   headers: {
     // "X-SERVICE-GROUP": getCookie("cookie"),
