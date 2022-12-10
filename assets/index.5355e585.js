@@ -1,0 +1,2 @@
+import{R as e}from"./index.43ee1ebf.js";import{L as r}from"./LeftOutline.81613f0c.js";const t=e.forwardRef(((t,a)=>{const{title:l,onClose:n,isMarquee:s=!1}=t;return e.createElement("div",{className:"HeaderWrapper",ref:a},e.createElement("div",{onClick:n},e.createElement(r,null)),e.createElement("h1",{className:"Marquee"},s?e.createElement("span",null,l):l))}));export{t as H};
+//# sourceMappingURL=index.5355e585.js.map
